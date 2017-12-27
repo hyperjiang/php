@@ -13,8 +13,6 @@
 | [strtotime](http://php.net/manual/en/function.strtotime.php) | Strtotime       |
 | [time](http://php.net/manual/en/function.time.php) | Time            |
 
-
-
 ### PHP String Functions
 
 | PHP function                             | Golang function |
@@ -38,11 +36,8 @@
 | [mb_strripos](http://php.net/manual/en/function.mb-strripos.php) | Strripos        |
 | [mb_strrpos](http://php.net/manual/en/function.mb-strrpos.php) | Strrpos         |
 | [mb_strstr](http://php.net/manual/en/function.mb-strstr.php) | Strstr          |
-| [mb_substr](ttp://php.net/manual/en/function.mb-substr.php) | Substr          |
+| [mb_substr](http://php.net/manual/en/function.mb-substr.php) | Substr          |
 | [ucfirst](http://php.net/manual/en/function.ucfirst.php) | Ucfirst         |
-
-
-
 
 ## Install
 
@@ -81,4 +76,3 @@ fmt.Println(php.Substr(str, 0, -1)) // abcde
 ```
 
 *For more usage you can find it out from tests file.*
-
