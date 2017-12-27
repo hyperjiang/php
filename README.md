@@ -1,14 +1,11 @@
-# go
+# PHP functions implemented by Golang
 
 [![GoDoc](https://godoc.org/github.com/hyperjiang/php?status.svg)](https://godoc.org/github.com/hyperjiang/php)
 [![Build Status](https://travis-ci.org/hyperjiang/php.svg?branch=master)](https://travis-ci.org/hyperjiang/php)
 [![](https://goreportcard.com/badge/github.com/hyperjiang/php)](https://goreportcard.com/report/github.com/hyperjiang/php)
-[![Maintainability](https://api.codeclimate.com/v1/badges/343b73a52b1f29ed4a44/maintainability)](https://codeclimate.com/github/hyperjiang/php/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/343b73a52b1f29ed4a44/test_coverage)](https://codeclimate.com/github/hyperjiang/php/test_coverage)
 
-## PHP useful functions implemented by Golang
-
-### PHP style Date/Time Functions
+### PHP Date/Time Functions
 
 | PHP function                             | Golang function |
 | ---------------------------------------- | --------------- |
@@ -22,27 +19,27 @@
 
 | PHP function                             | Golang function |
 | ---------------------------------------- | --------------- |
-| addslashes                               | Addslashes      |
-| chr                                      | Chr             |
-| crc32                                    | Crc32           |
-| explode                                  | Explode         |
-| implode                                  | Implode         |
-| str_ireplace                             | Ireplace        |
-| lcfirst                                  | Lcfirst         |
-| md5                                      | Md5             |
-| md5file                                  | Md5file         |
-| ord                                      | Ord             |
+| [addslashes](http://php.net/manual/en/function.addslashes.php) | Addslashes      |
+| [chr](http://php.net/manual/en/function.chr.php) | Chr             |
+| [crc32](http://php.net/manual/en/function.crc32.php) | Crc32           |
+| [explode](http://php.net/manual/en/function.explode.php) | Explode         |
+| [implode](http://php.net/manual/en/function.implode.php) | Implode         |
+| [str_ireplace](http://php.net/manual/en/function.str-ireplace.php) | Ireplace        |
+| [lcfirst](http://php.net/manual/en/function.lcfirst.php) | Lcfirst         |
+| [md5](http://php.net/manual/en/function.md5.php) | Md5             |
+| [md5_file](http://php.net/manual/en/function.md5-file.php) | Md5file         |
+| [ord](http://php.net/manual/en/function.ord.php) | Ord             |
 | [str_replace](http://php.net/manual/en/function.str-replace.php) | Replace         |
-| stripos                                  | Stripos         |
-| stripslashes                             | Stripslashes    |
-| stristr                                  | Stristr         |
-| strlen                                   | Strlen          |
-| strpos                                   | Strpos          |
-| strripos                                 | Strripos        |
-| strrpos                                  | Strrpos         |
-| strstr                                   | Strstr          |
+| [mb_stripos](http://php.net/manual/en/function.mb-stripos.php) | Stripos         |
+| [stripslashes](http://php.net/manual/en/function.stripslashes.php) | Stripslashes    |
+| [mb_stristr](http://php.net/manual/en/function.mb-stristr.php) | Stristr         |
+| [mb_strlen](http://php.net/manual/en/function.mb-strlen.php) | Strlen          |
+| [mb_strpos](http://php.net/manual/en/function.mb-strpos.php) | Strpos          |
+| [mb_strripos](http://php.net/manual/en/function.mb-strripos.php) | Strripos        |
+| [mb_strrpos](http://php.net/manual/en/function.mb-strrpos.php) | Strrpos         |
+| [mb_strstr](http://php.net/manual/en/function.mb-strstr.php) | Strstr          |
 | [mb_substr](ttp://php.net/manual/en/function.mb-substr.php) | Substr          |
-| ucfirst                                  | Ucfirst         |
+| [ucfirst](http://php.net/manual/en/function.ucfirst.php) | Ucfirst         |
 
 
 
