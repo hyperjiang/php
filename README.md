@@ -28,6 +28,7 @@
 | [md5_file](http://php.net/manual/en/function.md5-file.php) | Md5file         |
 | [ord](http://php.net/manual/en/function.ord.php) | Ord             |
 | [str_replace](http://php.net/manual/en/function.str-replace.php) | Replace         |
+| [similar_text](http://php.net/manual/en/function.similar-text.php) | SimilarText     |
 | [mb_stripos](http://php.net/manual/en/function.mb-stripos.php) | Stripos         |
 | [stripslashes](http://php.net/manual/en/function.stripslashes.php) | Stripslashes    |
 | [mb_stristr](http://php.net/manual/en/function.mb-stristr.php) | Stristr         |
