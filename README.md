@@ -40,6 +40,13 @@
 | [mb_substr](http://php.net/manual/en/function.mb-substr.php) | Substr          |
 | [ucfirst](http://php.net/manual/en/function.ucfirst.php) | Ucfirst         |
 
+### PHP Math Functions
+
+| PHP function                             | Golang function |
+| ---------------------------------------- | --------------- |
+| [Round](http://php.net/manual/en/function.round.php) | Round            |
+
+
 ## Install
 
 ```
@@ -74,6 +81,10 @@ fmt.Println(php.Substr(str, 0, 4)) // abcd
 fmt.Println(php.Substr(str, -1, 1)) // f
 fmt.Println(php.Substr(str, 0, -1)) // abcde
 
+// Math functions
+
+fmt.Println(php.Round(5.055, 2)) // 5.06
+
 ```
 
-*For more usage you can find it out from tests file.*
+*For more usage you can find it out from test files.*
