@@ -20,13 +20,13 @@ func init() {
 	_zone, _offset = _now.Zone()
 }
 
-// Time return current Unix timestamp
+// Time returns current Unix timestamp
 func Time() int64 {
 	return _now.Unix()
 }
 
-// Strtotime parse about any English textual datetime description into a Unix timestamp,
-// default timezone is UTC if you did not specify one
+// Strtotime parses any English textual datetime description into a Unix timestamp,
+// default timezone is UTC if you do not specify one
 //
 // e.g. You can specify the timezone to UTC+8 by using yyyy-MM-ddThh:mm:ss+08:00
 //
@@ -54,13 +54,13 @@ func Strtotime(str string) int64 {
 	return -1
 }
 
-// IsLeapYear check if the given time is in a leap year
+// IsLeapYear checks if the given time is in a leap year
 func IsLeapYear(t time.Time) bool {
 	t2 := time.Date(t.Year(), time.December, 31, 0, 0, 0, 0, time.UTC)
 	return t2.YearDay() == 366
 }
 
-// LastDateOfMonth get the last date of the month which the given time is in
+// LastDateOfMonth gets the last date of the month which the given time is in
 func LastDateOfMonth(t time.Time) time.Time {
 	year, month, _ := t.Date()
 	if month == time.December {
@@ -73,8 +73,8 @@ func LastDateOfMonth(t time.Time) time.Time {
 	return time.Unix(t2.Unix()-86400, 0)
 }
 
-// Recognize the character in the format parameter string of Parse
-func Recognize(c string, t time.Time) string {
+// recognize the character in the php date/time format string
+func recognize(c string, t time.Time) string {
 	switch c {
 	// Day
 	case "d": // Day of the month, 2 digits with leading zeros
@@ -153,22 +153,23 @@ func Recognize(c string, t time.Time) string {
 	}
 }
 
-// Parse returns a string formatted according to the given format string using the given time
-func Parse(format string, t time.Time) string {
+// parse returns a textual representation of the time value formatted
+// according to the given php date/time format string
+func parse(format string, t time.Time) string {
 	result := ""
 	for _, s := range format {
-		result += Recognize(string(s), t)
+		result += recognize(string(s), t)
 	}
 	return result
 }
 
-// Format returns a string formatted according to the given format string using the given time
-func Format(format string, t time.Time) string {
+// format is a wrapper of parse
+func format(f string, t time.Time) string {
 
-	pattern, err := GetPattern(format)
+	pattern, err := getPattern(f)
 
 	if err != nil {
-		return Parse(format, t)
+		return parse(f, t)
 	}
 
 	return t.Format(pattern.layout)
@@ -177,20 +178,20 @@ func Format(format string, t time.Time) string {
 // Date returns a string formatted according to the given format string using the given integer timestamp
 //
 // Note that the timezone is set to UTC
-func Date(format string, timestamp int64) string {
-	return Format(format, time.Unix(timestamp, 0).UTC())
+func Date(f string, timestamp int64) string {
+	return format(f, time.Unix(timestamp, 0).UTC())
 }
 
 // Today returns a string formatted according to the given format string using current timestamp
 //
 // Note that the timezone is using local timezone
-func Today(format string) string {
-	return Format(format, _now)
+func Today(f string) string {
+	return format(f, _now)
 }
 
 // LocalDate returns a string formatted according to the given format string using the given integer timestamp
 //
 // Note that the timezone is using local timezone
-func LocalDate(format string, timestamp int64) string {
-	return Format(format, time.Unix(timestamp, 0))
+func LocalDate(f string, timestamp int64) string {
+	return format(f, time.Unix(timestamp, 0))
 }

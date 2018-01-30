@@ -7,44 +7,44 @@
 
 ### PHP Date/Time Functions
 
-| PHP function                             | Golang function |
-| ---------------------------------------- | --------------- |
-| [date](http://php.net/manual/en/function.date.php) | Date            |
-| [strtotime](http://php.net/manual/en/function.strtotime.php) | Strtotime       |
-| [time](http://php.net/manual/en/function.time.php) | Time            |
+| PHP function                             | Golang function                          |
+| ---------------------------------------- | ---------------------------------------- |
+| [date](http://php.net/manual/en/function.date.php) | [Date](https://godoc.org/github.com/hyperjiang/php#Date) |
+| [strtotime](http://php.net/manual/en/function.strtotime.php) | [Strtotime](https://godoc.org/github.com/hyperjiang/php#Strtotime) |
+| [time](http://php.net/manual/en/function.time.php) | [Time](https://godoc.org/github.com/hyperjiang/php#Time) |
 
 ### PHP String Functions
 
-| PHP function                             | Golang function |
-| ---------------------------------------- | --------------- |
-| [addslashes](http://php.net/manual/en/function.addslashes.php) | Addslashes      |
-| [chr](http://php.net/manual/en/function.chr.php) | Chr             |
-| [crc32](http://php.net/manual/en/function.crc32.php) | Crc32           |
-| [explode](http://php.net/manual/en/function.explode.php) | Explode         |
-| [implode](http://php.net/manual/en/function.implode.php) | Implode         |
-| [str_ireplace](http://php.net/manual/en/function.str-ireplace.php) | Ireplace        |
-| [lcfirst](http://php.net/manual/en/function.lcfirst.php) | Lcfirst         |
-| [md5](http://php.net/manual/en/function.md5.php) | Md5             |
-| [md5_file](http://php.net/manual/en/function.md5-file.php) | Md5file         |
-| [ord](http://php.net/manual/en/function.ord.php) | Ord             |
-| [str_replace](http://php.net/manual/en/function.str-replace.php) | Replace         |
-| [similar_text](http://php.net/manual/en/function.similar-text.php) | SimilarText     |
-| [mb_stripos](http://php.net/manual/en/function.mb-stripos.php) | Stripos         |
-| [stripslashes](http://php.net/manual/en/function.stripslashes.php) | Stripslashes    |
-| [mb_stristr](http://php.net/manual/en/function.mb-stristr.php) | Stristr         |
-| [mb_strlen](http://php.net/manual/en/function.mb-strlen.php) | Strlen          |
-| [mb_strpos](http://php.net/manual/en/function.mb-strpos.php) | Strpos          |
-| [mb_strripos](http://php.net/manual/en/function.mb-strripos.php) | Strripos        |
-| [mb_strrpos](http://php.net/manual/en/function.mb-strrpos.php) | Strrpos         |
-| [mb_strstr](http://php.net/manual/en/function.mb-strstr.php) | Strstr          |
-| [mb_substr](http://php.net/manual/en/function.mb-substr.php) | Substr          |
-| [ucfirst](http://php.net/manual/en/function.ucfirst.php) | Ucfirst         |
+| PHP function                             | Golang function                          |
+| ---------------------------------------- | ---------------------------------------- |
+| [addslashes](http://php.net/manual/en/function.addslashes.php) | [Addslashes](https://godoc.org/github.com/hyperjiang/php#Addslashes) |
+| [chr](http://php.net/manual/en/function.chr.php) | [Chr](https://godoc.org/github.com/hyperjiang/php#Chr) |
+| [crc32](http://php.net/manual/en/function.crc32.php) | [Crc32](https://godoc.org/github.com/hyperjiang/php#Crc32) |
+| [explode](http://php.net/manual/en/function.explode.php) | [Explode](https://godoc.org/github.com/hyperjiang/php#Explode) |
+| [implode](http://php.net/manual/en/function.implode.php) | [Implode](https://godoc.org/github.com/hyperjiang/php#Implode) |
+| [str_ireplace](http://php.net/manual/en/function.str-ireplace.php) | [Ireplace](https://godoc.org/github.com/hyperjiang/php#Ireplace) |
+| [lcfirst](http://php.net/manual/en/function.lcfirst.php) | [Lcfirst](https://godoc.org/github.com/hyperjiang/php#Lcfirst) |
+| [md5](http://php.net/manual/en/function.md5.php) | [Md5](https://godoc.org/github.com/hyperjiang/php#Md5) |
+| [md5_file](http://php.net/manual/en/function.md5-file.php) | [Md5file](https://godoc.org/github.com/hyperjiang/php#Md5File) |
+| [ord](http://php.net/manual/en/function.ord.php) | [Ord](https://godoc.org/github.com/hyperjiang/php#Ord) |
+| [str_replace](http://php.net/manual/en/function.str-replace.php) | [Replace](https://godoc.org/github.com/hyperjiang/php#Replace) |
+| [similar_text](http://php.net/manual/en/function.similar-text.php) | [SimilarText](https://godoc.org/github.com/hyperjiang/php#SimilarText) |
+| [mb_stripos](http://php.net/manual/en/function.mb-stripos.php) | [Stripos](https://godoc.org/github.com/hyperjiang/php#Stripos) |
+| [stripslashes](http://php.net/manual/en/function.stripslashes.php) | [Stripslashes](https://godoc.org/github.com/hyperjiang/php#Stripslashes) |
+| [mb_stristr](http://php.net/manual/en/function.mb-stristr.php) | [Stristr](https://godoc.org/github.com/hyperjiang/php#Stristr) |
+| [mb_strlen](http://php.net/manual/en/function.mb-strlen.php) | [Strlen](https://godoc.org/github.com/hyperjiang/php#Strlen) |
+| [mb_strpos](http://php.net/manual/en/function.mb-strpos.php) | [Strpos](https://godoc.org/github.com/hyperjiang/php#Strpos) |
+| [mb_strripos](http://php.net/manual/en/function.mb-strripos.php) | [Strripos](https://godoc.org/github.com/hyperjiang/php#Strripos) |
+| [mb_strrpos](http://php.net/manual/en/function.mb-strrpos.php) | [Strrpos](https://godoc.org/github.com/hyperjiang/php#Strrpos) |
+| [mb_strstr](http://php.net/manual/en/function.mb-strstr.php) | [Strstr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
+| [mb_substr](http://php.net/manual/en/function.mb-substr.php) | [Substr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
+| [ucfirst](http://php.net/manual/en/function.ucfirst.php) | [Ucfirst](https://godoc.org/github.com/hyperjiang/php#Ucfirst) |
 
 ### PHP Math Functions
 
-| PHP function                             | Golang function |
-| ---------------------------------------- | --------------- |
-| [Round](http://php.net/manual/en/function.round.php) | Round            |
+| PHP function                             | Golang function                          |
+| ---------------------------------------- | ---------------------------------------- |
+| [Round](http://php.net/manual/en/function.round.php) | [Round](https://godoc.org/github.com/hyperjiang/php#Round) |
 
 
 ## Install
