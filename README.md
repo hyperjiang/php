@@ -3,7 +3,7 @@
 [![GoDoc](https://godoc.org/github.com/hyperjiang/php?status.svg)](https://godoc.org/github.com/hyperjiang/php)
 [![Build Status](https://travis-ci.org/hyperjiang/php.svg?branch=master)](https://travis-ci.org/hyperjiang/php)
 [![](https://goreportcard.com/badge/github.com/hyperjiang/php)](https://goreportcard.com/report/github.com/hyperjiang/php)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/343b73a52b1f29ed4a44/test_coverage)](https://codeclimate.com/github/hyperjiang/php/test_coverage)
+[![codecov](https://codecov.io/gh/hyperjiang/php/branch/master/graph/badge.svg)](https://codecov.io/gh/hyperjiang/php)
 
 ### PHP Date/Time Functions
 
