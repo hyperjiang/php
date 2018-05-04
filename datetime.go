@@ -3,6 +3,7 @@ package php
 import (
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -39,9 +40,36 @@ func Strtotime(str string) int64 {
 		return Time()
 	}
 
+	reg := regexp.MustCompile("(\\+|\\-)\\s?(\\d)\\s?(day|month|year|week|hour|minute|second)s?")
+	matches := reg.FindStringSubmatch(str)
+	if matches != nil {
+		var diff int64
+		num, _ := strconv.ParseInt(matches[2], 10, 64)
+		switch matches[3] {
+		case "day":
+			diff = num * 86400
+		case "month":
+			diff = num * 86400 * 30
+		case "year":
+			diff = num * 86400 * 365
+		case "week":
+			diff = num * 86400 * 7
+		case "hour":
+			diff = num * 3600
+		case "minute":
+			diff = num * 60
+		case "second":
+			diff = num
+		}
+		if matches[1] == "+" {
+			return Time() + diff
+		}
+		return Time() - diff
+	}
+
 	for _, p := range _defaultPatterns {
 
-		reg := regexp.MustCompile(p.regexp)
+		reg = regexp.MustCompile(p.regexp)
 
 		if reg.MatchString(str) {
 			t, err := time.Parse(p.layout, str)

@@ -52,6 +52,33 @@ func TestStrtotime(t *testing.T) {
 	if Strtotime("Fri, 14 Jul 2017 02:40:00 +0000") != 1500000000 {
 		t.Fail()
 	}
+	if (Strtotime("+1 day") - Time()) != 86400 {
+		t.Fail()
+	}
+	if (Strtotime("+2 days") - Time()) != 86400*2 {
+		t.Fail()
+	}
+	if (Strtotime("-1 day") - Time()) != -86400 {
+		t.Fail()
+	}
+	if (Strtotime("+1 month") - Time()) != 86400*30 {
+		t.Fail()
+	}
+	if (Strtotime("+1 year") - Time()) != 86400*365 {
+		t.Fail()
+	}
+	if (Strtotime("+1 week") - Time()) != 86400*7 {
+		t.Fail()
+	}
+	if (Strtotime("+1 hour") - Time()) != 3600 {
+		t.Fail()
+	}
+	if (Strtotime("+1 minute") - Time()) != 60 {
+		t.Fail()
+	}
+	if (Strtotime("+1 second") - Time()) != 1 {
+		t.Fail()
+	}
 }
 
 func TestDate(t *testing.T) {
