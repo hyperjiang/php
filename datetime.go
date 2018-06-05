@@ -90,6 +90,18 @@ func IsLeapYear(t time.Time) bool {
 
 // LastDateOfMonth gets the last date of the month which the given time is in
 func LastDateOfMonth(t time.Time) time.Time {
+	t2 := FirstDateOfNextMonth(t)
+	return time.Unix(t2.Unix()-86400, 0)
+}
+
+// FirstDateOfMonth gets the first date of the month which the given time is in
+func FirstDateOfMonth(t time.Time) time.Time {
+	year, month, _ := t.Date()
+	return time.Date(year, month, 1, 0, 0, 0, 0, time.UTC)
+}
+
+// FirstDateOfNextMonth gets the first date of next month
+func FirstDateOfNextMonth(t time.Time) time.Time {
 	year, month, _ := t.Date()
 	if month == time.December {
 		year++
@@ -97,8 +109,19 @@ func LastDateOfMonth(t time.Time) time.Time {
 	} else {
 		month++
 	}
-	t2 := time.Date(year, month, 1, 0, 0, 0, 0, time.UTC)
-	return time.Unix(t2.Unix()-86400, 0)
+	return time.Date(year, month, 1, 0, 0, 0, 0, time.UTC)
+}
+
+// FirstDateOfLastMonth gets the first date of last month
+func FirstDateOfLastMonth(t time.Time) time.Time {
+	year, month, _ := t.Date()
+	if month == time.January {
+		year--
+		month = time.December
+	} else {
+		month--
+	}
+	return time.Date(year, month, 1, 0, 0, 0, 0, time.UTC)
 }
 
 // recognize the character in the php date/time format string

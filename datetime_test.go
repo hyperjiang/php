@@ -217,3 +217,27 @@ func TestLocalDate(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestFirstDateOfMonth(t *testing.T) {
+	ts := int64(1500000000)
+	d := time.Unix(ts, 0) // 2017-07-14
+	fd := FirstDateOfMonth(d)
+	if fd.Day() != 1 || fd.Month() != 7 || fd.Year() != 2017 {
+		t.Fail()
+	}
+}
+
+func TestFirstDateOfLastMonth(t *testing.T) {
+	ts := int64(1500000000)
+	d := time.Unix(ts, 0) // 2017-07-14
+	fd := FirstDateOfLastMonth(d)
+	if fd.Day() != 1 || fd.Month() != 6 || fd.Year() != 2017 {
+		t.Fail()
+	}
+
+	d2 := time.Date(2018, time.January, 1, 0, 0, 0, 0, time.UTC)
+	fd2 := FirstDateOfLastMonth(d2)
+	if fd2.Day() != 1 || fd2.Month() != 12 || fd2.Year() != 2017 {
+		t.Fail()
+	}
+}
