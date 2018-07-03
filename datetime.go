@@ -9,21 +9,19 @@ import (
 )
 
 var (
-	_now    time.Time
 	_zero   time.Time
 	_zone   string
 	_offset int
 )
 
 func init() {
-	_now = time.Now()
 	_zero = time.Unix(0, 0)
-	_zone, _offset = _now.Zone()
+	_zone, _offset = _zero.Zone()
 }
 
 // Time returns current Unix timestamp
 func Time() int64 {
-	return _now.Unix()
+	return time.Now().Unix()
 }
 
 // Strtotime parses any English textual datetime description into a Unix timestamp,
@@ -237,7 +235,7 @@ func Date(f string, timestamp int64) string {
 //
 // Note that the timezone is using local timezone
 func Today(f string) string {
-	return format(f, _now)
+	return format(f, time.Now())
 }
 
 // LocalDate returns a string formatted according to the given format string using the given integer timestamp
