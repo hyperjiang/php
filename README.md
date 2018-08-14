@@ -42,9 +42,17 @@
 
 ### PHP Math Functions
 
-| PHP function                             | Golang function                          |
-| ---------------------------------------- | ---------------------------------------- |
-| [Round](http://php.net/manual/en/function.round.php) | [Round](https://godoc.org/github.com/hyperjiang/php#Round) |
+| PHP function                                         | Golang function                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| [round](http://php.net/manual/en/function.round.php) | [Round](https://godoc.org/github.com/hyperjiang/php#Round) |
+
+### PHP Array Functions
+
+| PHP function                                                 | Golang function                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [array_unique](http://php.net/manual/en/function.array-unique.php) | [ArrayUnique](https://godoc.org/github.com/hyperjiang/php#ArrayUnique) |
+| [in_array](http://php.net/manual/en/function.in-array.php) | [InArray](https://godoc.org/github.com/hyperjiang/php#InArray) |
+
 
 
 ## Install
@@ -84,6 +92,12 @@ fmt.Println(php.Substr(str, 0, -1)) // abcde
 // Math functions
 
 fmt.Println(php.Round(5.055, 2)) // 5.06
+
+// Array functions
+
+arr := []string{"1", "1", "2", "3", "a", "ab", "abc", "abc", "abc", "Abc"}
+fmt.Println(php.ArrayUnique(arr).([]string)) // [abc Abc 1 2 3 a ab]
+fmt.Println(php.InArray("a", arr)) // true
 
 ```
 
