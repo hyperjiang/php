@@ -53,7 +53,21 @@
 | [array_unique](http://php.net/manual/en/function.array-unique.php) | [ArrayUnique](https://godoc.org/github.com/hyperjiang/php#ArrayUnique) |
 | [in_array](http://php.net/manual/en/function.in-array.php) | [InArray](https://godoc.org/github.com/hyperjiang/php#InArray) |
 
+### PHP Ctype Functions
 
+| PHP function                                         | Golang function                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| [ctype_alnum](http://php.net/manual/en/function.ctype-alnum.php) | [CtypeAlnum](https://godoc.org/github.com/hyperjiang/php#CtypeAlnum) |
+| [ctype_alpha](http://php.net/manual/en/function.ctype-alpha.php) | [CtypeAlpha](https://godoc.org/github.com/hyperjiang/php#CtypeAlpha) |
+| [ctype_cntrl](http://php.net/manual/en/function.ctype-cntrl.php) | [CtypeCntrl](https://godoc.org/github.com/hyperjiang/php#CtypeCntrl) |
+| [ctype_digit](http://php.net/manual/en/function.ctype-digit.php) | [CtypeDigit](https://godoc.org/github.com/hyperjiang/php#CtypeDigit) |
+| [ctype_graph](http://php.net/manual/en/function.ctype-graph.php) | [CtypeGraph](https://godoc.org/github.com/hyperjiang/php#CtypeGraph) |
+| [ctype_lower](http://php.net/manual/en/function.ctype-lower.php) | [CtypeLower](https://godoc.org/github.com/hyperjiang/php#CtypeLower) |
+| [ctype_print](http://php.net/manual/en/function.ctype-print.php) | [CtypePrint](https://godoc.org/github.com/hyperjiang/php#CtypePrint) |
+| [ctype_punct](http://php.net/manual/en/function.ctype-punct.php) | [CtypePunct](https://godoc.org/github.com/hyperjiang/php#CtypePunct) |
+| [ctype_space](http://php.net/manual/en/function.ctype-space.php) | [CtypeSpace](https://godoc.org/github.com/hyperjiang/php#CtypeSpace) |
+| [ctype_upper](http://php.net/manual/en/function.ctype-upper.php) | [CtypeUpper](https://godoc.org/github.com/hyperjiang/php#CtypeUpper) |
+| [ctype_xdigit](http://php.net/manual/en/function.ctype-xdigit.php) | [CtypeXdigit](https://godoc.org/github.com/hyperjiang/php#CtypeXdigit) |
 
 ## Install
 
