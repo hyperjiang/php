@@ -75,6 +75,10 @@
 | ---------------------------------------------------- | ---------------------------------------------------------- |
 | [dirname](https://www.php.net/manual/en/function.dirname.php) | [Dirname](https://godoc.org/github.com/hyperjiang/php#Dirname) [DirnameWithLevels](https://godoc.org/github.com/hyperjiang/php#DirnameWithLevels) |
 | [realpath](https://www.php.net/manual/en/function.realpath.php) | [Realpath](https://godoc.org/github.com/hyperjiang/php#realpath) |
+| [touch](https://www.php.net/manual/en/function.touch.php) | [Touch](https://godoc.org/github.com/hyperjiang/php#Touch) |
+| [unlink](https://www.php.net/manual/en/function.unlink.php) | [Unlink](https://godoc.org/github.com/hyperjiang/php#Unlink) |
+| [mkdir](https://www.php.net/manual/en/function.mkdir.php) | [Mkdir](https://godoc.org/github.com/hyperjiang/php#Mkdir) |
+| [rmdir](https://www.php.net/manual/en/function.rmdir.php) | [Rmdir](https://godoc.org/github.com/hyperjiang/php#Rmdir) |
 
 ## Install
 

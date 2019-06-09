@@ -105,3 +105,28 @@ func TestRealpath(t *testing.T) {
 		})
 	}
 }
+
+func TestTouch(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+	if got := Touch(filename); got != nil {
+		t.Errorf("Touch() = %v, want %v", got, nil)
+	}
+	Unlink(filename)
+}
+
+func TestMkdir(t *testing.T) {
+	var pathname = "/tmp/hyperjiangphpfilesystemtestdir"
+	if got := Mkdir(pathname, 0666, false); got != nil {
+		t.Errorf("Mkdir() = %v, want %v", got, nil)
+	}
+	// clean up
+	Rmdir(pathname)
+
+	var pathname2 = "/tmp/hyperjiangphpfilesystemtestdir/dir"
+	if got := Mkdir(pathname2, 0, true); got != nil {
+		t.Errorf("Mkdir() = %v, want %v", got, nil)
+	}
+	// clean up
+	Rmdir(pathname2)
+	Rmdir(pathname)
+}
