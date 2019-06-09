@@ -15,3 +15,9 @@ func DirnameWithLevels(path string, levels int) string {
 	}
 	return path
 }
+
+// Realpath returns canonicalized absolute pathname
+func Realpath(path string) string {
+	p, _ := filepath.Abs(path)
+	return p
+}
