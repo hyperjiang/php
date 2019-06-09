@@ -130,3 +130,100 @@ func TestMkdir(t *testing.T) {
 	Rmdir(pathname2)
 	Rmdir(pathname)
 }
+
+func TestIsFile(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+	Unlink(filename)
+	if IsFile(filename) { // not exists
+		t.Fail()
+	}
+	Touch(filename)
+	if !IsFile(filename) {
+		t.Fail()
+	}
+	Unlink(filename)
+}
+
+func TestIsDir(t *testing.T) {
+	var pathname = "/tmp/hyperjiangphpfilesystemtestdir"
+	Rmdir(pathname)
+	if IsDir(pathname) { // not exists
+		t.Fail()
+	}
+	Mkdir(pathname, 0, false)
+	if !IsDir(pathname) {
+		t.Fail()
+	}
+	Rmdir(pathname)
+}
+
+func TestIsExecutable(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.exe"
+	Unlink(filename)
+	if IsExecutable(filename) { // not exists
+		t.Fail()
+	}
+	Touch(filename)
+	if IsExecutable(filename) { // not executable
+		t.Fail()
+	}
+	Chmod(filename, 0777)
+	if !IsExecutable(filename) {
+		t.Fail()
+	}
+	Unlink(filename)
+}
+
+func TestIsReadable(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+	Unlink(filename)
+	if IsReadable(filename) { // not exists
+		t.Fail()
+	}
+	Touch(filename)
+	if !IsReadable(filename) {
+		t.Fail()
+	}
+	Chmod(filename, 0222)
+	if IsReadable(filename) { // not readable
+		t.Fail()
+	}
+	Unlink(filename)
+}
+
+func TestIsWritable(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+	Unlink(filename)
+	if IsWritable(filename) { // not exists
+		t.Fail()
+	}
+	Touch(filename)
+	if !IsWritable(filename) {
+		t.Fail()
+	}
+	Chmod(filename, 0555)
+	if IsWritable(filename) { // not writable
+		t.Fail()
+	}
+	Unlink(filename)
+}
+
+func TestIsLink(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+	Touch(filename)
+	defer Unlink(filename)
+
+	var link = "/tmp/hyperjiangphpfilesystemtest.link"
+	Unlink(link)
+	if IsLink(link) { // not exists
+		t.Fail()
+	}
+
+	if err := Symlink(filename, link); err != nil {
+		t.Error("Create symbolic link failed")
+	}
+	if !IsLink(link) {
+		t.Fail()
+	}
+	Unlink(link)
+}
