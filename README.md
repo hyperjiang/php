@@ -9,65 +9,73 @@
 
 | PHP function                             | Golang function                          |
 | ---------------------------------------- | ---------------------------------------- |
-| [date](http://php.net/manual/en/function.date.php) | [Date](https://godoc.org/github.com/hyperjiang/php#Date) |
-| [strtotime](http://php.net/manual/en/function.strtotime.php) | [Strtotime](https://godoc.org/github.com/hyperjiang/php#Strtotime) |
-| [time](http://php.net/manual/en/function.time.php) | [Time](https://godoc.org/github.com/hyperjiang/php#Time) |
+| [date](https://php.net/manual/en/function.date.php) | [Date](https://godoc.org/github.com/hyperjiang/php#Date) |
+| [strtotime](https://php.net/manual/en/function.strtotime.php) | [Strtotime](https://godoc.org/github.com/hyperjiang/php#Strtotime) |
+| [time](https://php.net/manual/en/function.time.php) | [Time](https://godoc.org/github.com/hyperjiang/php#Time) |
 
 ### PHP String Functions
 
 | PHP function                             | Golang function                          |
 | ---------------------------------------- | ---------------------------------------- |
-| [addslashes](http://php.net/manual/en/function.addslashes.php) | [Addslashes](https://godoc.org/github.com/hyperjiang/php#Addslashes) |
-| [chr](http://php.net/manual/en/function.chr.php) | [Chr](https://godoc.org/github.com/hyperjiang/php#Chr) |
-| [crc32](http://php.net/manual/en/function.crc32.php) | [Crc32](https://godoc.org/github.com/hyperjiang/php#Crc32) |
-| [explode](http://php.net/manual/en/function.explode.php) | [Explode](https://godoc.org/github.com/hyperjiang/php#Explode) |
-| [implode](http://php.net/manual/en/function.implode.php) | [Implode](https://godoc.org/github.com/hyperjiang/php#Implode) |
-| [str_ireplace](http://php.net/manual/en/function.str-ireplace.php) | [Ireplace](https://godoc.org/github.com/hyperjiang/php#Ireplace) |
-| [lcfirst](http://php.net/manual/en/function.lcfirst.php) | [Lcfirst](https://godoc.org/github.com/hyperjiang/php#Lcfirst) |
-| [md5](http://php.net/manual/en/function.md5.php) | [Md5](https://godoc.org/github.com/hyperjiang/php#Md5) |
-| [md5_file](http://php.net/manual/en/function.md5-file.php) | [Md5file](https://godoc.org/github.com/hyperjiang/php#Md5File) |
-| [ord](http://php.net/manual/en/function.ord.php) | [Ord](https://godoc.org/github.com/hyperjiang/php#Ord) |
-| [str_replace](http://php.net/manual/en/function.str-replace.php) | [Replace](https://godoc.org/github.com/hyperjiang/php#Replace) |
-| [similar_text](http://php.net/manual/en/function.similar-text.php) | [SimilarText](https://godoc.org/github.com/hyperjiang/php#SimilarText) |
-| [mb_stripos](http://php.net/manual/en/function.mb-stripos.php) | [Stripos](https://godoc.org/github.com/hyperjiang/php#Stripos) |
-| [stripslashes](http://php.net/manual/en/function.stripslashes.php) | [Stripslashes](https://godoc.org/github.com/hyperjiang/php#Stripslashes) |
-| [mb_stristr](http://php.net/manual/en/function.mb-stristr.php) | [Stristr](https://godoc.org/github.com/hyperjiang/php#Stristr) |
-| [mb_strlen](http://php.net/manual/en/function.mb-strlen.php) | [Strlen](https://godoc.org/github.com/hyperjiang/php#Strlen) |
-| [mb_strpos](http://php.net/manual/en/function.mb-strpos.php) | [Strpos](https://godoc.org/github.com/hyperjiang/php#Strpos) |
-| [mb_strripos](http://php.net/manual/en/function.mb-strripos.php) | [Strripos](https://godoc.org/github.com/hyperjiang/php#Strripos) |
-| [mb_strrpos](http://php.net/manual/en/function.mb-strrpos.php) | [Strrpos](https://godoc.org/github.com/hyperjiang/php#Strrpos) |
-| [mb_strstr](http://php.net/manual/en/function.mb-strstr.php) | [Strstr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
-| [mb_substr](http://php.net/manual/en/function.mb-substr.php) | [Substr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
-| [ucfirst](http://php.net/manual/en/function.ucfirst.php) | [Ucfirst](https://godoc.org/github.com/hyperjiang/php#Ucfirst) |
+| [addslashes](https://php.net/manual/en/function.addslashes.php) | [Addslashes](https://godoc.org/github.com/hyperjiang/php#Addslashes) |
+| [chr](https://php.net/manual/en/function.chr.php) | [Chr](https://godoc.org/github.com/hyperjiang/php#Chr) |
+| [crc32](https://php.net/manual/en/function.crc32.php) | [Crc32](https://godoc.org/github.com/hyperjiang/php#Crc32) |
+| [explode](https://php.net/manual/en/function.explode.php) | [Explode](https://godoc.org/github.com/hyperjiang/php#Explode) |
+| [implode](https://php.net/manual/en/function.implode.php) | [Implode](https://godoc.org/github.com/hyperjiang/php#Implode) |
+| [str_ireplace](https://php.net/manual/en/function.str-ireplace.php) | [Ireplace](https://godoc.org/github.com/hyperjiang/php#Ireplace) |
+| [lcfirst](https://php.net/manual/en/function.lcfirst.php) | [Lcfirst](https://godoc.org/github.com/hyperjiang/php#Lcfirst) |
+| [md5](https://php.net/manual/en/function.md5.php) | [Md5](https://godoc.org/github.com/hyperjiang/php#Md5) |
+| [md5_file](https://php.net/manual/en/function.md5-file.php) | [Md5file](https://godoc.org/github.com/hyperjiang/php#Md5File) |
+| [ord](https://php.net/manual/en/function.ord.php) | [Ord](https://godoc.org/github.com/hyperjiang/php#Ord) |
+| [str_replace](https://php.net/manual/en/function.str-replace.php) | [Replace](https://godoc.org/github.com/hyperjiang/php#Replace) |
+| [similar_text](https://php.net/manual/en/function.similar-text.php) | [SimilarText](https://godoc.org/github.com/hyperjiang/php#SimilarText) |
+| [mb_stripos](https://php.net/manual/en/function.mb-stripos.php) | [Stripos](https://godoc.org/github.com/hyperjiang/php#Stripos) |
+| [stripslashes](https://php.net/manual/en/function.stripslashes.php) | [Stripslashes](https://godoc.org/github.com/hyperjiang/php#Stripslashes) |
+| [mb_stristr](https://php.net/manual/en/function.mb-stristr.php) | [Stristr](https://godoc.org/github.com/hyperjiang/php#Stristr) |
+| [mb_strlen](https://php.net/manual/en/function.mb-strlen.php) | [Strlen](https://godoc.org/github.com/hyperjiang/php#Strlen) |
+| [mb_strpos](https://php.net/manual/en/function.mb-strpos.php) | [Strpos](https://godoc.org/github.com/hyperjiang/php#Strpos) |
+| [mb_strripos](https://php.net/manual/en/function.mb-strripos.php) | [Strripos](https://godoc.org/github.com/hyperjiang/php#Strripos) |
+| [mb_strrpos](https://php.net/manual/en/function.mb-strrpos.php) | [Strrpos](https://godoc.org/github.com/hyperjiang/php#Strrpos) |
+| [mb_strstr](https://php.net/manual/en/function.mb-strstr.php) | [Strstr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
+| [mb_substr](https://php.net/manual/en/function.mb-substr.php) | [Substr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
+| [ucfirst](https://php.net/manual/en/function.ucfirst.php) | [Ucfirst](https://godoc.org/github.com/hyperjiang/php#Ucfirst) |
 
 ### PHP Math Functions
 
 | PHP function                                         | Golang function                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------- |
-| [round](http://php.net/manual/en/function.round.php) | [Round](https://godoc.org/github.com/hyperjiang/php#Round) |
+| [round](https://php.net/manual/en/function.round.php) | [Round](https://godoc.org/github.com/hyperjiang/php#Round) |
 
 ### PHP Array Functions
 
 | PHP function                                                 | Golang function                                              |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| [array_unique](http://php.net/manual/en/function.array-unique.php) | [ArrayUnique](https://godoc.org/github.com/hyperjiang/php#ArrayUnique) |
-| [in_array](http://php.net/manual/en/function.in-array.php) | [InArray](https://godoc.org/github.com/hyperjiang/php#InArray) |
+| [array_unique](https://php.net/manual/en/function.array-unique.php) | [ArrayUnique](https://godoc.org/github.com/hyperjiang/php#ArrayUnique) |
+| [in_array](https://php.net/manual/en/function.in-array.php) | [InArray](https://godoc.org/github.com/hyperjiang/php#InArray) |
 
 ### PHP Ctype Functions
 
 | PHP function                                         | Golang function                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------- |
-| [ctype_alnum](http://php.net/manual/en/function.ctype-alnum.php) | [CtypeAlnum](https://godoc.org/github.com/hyperjiang/php#CtypeAlnum) |
-| [ctype_alpha](http://php.net/manual/en/function.ctype-alpha.php) | [CtypeAlpha](https://godoc.org/github.com/hyperjiang/php#CtypeAlpha) |
-| [ctype_cntrl](http://php.net/manual/en/function.ctype-cntrl.php) | [CtypeCntrl](https://godoc.org/github.com/hyperjiang/php#CtypeCntrl) |
-| [ctype_digit](http://php.net/manual/en/function.ctype-digit.php) | [CtypeDigit](https://godoc.org/github.com/hyperjiang/php#CtypeDigit) |
-| [ctype_graph](http://php.net/manual/en/function.ctype-graph.php) | [CtypeGraph](https://godoc.org/github.com/hyperjiang/php#CtypeGraph) |
-| [ctype_lower](http://php.net/manual/en/function.ctype-lower.php) | [CtypeLower](https://godoc.org/github.com/hyperjiang/php#CtypeLower) |
-| [ctype_print](http://php.net/manual/en/function.ctype-print.php) | [CtypePrint](https://godoc.org/github.com/hyperjiang/php#CtypePrint) |
-| [ctype_punct](http://php.net/manual/en/function.ctype-punct.php) | [CtypePunct](https://godoc.org/github.com/hyperjiang/php#CtypePunct) |
-| [ctype_space](http://php.net/manual/en/function.ctype-space.php) | [CtypeSpace](https://godoc.org/github.com/hyperjiang/php#CtypeSpace) |
-| [ctype_upper](http://php.net/manual/en/function.ctype-upper.php) | [CtypeUpper](https://godoc.org/github.com/hyperjiang/php#CtypeUpper) |
-| [ctype_xdigit](http://php.net/manual/en/function.ctype-xdigit.php) | [CtypeXdigit](https://godoc.org/github.com/hyperjiang/php#CtypeXdigit) |
+| [ctype_alnum](https://php.net/manual/en/function.ctype-alnum.php) | [CtypeAlnum](https://godoc.org/github.com/hyperjiang/php#CtypeAlnum) |
+| [ctype_alpha](https://php.net/manual/en/function.ctype-alpha.php) | [CtypeAlpha](https://godoc.org/github.com/hyperjiang/php#CtypeAlpha) |
+| [ctype_cntrl](https://php.net/manual/en/function.ctype-cntrl.php) | [CtypeCntrl](https://godoc.org/github.com/hyperjiang/php#CtypeCntrl) |
+| [ctype_digit](https://php.net/manual/en/function.ctype-digit.php) | [CtypeDigit](https://godoc.org/github.com/hyperjiang/php#CtypeDigit) |
+| [ctype_graph](https://php.net/manual/en/function.ctype-graph.php) | [CtypeGraph](https://godoc.org/github.com/hyperjiang/php#CtypeGraph) |
+| [ctype_lower](https://php.net/manual/en/function.ctype-lower.php) | [CtypeLower](https://godoc.org/github.com/hyperjiang/php#CtypeLower) |
+| [ctype_print](https://php.net/manual/en/function.ctype-print.php) | [CtypePrint](https://godoc.org/github.com/hyperjiang/php#CtypePrint) |
+| [ctype_punct](https://php.net/manual/en/function.ctype-punct.php) | [CtypePunct](https://godoc.org/github.com/hyperjiang/php#CtypePunct) |
+| [ctype_space](https://php.net/manual/en/function.ctype-space.php) | [CtypeSpace](https://godoc.org/github.com/hyperjiang/php#CtypeSpace) |
+| [ctype_upper](https://php.net/manual/en/function.ctype-upper.php) | [CtypeUpper](https://godoc.org/github.com/hyperjiang/php#CtypeUpper) |
+| [ctype_xdigit](https://php.net/manual/en/function.ctype-xdigit.php) | [CtypeXdigit](https://godoc.org/github.com/hyperjiang/php#CtypeXdigit) |
+
+### PHP Filesystem Functions
+
+| PHP function                                         | Golang function                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| [dirname](https://www.php.net/manual/en/function.dirname.php) | [Dirname](https://godoc.org/github.com/hyperjiang/php#Dirname)
+[DirnameWithLevels](https://godoc.org/github.com/hyperjiang/php#DirnameWithLevels)
+|
 
 ## Install
 
