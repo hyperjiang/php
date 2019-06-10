@@ -81,6 +81,7 @@
 | [mkdir](https://www.php.net/manual/en/function.mkdir.php) | [Mkdir](https://godoc.org/github.com/hyperjiang/php#Mkdir) |
 | [rmdir](https://www.php.net/manual/en/function.rmdir.php) | [Rmdir](https://godoc.org/github.com/hyperjiang/php#Rmdir) |
 | [symlink](https://www.php.net/manual/en/function.symlink.php) | [Symlink](https://godoc.org/github.com/hyperjiang/php#Symlink) |
+| [link](https://www.php.net/manual/en/function.link.php) | [Link](https://godoc.org/github.com/hyperjiang/php#Link) |
 | [chmod](https://www.php.net/manual/en/function.chmod.php) | [Chmod](https://godoc.org/github.com/hyperjiang/php#Chmod) |
 | [chown](https://www.php.net/manual/en/function.chown.php) | [Chown](https://godoc.org/github.com/hyperjiang/php#Chown) |
 | [is_file](https://www.php.net/manual/en/function.is-file.php) | [IsFile](https://godoc.org/github.com/hyperjiang/php#IsFile) |
@@ -89,6 +90,7 @@
 | [is_readable](https://www.php.net/manual/en/function.is-readable.php) | [IsReadable](https://godoc.org/github.com/hyperjiang/php#IsReadable) |
 | [is_writable](https://www.php.net/manual/en/function.is-writable.php) | [IsWritable](https://godoc.org/github.com/hyperjiang/php#IsWritable) |
 | [is_link](https://www.php.net/manual/en/function.is-link.php) | [IsLink](https://godoc.org/github.com/hyperjiang/php#IsLink) |
+| [copy](https://www.php.net/manual/en/function.copy.php) | [Copy](https://godoc.org/github.com/hyperjiang/php#Copy) |
 
 ## Install
 

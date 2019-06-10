@@ -1,6 +1,7 @@
 package php
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 	"syscall"
@@ -69,6 +70,11 @@ func Symlink(target, link string) error {
 	return os.Symlink(target, link)
 }
 
+// Link create a hard link
+func Link(target, link string) error {
+	return os.Link(target, link)
+}
+
 // Chmod changes file mode
 func Chmod(filename string, mode uint32) error {
 	return os.Chmod(filename, os.FileMode(mode))
@@ -119,4 +125,25 @@ func IsLink(filename string) bool {
 		return false
 	}
 	return fi.Mode()&os.ModeSymlink == os.ModeSymlink
+}
+
+// Copy copies the src file to dst. Any existing file will be overwritten and will not copy file attributes.
+func Copy(src, dst string) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, in)
+	if err != nil {
+		return err
+	}
+	return out.Close()
 }

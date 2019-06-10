@@ -276,3 +276,41 @@ func TestChown(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestLink(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+	Touch(filename)
+	defer Unlink(filename)
+
+	var link = "/tmp/hyperjiangphpfilesystemtest.link"
+	Unlink(link)
+
+	if err := Link(filename, link); err != nil {
+		t.Error("Create hard link failed")
+	}
+	Unlink(link)
+}
+
+func TestCopy(t *testing.T) {
+	var src = "/tmp/hyperjiangphpfilesystemtest.src"
+	var dst = "/tmp/hyperjiangphpfilesystemtest.dst"
+	Unlink(src)
+	Unlink(dst)
+
+	if err := Copy(src, dst); err == nil {
+		t.Error("Copy should fail because src file does not exist")
+	}
+
+	Touch(src)
+	defer Unlink(src)
+
+	if err := Copy(src, "/tmp/nodir/hyperjiangphpfilesystemtest.dst"); err == nil {
+		t.Error("Copy should fail because the directory of dst file does not exist")
+	}
+
+	if err := Copy(src, dst); err != nil {
+		t.Fail()
+	}
+
+	Unlink(dst)
+}
