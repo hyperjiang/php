@@ -284,12 +284,12 @@ func Crc32(str string) uint32 {
 }
 
 // Bin2hex converts binary data into hexadecimal representation
-func Bin2hex(str string) string {
-	return hex.EncodeToString([]byte(str))
+func Bin2hex(src []byte) string {
+	return hex.EncodeToString(src)
 }
 
 // Hex2bin decodes a hexadecimally encoded binary string
-func Hex2bin(str string) string {
+func Hex2bin(str string) []byte {
 	s, _ := hex.DecodeString(str)
-	return string(s)
+	return s
 }

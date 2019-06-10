@@ -96,6 +96,13 @@
 | [copy](https://www.php.net/manual/en/function.copy.php) | [Copy](https://godoc.org/github.com/hyperjiang/php#Copy) |
 | [rename](https://www.php.net/manual/en/function.rename.php) | [Rename](https://godoc.org/github.com/hyperjiang/php#Rename) |
 
+### PHP CSPRNG Functions
+
+| PHP function                                         | Golang function                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| [random_bytes](https://php.net/manual/en/function.random-bytes.php) | [RandomBytes](https://godoc.org/github.com/hyperjiang/php#RandomBytes) |
+
+
 ## Install
 
 ```
