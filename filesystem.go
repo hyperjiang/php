@@ -6,6 +6,11 @@ import (
 	"syscall"
 )
 
+// Basename returns trailing name component of path
+func Basename(path string) string {
+	return filepath.Base(path)
+}
+
 // Dirname returns a parent directory's path
 func Dirname(path string) string {
 	return filepath.Dir(path)
@@ -67,6 +72,11 @@ func Symlink(target, link string) error {
 // Chmod changes file mode
 func Chmod(filename string, mode uint32) error {
 	return os.Chmod(filename, os.FileMode(mode))
+}
+
+// Chown changes file owner and group
+func Chown(filename string, uid, gid int) error {
+	return os.Chown(filename, uid, gid)
 }
 
 // IsFile tells whether the filename is a regular file

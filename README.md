@@ -73,6 +73,7 @@
 
 | PHP function                                         | Golang function                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------- |
+| [basename](https://www.php.net/manual/en/function.basename.php) | [Basename](https://godoc.org/github.com/hyperjiang/php#Basename) |
 | [dirname](https://www.php.net/manual/en/function.dirname.php) | [Dirname](https://godoc.org/github.com/hyperjiang/php#Dirname) [DirnameWithLevels](https://godoc.org/github.com/hyperjiang/php#DirnameWithLevels) |
 | [realpath](https://www.php.net/manual/en/function.realpath.php) | [Realpath](https://godoc.org/github.com/hyperjiang/php#realpath) |
 | [touch](https://www.php.net/manual/en/function.touch.php) | [Touch](https://godoc.org/github.com/hyperjiang/php#Touch) |
@@ -81,6 +82,7 @@
 | [rmdir](https://www.php.net/manual/en/function.rmdir.php) | [Rmdir](https://godoc.org/github.com/hyperjiang/php#Rmdir) |
 | [symlink](https://www.php.net/manual/en/function.symlink.php) | [Symlink](https://godoc.org/github.com/hyperjiang/php#Symlink) |
 | [chmod](https://www.php.net/manual/en/function.chmod.php) | [Chmod](https://godoc.org/github.com/hyperjiang/php#Chmod) |
+| [chown](https://www.php.net/manual/en/function.chown.php) | [Chown](https://godoc.org/github.com/hyperjiang/php#Chown) |
 | [is_file](https://www.php.net/manual/en/function.is-file.php) | [IsFile](https://godoc.org/github.com/hyperjiang/php#IsFile) |
 | [is_dir](https://www.php.net/manual/en/function.is-dir.php) | [IsDir](https://godoc.org/github.com/hyperjiang/php#IsDir) |
 | [is_executable](https://www.php.net/manual/en/function.is-executable.php) | [IsExecutable](https://godoc.org/github.com/hyperjiang/php#IsExecutable) |

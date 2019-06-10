@@ -227,3 +227,52 @@ func TestIsLink(t *testing.T) {
 	}
 	Unlink(link)
 }
+
+func TestBasename(t *testing.T) {
+	type args struct {
+		path string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{"/etc/sudoers.d"},
+			"sudoers.d",
+		},
+		{
+			"2",
+			args{"/etc/"},
+			"etc",
+		},
+		{
+			"3",
+			args{"."},
+			".",
+		},
+		{
+			"4",
+			args{"/"},
+			"/",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Basename(tt.args.path); got != tt.want {
+				t.Errorf("Basename() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestChown(t *testing.T) {
+	var filename = "/tmp/tmpfile"
+	Touch(filename)
+	defer Unlink(filename)
+
+	if err := Chown(filename, os.Getuid(), os.Getegid()); err != nil {
+		t.Fail()
+	}
+}
