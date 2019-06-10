@@ -90,7 +90,9 @@
 | [is_readable](https://www.php.net/manual/en/function.is-readable.php) | [IsReadable](https://godoc.org/github.com/hyperjiang/php#IsReadable) |
 | [is_writable](https://www.php.net/manual/en/function.is-writable.php) | [IsWritable](https://godoc.org/github.com/hyperjiang/php#IsWritable) |
 | [is_link](https://www.php.net/manual/en/function.is-link.php) | [IsLink](https://godoc.org/github.com/hyperjiang/php#IsLink) |
+| [file_exists](https://www.php.net/manual/en/function.file-exists.php) | [FileExists](https://godoc.org/github.com/hyperjiang/php#FileExists) |
 | [copy](https://www.php.net/manual/en/function.copy.php) | [Copy](https://godoc.org/github.com/hyperjiang/php#Copy) |
+| [rename](https://www.php.net/manual/en/function.rename.php) | [Rename](https://godoc.org/github.com/hyperjiang/php#Rename) |
 
 ## Install
 

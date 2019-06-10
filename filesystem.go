@@ -147,3 +147,17 @@ func Copy(src, dst string) error {
 	}
 	return out.Close()
 }
+
+// FileExists checks whether a file or directory exists
+func FileExists(filename string) bool {
+	_, err := os.Stat(filename)
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+// Rename renames a file or directory
+func Rename(oldname, newname string) error {
+	return os.Rename(oldname, newname)
+}

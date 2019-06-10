@@ -314,3 +314,27 @@ func TestCopy(t *testing.T) {
 
 	Unlink(dst)
 }
+
+func TestFileExists(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+	Unlink(filename)
+	if FileExists(filename) { // not exists
+		t.Fail()
+	}
+	Touch(filename)
+	if !FileExists(filename) {
+		t.Fail()
+	}
+	Unlink(filename)
+}
+
+func TestRename(t *testing.T) {
+	var oldname = "/tmp/hyperjiangphpfilesystemtest.old"
+	Touch(oldname)
+	var newname = "/tmp/hyperjiangphpfilesystemtest.new"
+	Rename(oldname, newname)
+	if FileExists(oldname) || !FileExists(newname) {
+		t.Fail()
+	}
+	Unlink(newname)
+}
