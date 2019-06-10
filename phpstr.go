@@ -2,6 +2,7 @@ package php
 
 import (
 	"crypto/md5"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"hash/crc32"
@@ -280,4 +281,15 @@ func Stristr(haystack, needle string) string {
 // Crc32 calculates the crc32 polynomial of a string
 func Crc32(str string) uint32 {
 	return crc32.ChecksumIEEE([]byte(str))
+}
+
+// Bin2hex converts binary data into hexadecimal representation
+func Bin2hex(str string) string {
+	return hex.EncodeToString([]byte(str))
+}
+
+// Hex2bin decodes a hexadecimally encoded binary string
+func Hex2bin(str string) string {
+	s, _ := hex.DecodeString(str)
+	return string(s)
 }

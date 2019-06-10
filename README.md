@@ -39,6 +39,8 @@
 | [mb_strstr](https://php.net/manual/en/function.mb-strstr.php) | [Strstr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
 | [mb_substr](https://php.net/manual/en/function.mb-substr.php) | [Substr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
 | [ucfirst](https://php.net/manual/en/function.ucfirst.php) | [Ucfirst](https://godoc.org/github.com/hyperjiang/php#Ucfirst) |
+| [bin2hex](https://php.net/manual/en/function.bin2hex.php) | [Bin2hex](https://godoc.org/github.com/hyperjiang/php#Bin2hex) |
+| [hex2bin](https://php.net/manual/en/function.hex2bin.php) | [Hex2bin](https://godoc.org/github.com/hyperjiang/php#Hex2bin) |
 
 ### PHP Math Functions
 

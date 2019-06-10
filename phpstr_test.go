@@ -329,3 +329,15 @@ func TestCrc32(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestBin2hex(t *testing.T) {
+	if Bin2hex("Hello") != "48656c6c6f" {
+		t.Fail()
+	}
+}
+
+func TestHex2bin(t *testing.T) {
+	if Hex2bin("6578616d706c65206865782064617461") != "example hex data" {
+		t.Fail()
+	}
+}
