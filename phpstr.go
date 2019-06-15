@@ -11,6 +11,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 // Substr returns the portion of string specified by the start and length parameters.
@@ -292,4 +293,40 @@ func Bin2hex(src []byte) string {
 func Hex2bin(str string) []byte {
 	s, _ := hex.DecodeString(str)
 	return s
+}
+
+// Trim strips whitespace (or other characters) from the beginning and end of a string
+func Trim(str string, chars ...string) string {
+	if len(chars) == 0 {
+		return strings.TrimSpace(str)
+	}
+	var cutset = ""
+	for _, c := range chars {
+		cutset += c
+	}
+	return strings.Trim(str, cutset)
+}
+
+// Ltrim strips whitespace (or other characters) from the beginning of a string
+func Ltrim(str string, chars ...string) string {
+	if len(chars) == 0 {
+		return strings.TrimLeftFunc(str, unicode.IsSpace)
+	}
+	var cutset = ""
+	for _, c := range chars {
+		cutset += c
+	}
+	return strings.TrimLeft(str, cutset)
+}
+
+// Rtrim strips whitespace (or other characters) from the end of a string
+func Rtrim(str string, chars ...string) string {
+	if len(chars) == 0 {
+		return strings.TrimRightFunc(str, unicode.IsSpace)
+	}
+	var cutset = ""
+	for _, c := range chars {
+		cutset += c
+	}
+	return strings.TrimRight(str, cutset)
 }

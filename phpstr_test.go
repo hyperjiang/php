@@ -341,3 +341,123 @@ func TestHex2bin(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestTrim(t *testing.T) {
+	type args struct {
+		str   string
+		chars []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{str: "\t\tThese are a few words :) ...  "},
+			"These are a few words :) ...",
+		},
+		{
+			"2",
+			args{str: "\t\tThese are a few words :) ...  ", chars: []string{" ", "\t", "."}},
+			"These are a few words :)",
+		},
+		{
+			"3",
+			args{str: "Hello World", chars: []string{"H", "d", "l", "e"}},
+			"o Wor",
+		},
+		{
+			"4",
+			args{str: "Hello World", chars: []string{"H", "d", "W", "r"}},
+			"ello Worl",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Trim(tt.args.str, tt.args.chars...); got != tt.want {
+				t.Errorf("Trim() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestLtrim(t *testing.T) {
+	type args struct {
+		str   string
+		chars []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{str: "\t\tThese are a few words :) ...  "},
+			"These are a few words :) ...  ",
+		},
+		{
+			"2",
+			args{str: "\t\tThese are a few words :) ...  ", chars: []string{" ", "\t", "."}},
+			"These are a few words :) ...  ",
+		},
+		{
+			"3",
+			args{str: "Hello World", chars: []string{"H", "d", "l", "e"}},
+			"o World",
+		},
+		{
+			"4",
+			args{str: "Hello World", chars: []string{"H", "d", "W", "r"}},
+			"ello World",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Ltrim(tt.args.str, tt.args.chars...); got != tt.want {
+				t.Errorf("Ltrim() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestRtrim(t *testing.T) {
+	type args struct {
+		str   string
+		chars []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{str: "\t\tThese are a few words :) ...  "},
+			"\t\tThese are a few words :) ...",
+		},
+		{
+			"2",
+			args{str: "\t\tThese are a few words :) ...  ", chars: []string{" ", "\t", "."}},
+			"\t\tThese are a few words :)",
+		},
+		{
+			"3",
+			args{str: "Hello World", chars: []string{"H", "d", "l", "e"}},
+			"Hello Wor",
+		},
+		{
+			"4",
+			args{str: "Hello World", chars: []string{"H", "d", "W", "r"}},
+			"Hello Worl",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Rtrim(tt.args.str, tt.args.chars...); got != tt.want {
+				t.Errorf("Rtrim() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
