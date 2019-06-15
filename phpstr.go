@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"hash/crc32"
+	"html"
 	"io"
 	"os"
 	"regexp"
@@ -329,4 +330,14 @@ func Rtrim(str string, chars ...string) string {
 		cutset += c
 	}
 	return strings.TrimRight(str, cutset)
+}
+
+// HTMLSpecialchars converts special characters to HTML entities
+func HTMLSpecialchars(str string) string {
+	return html.EscapeString(str)
+}
+
+// HTMLSpecialcharsDecode converts special HTML entities back to characters
+func HTMLSpecialcharsDecode(str string) string {
+	return html.UnescapeString(str)
 }

@@ -461,3 +461,21 @@ func TestRtrim(t *testing.T) {
 		})
 	}
 }
+
+func TestHTMLSpecialchars(t *testing.T) {
+	if HTMLSpecialchars("<a href='test'>Test</a>") != "&lt;a href=&#39;test&#39;&gt;Test&lt;/a&gt;" {
+		t.Fail()
+	}
+	if HTMLSpecialchars("<Il était une fois un être>.") != "&lt;Il était une fois un être&gt;." {
+		t.Fail()
+	}
+}
+
+func TestHTMLSpecialcharsDecode(t *testing.T) {
+	if HTMLSpecialcharsDecode("&lt;a href=&#39;test&#39;&gt;Test&lt;/a&gt;") != "<a href='test'>Test</a>" {
+		t.Fail()
+	}
+	if HTMLSpecialcharsDecode("<p>this -&gt; &quot;</p>") != "<p>this -> \"</p>" {
+		t.Fail()
+	}
+}
