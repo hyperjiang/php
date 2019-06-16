@@ -8,6 +8,7 @@ import (
 	"hash/crc32"
 	"html"
 	"io"
+	"math"
 	"os"
 	"regexp"
 	"strconv"
@@ -340,4 +341,69 @@ func HTMLSpecialchars(str string) string {
 // HTMLSpecialcharsDecode converts special HTML entities back to characters
 func HTMLSpecialcharsDecode(str string) string {
 	return html.UnescapeString(str)
+}
+
+// StrWordCount returns an array containing all the words found inside the string
+func StrWordCount(str string) []string {
+	return strings.Fields(str)
+}
+
+// NumberFormat formats a number with grouped thousands
+//
+// decimals: sets the number of decimal points.
+// decPoint: sets the separator for the decimal point.
+// thousandsSep: sets the thousands separator.
+func NumberFormat(number float64, decimals int, decPoint, thousandsSep string) string {
+	if decimals < 0 {
+		decimals = 0
+	}
+	var isNegative bool
+	num := Round(number, decimals)
+	if num < 0 {
+		isNegative = true
+		num = math.Abs(num)
+	}
+
+	str := fmt.Sprintf("%."+strconv.Itoa(decimals)+"F", num)
+
+	var integerPart, decimalPart string
+
+	if decimals > 0 {
+		integerPart = str[:len(str)-(decimals+1)]
+		decimalPart = str[len(str)-decimals:]
+	} else {
+		integerPart = str
+	}
+
+	var s string
+
+	length := len(integerPart)
+	i := length % 3
+	if i > 0 {
+		s = integerPart[0:i]
+	}
+
+	for i < length {
+		if s != "" {
+			s += thousandsSep
+		}
+		j := i + 3
+		s += integerPart[i:j]
+		i = j
+	}
+
+	if decimals > 0 {
+		s += decPoint + decimalPart
+	}
+
+	if isNegative {
+		s = "-" + s
+	}
+
+	return s
+}
+
+// DefaultNumberFormat is default NumberFormat for english notation with thousands separator
+func DefaultNumberFormat(number float64, decimals int) string {
+	return NumberFormat(number, decimals, ".", ",")
 }

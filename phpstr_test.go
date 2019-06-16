@@ -1,6 +1,7 @@
 package php
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -476,6 +477,94 @@ func TestHTMLSpecialcharsDecode(t *testing.T) {
 		t.Fail()
 	}
 	if HTMLSpecialcharsDecode("<p>this -&gt; &quot;</p>") != "<p>this -> \"</p>" {
+		t.Fail()
+	}
+}
+
+func TestStrWordCount(t *testing.T) {
+	var expected = []string{
+		"Hello",
+		"fri3nd,",
+		"you're",
+		"looking",
+		"good",
+		"today!",
+	}
+	var res = StrWordCount("Hello fri3nd, you're looking          good today!")
+	if !reflect.DeepEqual(expected, res) {
+		t.Fail()
+	}
+}
+
+func TestNumberFormat(t *testing.T) {
+	type args struct {
+		number       float64
+		decimals     int
+		decPoint     string
+		thousandsSep string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{1234.56, 0, ".", ","},
+			"1,235",
+		},
+		{
+			"2",
+			args{123456.78, 2, ".", ","},
+			"123,456.78",
+		},
+		{
+			"3",
+			args{123456.78, 3, ".", ","},
+			"123,456.780",
+		},
+		{
+			"4",
+			args{123456789, 1, ".", ","},
+			"123,456,789.0",
+		},
+		{
+			"5",
+			args{-1234.56, 0, ".", ","},
+			"-1,235",
+		},
+		{
+			"6",
+			args{-1234.56, -1, ".", ","},
+			"-1,235",
+		},
+		{
+			"7",
+			args{1234.56, 2, ",", " "},
+			"1 234,56",
+		},
+		{
+			"8",
+			args{1234.5678, 2, ".", ""},
+			"1234.57",
+		},
+		{
+			"9",
+			args{1234.56, 1, "", ","},
+			"1,2346",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NumberFormat(tt.args.number, tt.args.decimals, tt.args.decPoint, tt.args.thousandsSep); got != tt.want {
+				t.Errorf("NumberFormat() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestDefaultNumberFormat(t *testing.T) {
+	if DefaultNumberFormat(1234.56, 0) != "1,235" {
 		t.Fail()
 	}
 }

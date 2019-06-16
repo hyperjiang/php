@@ -158,6 +158,14 @@ func TestRound(t *testing.T) {
 			},
 			-2,
 		},
+		{
+			"test18",
+			args{
+				-0.05,
+				0,
+			},
+			0,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

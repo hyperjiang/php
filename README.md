@@ -30,6 +30,7 @@
 | [lcfirst](https://php.net/manual/en/function.lcfirst.php) | [Lcfirst](https://godoc.org/github.com/hyperjiang/php#Lcfirst) |
 | [md5](https://php.net/manual/en/function.md5.php) | [Md5](https://godoc.org/github.com/hyperjiang/php#Md5) |
 | [md5_file](https://php.net/manual/en/function.md5-file.php) | [Md5file](https://godoc.org/github.com/hyperjiang/php#Md5File) |
+| [number_format](https://php.net/manual/en/function.number-format.php) | [NumberFormat](https://godoc.org/github.com/hyperjiang/php#NumberFormat) |
 | [ord](https://php.net/manual/en/function.ord.php) | [Ord](https://godoc.org/github.com/hyperjiang/php#Ord) |
 | [str_replace](https://php.net/manual/en/function.str-replace.php) | [Replace](https://godoc.org/github.com/hyperjiang/php#Replace) |
 | [similar_text](https://php.net/manual/en/function.similar-text.php) | [SimilarText](https://godoc.org/github.com/hyperjiang/php#SimilarText) |
@@ -41,7 +42,8 @@
 | [mb_strripos](https://php.net/manual/en/function.mb-strripos.php) | [Strripos](https://godoc.org/github.com/hyperjiang/php#Strripos) |
 | [mb_strrpos](https://php.net/manual/en/function.mb-strrpos.php) | [Strrpos](https://godoc.org/github.com/hyperjiang/php#Strrpos) |
 | [mb_strstr](https://php.net/manual/en/function.mb-strstr.php) | [Strstr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
-| [mb_substr](https://php.net/manual/en/function.mb-substr.php) | [Substr](https://godoc.org/github.com/hyperjiang/php#Strstr) |
+| [mb_substr](https://php.net/manual/en/function.mb-substr.php) | [Substr](https://godoc.org/github.com/hyperjiang/php#Substr) |
+| [str_word_count](https://php.net/manual/en/function.str-word-count.php) | [StrWordCount](https://godoc.org/github.com/hyperjiang/php#StrWordCount) |
 | [ltrim](https://php.net/manual/en/function.ltrim.php) | [Ltrim](https://godoc.org/github.com/hyperjiang/php#Ltrim) |
 | [rtrim](https://php.net/manual/en/function.rtrim.php) | [Rtrim](https://godoc.org/github.com/hyperjiang/php#Rtrim) |
 | [trim](https://php.net/manual/en/function.trim.php) | [Trim](https://godoc.org/github.com/hyperjiang/php#Trim) |
