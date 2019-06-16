@@ -568,3 +568,21 @@ func TestDefaultNumberFormat(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestSha1(t *testing.T) {
+	if Sha1("apple") != "d0be2dc421be4fcd0172e5afceea3970e2f3d940" {
+		t.Fail()
+	}
+}
+
+func TestSha1File(t *testing.T) {
+	h1, _ := Sha1File("./LICENSE")
+	if h1 != "404a894bedbe7256611b7bc5887eb3efb06de19f" {
+		t.Fail()
+	}
+
+	h2, _ := Sha1File("./non-existent-file")
+	if h2 != "" {
+		t.Fail()
+	}
+}

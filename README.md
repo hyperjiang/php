@@ -29,7 +29,9 @@
 | [str_ireplace](https://php.net/manual/en/function.str-ireplace.php) | [Ireplace](https://godoc.org/github.com/hyperjiang/php#Ireplace) |
 | [lcfirst](https://php.net/manual/en/function.lcfirst.php) | [Lcfirst](https://godoc.org/github.com/hyperjiang/php#Lcfirst) |
 | [md5](https://php.net/manual/en/function.md5.php) | [Md5](https://godoc.org/github.com/hyperjiang/php#Md5) |
-| [md5_file](https://php.net/manual/en/function.md5-file.php) | [Md5file](https://godoc.org/github.com/hyperjiang/php#Md5File) |
+| [md5_file](https://php.net/manual/en/function.md5-file.php) | [Md5File](https://godoc.org/github.com/hyperjiang/php#Md5File) |
+| [sha1](https://php.net/manual/en/function.sha1.php) | [Sha1](https://godoc.org/github.com/hyperjiang/php#Sha1) |
+| [sha1_file](https://php.net/manual/en/function.sha1-file.php) | [Sha1File](https://godoc.org/github.com/hyperjiang/php#Sha1File) |
 | [number_format](https://php.net/manual/en/function.number-format.php) | [NumberFormat](https://godoc.org/github.com/hyperjiang/php#NumberFormat) |
 | [ord](https://php.net/manual/en/function.ord.php) | [Ord](https://godoc.org/github.com/hyperjiang/php#Ord) |
 | [str_replace](https://php.net/manual/en/function.str-replace.php) | [Replace](https://godoc.org/github.com/hyperjiang/php#Replace) |

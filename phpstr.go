@@ -2,12 +2,14 @@ package php
 
 import (
 	"crypto/md5"
+	"crypto/sha1"
 	"encoding/hex"
 	"errors"
 	"fmt"
 	"hash/crc32"
 	"html"
 	"io"
+	"io/ioutil"
 	"math"
 	"os"
 	"regexp"
@@ -406,4 +408,22 @@ func NumberFormat(number float64, decimals int, decPoint, thousandsSep string) s
 // DefaultNumberFormat is default NumberFormat for english notation with thousands separator
 func DefaultNumberFormat(number float64, decimals int) string {
 	return NumberFormat(number, decimals, ".", ",")
+}
+
+// Sha1 calculates the sha1 hash of a string
+func Sha1(str string) string {
+	hash := sha1.New()
+	hash.Write([]byte(str))
+	return hex.EncodeToString(hash.Sum(nil))
+}
+
+// Sha1File calculates the sha1 hash of a file
+func Sha1File(path string) (string, error) {
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	hash := sha1.New()
+	hash.Write([]byte(data))
+	return hex.EncodeToString(hash.Sum(nil)), nil
 }
