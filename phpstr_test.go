@@ -586,3 +586,66 @@ func TestSha1File(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestStrRepeat(t *testing.T) {
+	if StrRepeat("-=", 10) != "-=-=-=-=-=-=-=-=-=-=" {
+		t.Fail()
+	}
+}
+
+func TestStrPad(t *testing.T) {
+	type args struct {
+		input     string
+		padLength int
+		padString string
+		padType   int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{"input", 10, "ab", StrPadBoth},
+			"abinputaba",
+		},
+		{
+			"2",
+			args{"Alien", 10, "", StrPadRight},
+			"Alien     ",
+		},
+		{
+			"3",
+			args{"Alien", 10, "-=", StrPadLeft},
+			"-=-=-Alien",
+		},
+		{
+			"4",
+			args{"Alien", 10, "_", StrPadBoth},
+			"__Alien___",
+		},
+		{
+			"5",
+			args{"Alien", 3, "*", StrPadBoth},
+			"Alien",
+		},
+		{
+			"6",
+			args{"input", 6, "p", StrPadBoth},
+			"inputp",
+		},
+		{
+			"7",
+			args{"input", 6, "p", 100000},
+			"inputp",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := StrPad(tt.args.input, tt.args.padLength, tt.args.padString, tt.args.padType); got != tt.want {
+				t.Errorf("StrPad() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

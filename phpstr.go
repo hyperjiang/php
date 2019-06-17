@@ -18,6 +18,13 @@ import (
 	"unicode"
 )
 
+// Optional argument for PadType of function StrPad
+const (
+	StrPadRight = iota
+	StrPadLeft
+	StrPadBoth
+)
+
 // Substr returns the portion of string specified by the start and length parameters.
 //
 // The behaviour of this function is mostly the same as the PHP mb_substr function,
@@ -426,4 +433,64 @@ func Sha1File(path string) (string, error) {
 	hash := sha1.New()
 	hash.Write([]byte(data))
 	return hex.EncodeToString(hash.Sum(nil)), nil
+}
+
+// StrRepeat repeats a string
+func StrRepeat(input string, multiplier int) string {
+	var s string
+	for i := 0; i < multiplier; i++ {
+		s += input
+	}
+	return s
+}
+
+// StrPad pads a string to a certain length with another string
+func StrPad(input string, padLength int, padString string, padType int) string {
+	// if the value of padLength is less than or equal to the length of the input string,
+	// no padding takes place, and input will be returned.
+	if padLength <= len(input) {
+		return input
+	}
+	// default padType is StrPadRight
+	if padType > StrPadBoth {
+		padType = StrPadRight
+	}
+	// default padString is space
+	if padString == "" {
+		padString = " "
+	}
+
+	var s string
+	l := padLength - len(input)
+	switch padType {
+	case StrPadRight:
+		s = input
+		i := 0
+		for i < l {
+			for j := 0; j < len(padString); j++ {
+				s += padString[j : j+1]
+				i++
+				if i >= l {
+					break
+				}
+			}
+		}
+	case StrPadLeft:
+		i := 0
+		for i < l {
+			for j := 0; j < len(padString); j++ {
+				s += padString[j : j+1]
+				i++
+				if i >= l {
+					break
+				}
+			}
+		}
+		s += input
+	case StrPadBoth:
+		l1 := l / 2
+		s = StrPad(StrPad(input, len(input)+l1, padString, StrPadLeft), padLength, padString, StrPadRight)
+	}
+
+	return s
 }
