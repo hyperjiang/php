@@ -47,6 +47,7 @@
 | [mb_substr](https://php.net/manual/en/function.mb-substr.php) | [Substr](https://godoc.org/github.com/hyperjiang/php#Substr) |
 | [str_pad](https://php.net/manual/en/function.str-pad.php) | [StrPad](https://godoc.org/github.com/hyperjiang/php#StrPad) |
 | [str_repeat](https://php.net/manual/en/function.str-repeat.php) | [StrRepeat](https://godoc.org/github.com/hyperjiang/php#StrRepeat) |
+| [strrev](https://php.net/manual/en/function.strrev.php) | [Strrev](https://godoc.org/github.com/hyperjiang/php#Strrev) |
 | [strtolower](https://php.net/manual/en/function.strtolower.php) | [Strtolower](https://godoc.org/github.com/hyperjiang/php#Strtolower) |
 | [strtoupper](https://php.net/manual/en/function.strtoupper.php) | [Strtoupper](https://godoc.org/github.com/hyperjiang/php#Strtoupper) |
 | [str_word_count](https://php.net/manual/en/function.str-word-count.php) | [StrWordCount](https://godoc.org/github.com/hyperjiang/php#StrWordCount) |
@@ -54,6 +55,7 @@
 | [rtrim](https://php.net/manual/en/function.rtrim.php) | [Rtrim](https://godoc.org/github.com/hyperjiang/php#Rtrim) |
 | [trim](https://php.net/manual/en/function.trim.php) | [Trim](https://godoc.org/github.com/hyperjiang/php#Trim) |
 | [ucfirst](https://php.net/manual/en/function.ucfirst.php) | [Ucfirst](https://godoc.org/github.com/hyperjiang/php#Ucfirst) |
+| [ucwords](https://php.net/manual/en/function.ucwords.php) | [Ucwords](https://godoc.org/github.com/hyperjiang/php#Ucwords) |
 
 ### PHP Math Functions
 

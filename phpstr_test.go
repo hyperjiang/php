@@ -661,3 +661,82 @@ func TestStrtolower(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestStrrev(t *testing.T) {
+	if Strrev("Hello world!") != "!dlrow olleH" {
+		t.Fail()
+	}
+}
+
+func TestUcwords(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{"hello world!"},
+			"Hello World!",
+		},
+		{
+			"2",
+			args{"HELLO WORLD!"},
+			"HELLO WORLD!",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Ucwords(tt.args.str); got != tt.want {
+				t.Errorf("Ucwords() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestUcname(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{"JEAN-LUC PICARD"},
+			"Jean-Luc Picard",
+		},
+		{
+			"2",
+			args{"MILES O'BRIEN"},
+			"Miles O'Brien",
+		},
+		{
+			"3",
+			args{"WILLIAM RIKER"},
+			"William Riker",
+		},
+		{
+			"4",
+			args{"geordi la forge"},
+			"Geordi La Forge",
+		},
+		{
+			"5",
+			args{"bEvErly CRuSHeR"},
+			"Beverly Crusher",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Ucname(tt.args.str); got != tt.want {
+				t.Errorf("Ucname() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

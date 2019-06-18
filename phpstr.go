@@ -25,6 +25,9 @@ const (
 	StrPadBoth
 )
 
+// RuneMatchFunc is function to check if a rune match some condition
+type RuneMatchFunc func(rune) bool
+
 // Substr returns the portion of string specified by the start and length parameters.
 //
 // The behaviour of this function is mostly the same as the PHP mb_substr function,
@@ -503,4 +506,53 @@ func Strtoupper(str string) string {
 // Strtolower makes a string lowercase
 func Strtolower(str string) string {
 	return strings.ToLower(str)
+}
+
+// Strrev reverses a string
+func Strrev(str string) string {
+	var s1, s2 []rune
+	s1 = []rune(str)
+	s2 = make([]rune, len(s1))
+	for i := 0; i < len(s1); i++ {
+		s2[i] = s1[len(s1)-i-1]
+	}
+	return string(s2)
+}
+
+// Ucwords uppercases the first character of each word in a string
+func Ucwords(str string, fs ...RuneMatchFunc) string {
+	if len(fs) == 0 {
+		fs = []RuneMatchFunc{unicode.IsSpace}
+	}
+
+	var s = make([]rune, len(str))
+	var isFirst = true
+	for i, r := range str {
+		var match = false
+		for _, f := range fs {
+			match = f(r)
+			if match {
+				break
+			}
+		}
+		if match {
+			isFirst = true
+			s[i] = r
+		} else if isFirst {
+			v := []rune(strings.ToUpper(string(r)))
+			s[i] = v[0]
+			isFirst = false
+		} else {
+			s[i] = r
+		}
+	}
+	return string(s)
+}
+
+// Ucname uppercases names
+func Ucname(str string) string {
+	f := func(r rune) bool {
+		return r == '-' || r == '\''
+	}
+	return Ucwords(Strtolower(str), unicode.IsSpace, f)
 }
