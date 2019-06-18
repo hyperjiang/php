@@ -198,7 +198,6 @@ func TestDate(t *testing.T) {
 }
 
 func TestToday(t *testing.T) {
-
 	if Today("Y-m-d") != time.Now().Format("2006-01-02") {
 		t.Fail()
 	}
@@ -211,9 +210,11 @@ func TestToday(t *testing.T) {
 func TestLocalDate(t *testing.T) {
 	ts := int64(1500000000)
 
-	// _offset is the seconds east of UTC.
+	zone, offset := time.Unix(0, 0).Zone()
+
+	// offset is the seconds east of UTC.
 	// Note that BST is one hour ahead of UTC
-	if LocalDate("Y-m-d H:i:s", ts) != Date("Y-m-d H:i:s", ts+int64(_offset)) && _zone != "GMT" {
+	if LocalDate("Y-m-d H:i:s", ts) != Date("Y-m-d H:i:s", ts+int64(offset)) && zone != "GMT" {
 		t.Fail()
 	}
 }
@@ -239,5 +240,46 @@ func TestFirstDateOfLastMonth(t *testing.T) {
 	fd2 := FirstDateOfLastMonth(d2)
 	if fd2.Day() != 1 || fd2.Month() != 12 || fd2.Year() != 2017 {
 		t.Fail()
+	}
+}
+
+func TestCheckdate(t *testing.T) {
+	type args struct {
+		month int
+		day   int
+		year  int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			"1",
+			args{12, 31, 2000},
+			true,
+		},
+		{
+			"2",
+			args{12, 31, 1},
+			true,
+		},
+		{
+			"3",
+			args{12, 31, 0},
+			false,
+		},
+		{
+			"4",
+			args{2, 29, 2001},
+			false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Checkdate(tt.args.month, tt.args.day, tt.args.year); got != tt.want {
+				t.Errorf("Checkdate() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }

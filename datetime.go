@@ -8,17 +8,6 @@ import (
 	"time"
 )
 
-var (
-	_zero   time.Time
-	_zone   string
-	_offset int
-)
-
-func init() {
-	_zero = time.Unix(0, 0)
-	_zone, _offset = _zero.Zone()
-}
-
 // Time returns current Unix timestamp
 func Time() int64 {
 	return time.Now().Unix()
@@ -243,4 +232,13 @@ func Today(f string) string {
 // Note that the timezone is using local timezone
 func LocalDate(f string, timestamp int64) string {
 	return format(f, time.Unix(timestamp, 0))
+}
+
+// Checkdate validates a Gregorian date
+func Checkdate(month, day, year int) bool {
+	if month < 1 || month > 12 || day < 1 || day > 31 || year <= 0 {
+		return false
+	}
+	_, err := time.Parse("2006-1-2", fmt.Sprintf("%04d-%d-%d", year, month, day))
+	return err == nil
 }

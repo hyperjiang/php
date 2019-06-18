@@ -9,6 +9,7 @@
 
 | PHP function                             | Golang function                          |
 | ---------------------------------------- | ---------------------------------------- |
+| [checkdate](https://php.net/manual/en/function.checkdate.php) | [Checkdate](https://godoc.org/github.com/hyperjiang/php#Checkdate) |
 | [date](https://php.net/manual/en/function.date.php) | [Date](https://godoc.org/github.com/hyperjiang/php#Date) |
 | [strtotime](https://php.net/manual/en/function.strtotime.php) | [Strtotime](https://godoc.org/github.com/hyperjiang/php#Strtotime) |
 | [time](https://php.net/manual/en/function.time.php) | [Time](https://godoc.org/github.com/hyperjiang/php#Time) |
