@@ -18,7 +18,7 @@ import (
 	"unicode"
 )
 
-// Optional argument for PadType of function StrPad
+// PadTypes for StrPad
 const (
 	StrPadRight = iota
 	StrPadLeft
@@ -493,4 +493,14 @@ func StrPad(input string, padLength int, padString string, padType int) string {
 	}
 
 	return s
+}
+
+// Strtoupper makes a string uppercase
+func Strtoupper(str string) string {
+	return strings.ToUpper(str)
+}
+
+// Strtolower makes a string lowercase
+func Strtolower(str string) string {
+	return strings.ToLower(str)
 }

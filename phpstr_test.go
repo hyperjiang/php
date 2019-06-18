@@ -649,3 +649,15 @@ func TestStrPad(t *testing.T) {
 		})
 	}
 }
+
+func TestStrtoupper(t *testing.T) {
+	if Strtoupper("Mary Had A Little Lamb and She LOVED It So") != "MARY HAD A LITTLE LAMB AND SHE LOVED IT SO" {
+		t.Fail()
+	}
+}
+
+func TestStrtolower(t *testing.T) {
+	if Strtolower("Mary Had A Little Lamb and She LOVED It So") != "mary had a little lamb and she loved it so" {
+		t.Fail()
+	}
+}
