@@ -283,3 +283,16 @@ func TestCheckdate(t *testing.T) {
 		})
 	}
 }
+
+func TestMicrotime(t *testing.T) {
+	start := Microtime()
+
+	time.Sleep(100 * time.Millisecond)
+
+	end := Microtime()
+
+	duration := end - start
+	if duration < 0.1 || duration > 0.2 {
+		t.Fail()
+	}
+}

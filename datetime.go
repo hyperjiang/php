@@ -13,6 +13,11 @@ func Time() int64 {
 	return time.Now().Unix()
 }
 
+// Microtime returns current Unix timestamp with microseconds
+func Microtime() float64 {
+	return Round(float64(time.Now().UnixNano())/1000000000, 4)
+}
+
 // Strtotime parses any English textual datetime description into a Unix timestamp,
 // default timezone is UTC if you do not specify one
 //
