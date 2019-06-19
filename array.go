@@ -185,3 +185,15 @@ func ArrayColumn(input []map[string]interface{}, columnKey string) []interface{}
 	}
 	return columns
 }
+
+// ArrayCombine creates an array by using one array for keys and another for its values
+func ArrayCombine(keys, values []interface{}) map[interface{}]interface{} {
+	if len(keys) != len(values) {
+		return nil
+	}
+	m := make(map[interface{}]interface{}, len(keys))
+	for i, v := range keys {
+		m[v] = values[i]
+	}
+	return m
+}

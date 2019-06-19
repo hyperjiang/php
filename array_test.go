@@ -234,3 +234,16 @@ func TestArrayColumn(t *testing.T) {
 	names := ArrayColumn(input, "first_name")
 	mustEqual(t, []interface{}{"John", "Sally", "Jane"}, names)
 }
+
+func TestArrayCombine(t *testing.T) {
+	if ArrayCombine([]interface{}{1, 2}, []interface{}{3}) != nil {
+		t.Fail()
+	}
+	keys := []interface{}{"green", "red", "yellow"}
+	values := []interface{}{"avocado", "apple", "banana"}
+	result := make(map[interface{}]interface{}, 3)
+	result["green"] = "avocado"
+	result["red"] = "apple"
+	result["yellow"] = "banana"
+	mustEqual(t, result, ArrayCombine(keys, values))
+}
