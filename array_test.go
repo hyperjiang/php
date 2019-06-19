@@ -5,20 +5,23 @@ import (
 	"testing"
 )
 
+// expect to be equal
+func mustEqual(t *testing.T, expected, actual interface{}) {
+	if !reflect.DeepEqual(expected, actual) {
+		t.Errorf("Expected %v (type %v) - Got %v (type %v)", expected, reflect.TypeOf(expected), actual, reflect.TypeOf(actual))
+	}
+}
+
 func TestArrayUniqueInvalid(t *testing.T) {
 	arr := make(map[int]int)
 	arr[1] = 1
 	arr[2] = 2
-	if !reflect.DeepEqual(arr, ArrayUnique(arr)) {
-		t.Fail()
-	}
+	mustEqual(t, arr, ArrayUnique(arr))
 }
 
 func TestArrayUniqueEmpty(t *testing.T) {
 	arr := []int{}
-	if !reflect.DeepEqual(arr, ArrayUnique(arr)) {
-		t.Fail()
-	}
+	mustEqual(t, arr, ArrayUnique(arr))
 }
 
 func TestArrayUniqueBool(t *testing.T) {
@@ -187,4 +190,47 @@ func TestInArray(t *testing.T) {
 	if !InArray(searchElement, arrInterface) {
 		t.Fail()
 	}
+
+	// Map
+	m := make(map[string]string, 3)
+	m["a"] = "Tony"
+	m["b"] = "Jimmy"
+	m["c"] = "Jelly"
+	if !InArray("Tony", m) {
+		t.Fail()
+	}
+}
+
+func TestArrayChunk(t *testing.T) {
+	arr := []interface{}{"a", "b", "c", "d", "e"}
+	res := ArrayChunk(arr, 2)
+	mustEqual(t, [][]interface{}{{"a", "b"}, {"c", "d"}, {"e"}}, res)
+
+	if !reflect.ValueOf(ArrayChunk(arr, 0)).IsNil() {
+		t.Fail()
+	}
+}
+
+func TestArrayColumn(t *testing.T) {
+	var input []map[string]interface{}
+
+	row1 := make(map[string]interface{})
+	row1["id"] = 1
+	row1["first_name"] = "John"
+	row1["last_name"] = "Doe"
+
+	row2 := make(map[string]interface{})
+	row2["id"] = 2
+	row2["first_name"] = "Sally"
+	row2["last_name"] = "Smith"
+
+	row3 := make(map[string]interface{})
+	row3["id"] = 3
+	row3["first_name"] = "Jane"
+	row3["last_name"] = "Jones"
+
+	input = append(input, row1, row2, row3)
+
+	names := ArrayColumn(input, "first_name")
+	mustEqual(t, []interface{}{"John", "Sally", "Jane"}, names)
 }

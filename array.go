@@ -1,6 +1,7 @@
 package php
 
 import (
+	"math"
 	"reflect"
 )
 
@@ -132,19 +133,55 @@ func ArrayUnique(array interface{}) interface{} {
 	}
 }
 
-// InArray checks if a value exists in an array
+// InArray checks if a value exists in an array or map
 //
-// needle is the element to search, haystack is the slice of value to be search
+// needle is the element to search, haystack is the slice or map to be search
 func InArray(needle interface{}, haystack interface{}) bool {
-	if reflect.TypeOf(haystack).Kind() == reflect.Slice {
-		s := reflect.ValueOf(haystack)
-
-		for i := 0; i < s.Len(); i++ {
-			if reflect.DeepEqual(needle, s.Index(i).Interface()) {
+	val := reflect.ValueOf(haystack)
+	switch val.Kind() {
+	case reflect.Slice, reflect.Array:
+		for i := 0; i < val.Len(); i++ {
+			if reflect.DeepEqual(needle, val.Index(i).Interface()) {
+				return true
+			}
+		}
+	case reflect.Map:
+		for _, k := range val.MapKeys() {
+			if reflect.DeepEqual(needle, val.MapIndex(k).Interface()) {
 				return true
 			}
 		}
 	}
 
 	return false
+}
+
+// ArrayChunk splits an array into chunks
+func ArrayChunk(array []interface{}, size int) [][]interface{} {
+	if size < 1 {
+		return nil
+	}
+	length := len(array)
+	chunkNum := int(math.Ceil(float64(length) / float64(size)))
+	var chunks [][]interface{}
+	for i, end := 0, 0; chunkNum > 0; chunkNum-- {
+		end = (i + 1) * size
+		if end > length {
+			end = length
+		}
+		chunks = append(chunks, array[i*size:end])
+		i++
+	}
+	return chunks
+}
+
+// ArrayColumn returns the values from a single column in the input array
+func ArrayColumn(input []map[string]interface{}, columnKey string) []interface{} {
+	columns := make([]interface{}, 0, len(input))
+	for _, val := range input {
+		if v, ok := val[columnKey]; ok {
+			columns = append(columns, v)
+		}
+	}
+	return columns
 }
