@@ -197,3 +197,25 @@ func ArrayCombine(keys, values []interface{}) map[interface{}]interface{} {
 	}
 	return m
 }
+
+// ArrayDiff computes the difference of arrays
+func ArrayDiff(array1, array2 []interface{}) []interface{} {
+	var res []interface{}
+	for _, v := range array1 {
+		if !InArray(v, array2) {
+			res = append(res, v)
+		}
+	}
+	return res
+}
+
+// ArrayIntersect computes the intersection of arrays
+func ArrayIntersect(array1, array2 []interface{}) []interface{} {
+	var res []interface{}
+	for _, v := range array1 {
+		if InArray(v, array2) {
+			res = append(res, v)
+		}
+	}
+	return res
+}

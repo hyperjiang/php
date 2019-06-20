@@ -247,3 +247,17 @@ func TestArrayCombine(t *testing.T) {
 	result["yellow"] = "banana"
 	mustEqual(t, result, ArrayCombine(keys, values))
 }
+
+func TestArrayDiff(t *testing.T) {
+	array1 := []interface{}{"green", "red", "blue"}
+	array2 := []interface{}{"green", "yellow", "red"}
+	result := []interface{}{"blue"}
+	mustEqual(t, result, ArrayDiff(array1, array2))
+}
+
+func TestArrayIntersect(t *testing.T) {
+	array1 := []interface{}{"green", "red", "blue"}
+	array2 := []interface{}{"green", "yellow", "red"}
+	result := []interface{}{"green", "red"}
+	mustEqual(t, result, ArrayIntersect(array1, array2))
+}

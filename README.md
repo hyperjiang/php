@@ -72,6 +72,8 @@
 | [array_chunk](https://php.net/manual/en/function.array-chunk.php) | [ArrayChunk](https://godoc.org/github.com/hyperjiang/php#ArrayChunk) |
 | [array_column](https://php.net/manual/en/function.array-column.php) | [ArrayColumn](https://godoc.org/github.com/hyperjiang/php#ArrayColumn) |
 | [array_combine](https://php.net/manual/en/function.array-combine.php) | [ArrayCombine](https://godoc.org/github.com/hyperjiang/php#ArrayCombine) |
+| [array_diff](https://php.net/manual/en/function.array-diff.php) | [ArrayDiff](https://godoc.org/github.com/hyperjiang/php#ArrayDiff) |
+| [array_intersect](https://php.net/manual/en/function.array-intersect.php) | [ArrayIntersect](https://godoc.org/github.com/hyperjiang/php#ArrayIntersect) |
 | [array_unique](https://php.net/manual/en/function.array-unique.php) | [ArrayUnique](https://godoc.org/github.com/hyperjiang/php#ArrayUnique) |
 | [in_array](https://php.net/manual/en/function.in-array.php) | [InArray](https://godoc.org/github.com/hyperjiang/php#InArray) |
 
