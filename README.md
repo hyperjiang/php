@@ -76,7 +76,9 @@
 | [array_flip](https://php.net/manual/en/function.array-flip.php) | [ArrayFlip](https://godoc.org/github.com/hyperjiang/php#ArrayFlip) |
 | [array_intersect](https://php.net/manual/en/function.array-intersect.php) | [ArrayIntersect](https://godoc.org/github.com/hyperjiang/php#ArrayIntersect) |
 | [array_keys](https://php.net/manual/en/function.array-keys.php) | [ArrayKeys](https://godoc.org/github.com/hyperjiang/php#ArrayKeys) |
+| [array_key_exists](https://www.php.net/manual/en/function.array-key-exists.php) | [ArrayKeyExists](https://godoc.org/github.com/hyperjiang/php#ArrayKeyExists) |
 | [array_unique](https://php.net/manual/en/function.array-unique.php) | [ArrayUnique](https://godoc.org/github.com/hyperjiang/php#ArrayUnique) |
+| [count](https://php.net/manual/en/function.count.php) | [Count](https://godoc.org/github.com/hyperjiang/php#Count) |
 | [in_array](https://php.net/manual/en/function.in-array.php) | [InArray](https://godoc.org/github.com/hyperjiang/php#InArray) |
 
 ### PHP Ctype Functions

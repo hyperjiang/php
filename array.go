@@ -277,3 +277,22 @@ func ArrayKeys(input interface{}) interface{} {
 	}
 	return nil
 }
+
+// ArrayKeyExists is alias of KeyExists()
+func ArrayKeyExists(k interface{}, m map[interface{}]interface{}) bool {
+	return KeyExists(k, m)
+}
+
+// KeyExists checks if the given key or index exists in the array
+func KeyExists(k interface{}, m map[interface{}]interface{}) bool {
+	_, ok := m[k]
+	return ok
+}
+
+// Count counts all elements in an array or map
+func Count(v interface{}) int {
+	if v == nil {
+		return 0
+	}
+	return reflect.ValueOf(v).Len()
+}

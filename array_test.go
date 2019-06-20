@@ -320,3 +320,24 @@ func TestArrayKeys(t *testing.T) {
 
 	mustEqual(t, nil, ArrayKeys("this is a string"))
 }
+
+func TestArrayKeyExists(t *testing.T) {
+	m := make(map[interface{}]interface{})
+	m["a"] = 1
+	m["b"] = 2
+	if !ArrayKeyExists("a", m) {
+		t.Fail()
+	}
+	if ArrayKeyExists("c", m) {
+		t.Fail()
+	}
+}
+
+func TestCount(t *testing.T) {
+	if Count(nil) != 0 {
+		t.Fail()
+	}
+	if Count([]int{1, 2, 3}) != 3 {
+		t.Fail()
+	}
+}
