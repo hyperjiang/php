@@ -3,14 +3,18 @@ package php
 import (
 	"math"
 	"reflect"
+	"sort"
 )
 
 // ArrayUnique removes duplicate values from an array
 //
 // you can use type assertion to convert the result to the type of input
 func ArrayUnique(array interface{}) interface{} {
-
 	type empty struct{}
+
+	if array == nil {
+		return nil
+	}
 
 	// if it's not a slice then return the original input
 	if reflect.TypeOf(array).Kind() != reflect.Slice {
@@ -218,4 +222,58 @@ func ArrayIntersect(array1, array2 []interface{}) []interface{} {
 		}
 	}
 	return res
+}
+
+// ArrayFlip exchanges all keys with their associated values in an array
+func ArrayFlip(input interface{}) interface{} {
+	if input == nil {
+		return nil
+	}
+	val := reflect.ValueOf(input)
+	if val.Len() == 0 {
+		return nil
+	}
+	res := make(map[interface{}]interface{}, val.Len())
+	switch val.Kind() {
+	case reflect.Slice, reflect.Array:
+		for i := 0; i < val.Len(); i++ {
+			res[val.Index(i).Interface()] = i
+		}
+		return res
+	case reflect.Map:
+		for _, k := range val.MapKeys() {
+			res[val.MapIndex(k).Interface()] = k.Interface()
+		}
+		return res
+	}
+	return nil
+}
+
+// ArrayKeys returns all the keys or a subset of the keys of an array
+func ArrayKeys(input interface{}) interface{} {
+	if input == nil {
+		return nil
+	}
+	val := reflect.ValueOf(input)
+	if val.Len() == 0 {
+		return nil
+	}
+	switch val.Kind() {
+	case reflect.Slice, reflect.Array:
+		var res []int
+		for i := 0; i < val.Len(); i++ {
+			res = append(res, i)
+		}
+		return res
+	case reflect.Map:
+		var res []string
+		for _, k := range val.MapKeys() {
+			res = append(res, k.String())
+		}
+		sort.SliceStable(res, func(i, j int) bool {
+			return res[i] < res[j]
+		})
+		return res
+	}
+	return nil
 }

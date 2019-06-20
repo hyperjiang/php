@@ -13,6 +13,8 @@ func mustEqual(t *testing.T, expected, actual interface{}) {
 }
 
 func TestArrayUniqueInvalid(t *testing.T) {
+	mustEqual(t, nil, ArrayUnique(nil))
+
 	arr := make(map[int]int)
 	arr[1] = 1
 	arr[2] = 2
@@ -260,4 +262,61 @@ func TestArrayIntersect(t *testing.T) {
 	array2 := []interface{}{"green", "yellow", "red"}
 	result := []interface{}{"green", "red"}
 	mustEqual(t, result, ArrayIntersect(array1, array2))
+}
+
+func TestArrayFlip(t *testing.T) {
+	mustEqual(t, nil, ArrayFlip(nil))
+
+	a := []int{}
+	mustEqual(t, nil, ArrayFlip(a))
+
+	b := []int{3, 4, 5}
+	m1 := make(map[interface{}]interface{}, 3)
+	m1[3] = 0
+	m1[4] = 1
+	m1[5] = 2
+	mustEqual(t, m1, ArrayFlip(b))
+
+	c := []string{"oranges", "apples", "pears"}
+	m2 := make(map[interface{}]interface{}, 3)
+	m2["oranges"] = 0
+	m2["apples"] = 1
+	m2["pears"] = 2
+	mustEqual(t, m2, ArrayFlip(c))
+
+	d := make(map[string]int)
+	d["a"] = 1
+	d["b"] = 1
+	d["c"] = 2
+	mustEqual(t, 2, len(ArrayFlip(d).(map[interface{}]interface{})))
+
+	e := make(map[int]int)
+	e[100] = 1
+	e[200] = 2
+	m4 := make(map[interface{}]interface{}, 2)
+	m4[1] = 100
+	m4[2] = 200
+	mustEqual(t, m4, ArrayFlip(e))
+
+	f := "this is a string"
+	mustEqual(t, nil, ArrayFlip(f))
+}
+
+func TestArrayKeys(t *testing.T) {
+	mustEqual(t, nil, ArrayKeys(nil))
+
+	a := []int{}
+	mustEqual(t, nil, ArrayKeys(a))
+
+	m := make(map[string]int, 3)
+	m["a"] = 1
+	m["b"] = 1
+	m["c"] = 2
+	result := []string{"a", "b", "c"}
+	mustEqual(t, result, ArrayKeys(m))
+
+	b := []string{"a", "b", "c"}
+	mustEqual(t, []int{0, 1, 2}, ArrayKeys(b))
+
+	mustEqual(t, nil, ArrayKeys("this is a string"))
 }
