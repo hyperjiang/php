@@ -73,6 +73,7 @@
 | [array_column](https://php.net/manual/en/function.array-column.php) | [ArrayColumn](https://godoc.org/github.com/hyperjiang/php#ArrayColumn) |
 | [array_combine](https://php.net/manual/en/function.array-combine.php) | [ArrayCombine](https://godoc.org/github.com/hyperjiang/php#ArrayCombine) |
 | [array_diff](https://php.net/manual/en/function.array-diff.php) | [ArrayDiff](https://godoc.org/github.com/hyperjiang/php#ArrayDiff) |
+| [array_filter](https://php.net/manual/en/function.array-filter.php) | [ArrayFilter](https://godoc.org/github.com/hyperjiang/php#ArrayFilter) |
 | [array_flip](https://php.net/manual/en/function.array-flip.php) | [ArrayFlip](https://godoc.org/github.com/hyperjiang/php#ArrayFlip) |
 | [array_intersect](https://php.net/manual/en/function.array-intersect.php) | [ArrayIntersect](https://godoc.org/github.com/hyperjiang/php#ArrayIntersect) |
 | [array_keys](https://php.net/manual/en/function.array-keys.php) | [ArrayKeys](https://godoc.org/github.com/hyperjiang/php#ArrayKeys) |
@@ -80,6 +81,7 @@
 | [array_unique](https://php.net/manual/en/function.array-unique.php) | [ArrayUnique](https://godoc.org/github.com/hyperjiang/php#ArrayUnique) |
 | [count](https://php.net/manual/en/function.count.php) | [Count](https://godoc.org/github.com/hyperjiang/php#Count) |
 | [in_array](https://php.net/manual/en/function.in-array.php) | [InArray](https://godoc.org/github.com/hyperjiang/php#InArray) |
+| [key_exists](https://www.php.net/manual/en/function.key-exists.php) | [KeyExists](https://godoc.org/github.com/hyperjiang/php#KeyExists) |
 
 ### PHP Ctype Functions
 

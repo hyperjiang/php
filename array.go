@@ -296,3 +296,41 @@ func Count(v interface{}) int {
 	}
 	return reflect.ValueOf(v).Len()
 }
+
+// ArrayFilter filters elements of an array using a callback function
+func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{} {
+	if input == nil {
+		return nil
+	}
+	val := reflect.ValueOf(input)
+	if val.Len() == 0 {
+		return nil
+	}
+	if callback == nil {
+		callback = func(v interface{}) bool {
+			return v != nil
+		}
+	}
+	switch val.Kind() {
+	case reflect.Slice, reflect.Array:
+		var res []interface{}
+		for i := 0; i < val.Len(); i++ {
+			v := val.Index(i).Interface()
+			if callback(v) {
+				res = append(res, v)
+			}
+		}
+		return res
+	case reflect.Map:
+		res := make(map[interface{}]interface{})
+		for _, k := range val.MapKeys() {
+			v := val.MapIndex(k).Interface()
+			if callback(v) {
+				res[k.Interface()] = v
+			}
+		}
+		return res
+	}
+
+	return input
+}

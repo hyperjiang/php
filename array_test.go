@@ -341,3 +341,28 @@ func TestCount(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestArrayFilter(t *testing.T) {
+	mustEqual(t, nil, ArrayFilter(nil, nil))
+
+	a := []int{}
+	mustEqual(t, nil, ArrayFilter(a, nil))
+
+	m := make(map[string]int, 3)
+	m["a"] = 1
+	m["b"] = 1
+	m["c"] = 2
+	res := make(map[interface{}]interface{})
+	res["a"] = 1
+	res["b"] = 1
+	mustEqual(t, res, ArrayFilter(m, func(v interface{}) bool { return v.(int) == 1 }))
+
+	b := []string{"a", "b", "c"}
+	mustEqual(t, []interface{}{"b"}, ArrayFilter(b, func(v interface{}) bool { return v.(string) == "b" }))
+
+	c := []string{"c"}
+	mustEqual(t, []interface{}{"c"}, ArrayFilter(c, nil))
+
+	s := "this is a string"
+	mustEqual(t, s, ArrayFilter(s, nil))
+}
