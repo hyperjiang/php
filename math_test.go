@@ -175,3 +175,20 @@ func TestRound(t *testing.T) {
 		})
 	}
 }
+
+func TestAbs(t *testing.T) {
+	if Abs(-1) != 1 {
+		t.Fail()
+	}
+}
+
+func TestMtRand(t *testing.T) {
+	v := MtRand(10, 0)
+	if v != 0 {
+		t.Fail()
+	}
+	v = MtRand(-10, 10)
+	if v < -10 || v > 10 {
+		t.Fail()
+	}
+}

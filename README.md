@@ -63,6 +63,8 @@
 
 | PHP function                                         | Golang function                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------- |
+| [abs](https://php.net/manual/en/function.abs.php) | [Abs](https://godoc.org/github.com/hyperjiang/php#Abs) |
+| [mt_rand](https://php.net/manual/en/function.mt-rand.php) | [MtRand](https://godoc.org/github.com/hyperjiang/php#MtRand) |
 | [round](https://php.net/manual/en/function.round.php) | [Round](https://godoc.org/github.com/hyperjiang/php#Round) |
 
 ### PHP Array Functions
