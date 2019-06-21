@@ -4,8 +4,11 @@
 [![Build Status](https://travis-ci.org/hyperjiang/php.svg?branch=master)](https://travis-ci.org/hyperjiang/php)
 [![](https://goreportcard.com/badge/github.com/hyperjiang/php)](https://goreportcard.com/report/github.com/hyperjiang/php)
 [![codecov](https://codecov.io/gh/hyperjiang/php/branch/master/graph/badge.svg)](https://codecov.io/gh/hyperjiang/php)
+[![Release](https://img.shields.io/github/release/hyperjiang/php.svg)](https://github.com/hyperjiang/php/releases)
 
-### PHP Date/Time Functions
+This package implements some PHP functions by Golang. Please note that it's impossible to have 100% the same behaviour between PHP and Golang functions because their mechanisms are quite different.
+
+### Date/Time Functions
 
 | PHP function                             | Golang function                          |
 | ---------------------------------------- | ---------------------------------------- |
@@ -15,7 +18,7 @@
 | [time](https://php.net/manual/en/function.time.php) | [Time](https://godoc.org/github.com/hyperjiang/php#Time) |
 | [microtime](https://php.net/manual/en/function.microtime.php) | [Microtime](https://godoc.org/github.com/hyperjiang/php#Microtime) |
 
-### PHP String Functions
+### String Functions
 
 | PHP function                             | Golang function                          |
 | ---------------------------------------- | ---------------------------------------- |
@@ -59,7 +62,7 @@
 | [ucfirst](https://php.net/manual/en/function.ucfirst.php) | [Ucfirst](https://godoc.org/github.com/hyperjiang/php#Ucfirst) |
 | [ucwords](https://php.net/manual/en/function.ucwords.php) | [Ucwords](https://godoc.org/github.com/hyperjiang/php#Ucwords) |
 
-### PHP Math Functions
+### Math Functions
 
 | PHP function                                         | Golang function                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------- |
@@ -78,7 +81,7 @@
 | [rand](https://php.net/manual/en/function.rand.php) | [Rand](https://godoc.org/github.com/hyperjiang/php#Rand) |
 | [round](https://php.net/manual/en/function.round.php) | [Round](https://godoc.org/github.com/hyperjiang/php#Round) |
 
-### PHP Array Functions
+### Array Functions
 
 | PHP function                                                 | Golang function                                              |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -106,7 +109,7 @@
 | [sort](https://php.net/manual/en/function.sort.php) | [Sort](https://godoc.org/github.com/hyperjiang/php#Sort) |
 | [rsort](https://php.net/manual/en/function.rsort.php) | [Rsort](https://godoc.org/github.com/hyperjiang/php#Rsort) |
 
-### PHP Ctype Functions
+### Ctype Functions
 
 | PHP function                                         | Golang function                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------- |
@@ -122,7 +125,7 @@
 | [ctype_upper](https://php.net/manual/en/function.ctype-upper.php) | [CtypeUpper](https://godoc.org/github.com/hyperjiang/php#CtypeUpper) |
 | [ctype_xdigit](https://php.net/manual/en/function.ctype-xdigit.php) | [CtypeXdigit](https://godoc.org/github.com/hyperjiang/php#CtypeXdigit) |
 
-### PHP Filesystem Functions
+### Filesystem Functions
 
 | PHP function                                         | Golang function                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------- |
@@ -147,12 +150,19 @@
 | [copy](https://www.php.net/manual/en/function.copy.php) | [Copy](https://godoc.org/github.com/hyperjiang/php#Copy) |
 | [rename](https://www.php.net/manual/en/function.rename.php) | [Rename](https://godoc.org/github.com/hyperjiang/php#Rename) |
 
-### PHP CSPRNG Functions
+### CSPRNG Functions
 
 | PHP function                                         | Golang function                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------- |
 | [random_bytes](https://php.net/manual/en/function.random-bytes.php) | [RandomBytes](https://godoc.org/github.com/hyperjiang/php#RandomBytes) |
 
+### Misc Functions
+
+| PHP function                                         | Golang function                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| [getenv](https://php.net/manual/en/function.getenv.php) | [Getenv](https://godoc.org/github.com/hyperjiang/php#Getenv) |
+| [putenv](https://php.net/manual/en/function.putenv.php) | [Putenv](https://godoc.org/github.com/hyperjiang/php#Putenv) |
+| [memory_get_usage](https://php.net/manual/en/function.memory-get-usage.php) | [MemoryGetUsage](https://godoc.org/github.com/hyperjiang/php#MemoryGetUsage) |
 
 ## Install
 
