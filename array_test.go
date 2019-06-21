@@ -497,3 +497,121 @@ func TestArraySum(t *testing.T) {
 		})
 	}
 }
+
+func TestSort(t *testing.T) {
+	type args struct {
+		array interface{}
+	}
+	tests := []struct {
+		name string
+		args args
+		want interface{}
+	}{
+		{
+			"1",
+			args{nil},
+			nil,
+		},
+		{
+			"2",
+			args{[]int{}},
+			[]int{},
+		},
+		{
+			"3",
+			args{[]string{"c", "a", "b"}},
+			[]string{"a", "b", "c"},
+		},
+		{
+			"4",
+			args{[]int{5, 3, 4, 2, 1}},
+			[]int64{1, 2, 3, 4, 5},
+		},
+		{
+			"5",
+			args{[]uint{1, 5, 3, 2, 4}},
+			[]uint64{1, 2, 3, 4, 5},
+		},
+		{
+			"6",
+			args{[]float64{3, 2, 1, 4, 5}},
+			[]float64{1, 2, 3, 4, 5},
+		},
+		{
+			"7",
+			args{[][]int{[]int{1}, []int{2}}},
+			[][]int{[]int{1}, []int{2}},
+		},
+		{
+			"8",
+			args{struct{}{}},
+			nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Sort(tt.args.array); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Sort() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestRsort(t *testing.T) {
+	type args struct {
+		array interface{}
+	}
+	tests := []struct {
+		name string
+		args args
+		want interface{}
+	}{
+		{
+			"1",
+			args{nil},
+			nil,
+		},
+		{
+			"2",
+			args{[]int{}},
+			[]int{},
+		},
+		{
+			"3",
+			args{[]string{"c", "a", "b"}},
+			[]string{"c", "b", "a"},
+		},
+		{
+			"4",
+			args{[]int{1, 2, 3, 4, 5}},
+			[]int64{5, 4, 3, 2, 1},
+		},
+		{
+			"5",
+			args{[]uint{1, 5, 3, 2, 4}},
+			[]uint64{5, 4, 3, 2, 1},
+		},
+		{
+			"6",
+			args{[]float64{3, 2, 1, 4, 5}},
+			[]float64{5, 4, 3, 2, 1},
+		},
+		{
+			"7",
+			args{[][]int{[]int{1}, []int{2}}},
+			[][]int{[]int{1}, []int{2}},
+		},
+		{
+			"8",
+			args{struct{}{}},
+			nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Rsort(tt.args.array); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Rsort() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

@@ -92,6 +92,8 @@
 | [count](https://php.net/manual/en/function.count.php) | [Count](https://godoc.org/github.com/hyperjiang/php#Count) |
 | [in_array](https://php.net/manual/en/function.in-array.php) | [InArray](https://godoc.org/github.com/hyperjiang/php#InArray) |
 | [key_exists](https://www.php.net/manual/en/function.key-exists.php) | [KeyExists](https://godoc.org/github.com/hyperjiang/php#KeyExists) |
+| [sort](https://php.net/manual/en/function.sort.php) | [Sort](https://godoc.org/github.com/hyperjiang/php#Sort) |
+| [rsort](https://php.net/manual/en/function.rsort.php) | [Rsort](https://godoc.org/github.com/hyperjiang/php#Rsort) |
 
 ### PHP Ctype Functions
 

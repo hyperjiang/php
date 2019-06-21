@@ -17,7 +17,8 @@ func ArrayUnique(array interface{}) interface{} {
 	}
 
 	// if it's not a slice then return the original input
-	if reflect.TypeOf(array).Kind() != reflect.Slice {
+	kind := reflect.TypeOf(array).Kind()
+	if kind != reflect.Slice && kind != reflect.Array {
 		return array
 	}
 
@@ -421,7 +422,8 @@ func ArraySum(array interface{}) interface{} {
 	if array == nil {
 		return nil
 	}
-	if reflect.TypeOf(array).Kind() != reflect.Slice {
+	kind := reflect.TypeOf(array).Kind()
+	if kind != reflect.Slice && kind != reflect.Array {
 		return nil
 	}
 
@@ -458,4 +460,118 @@ func ArraySum(array interface{}) interface{} {
 	}
 
 	return nil
+}
+
+// Sort sorts an array (lowest to highest)
+func Sort(array interface{}) interface{} {
+	if array == nil {
+		return nil
+	}
+	kind := reflect.TypeOf(array).Kind()
+	if kind != reflect.Slice && kind != reflect.Array {
+		return nil
+	}
+
+	s := reflect.ValueOf(array)
+	if s.Len() == 0 {
+		return array
+	}
+
+	switch s.Index(0).Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		var res = make([]int64, s.Len())
+		for i := 0; i < s.Len(); i++ {
+			res[i] = s.Index(i).Int()
+		}
+		sort.Slice(res, func(i int, j int) bool {
+			return res[i] < res[j]
+		})
+		return res
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		var res = make([]uint64, s.Len())
+		for i := 0; i < s.Len(); i++ {
+			res[i] = s.Index(i).Uint()
+		}
+		sort.Slice(res, func(i int, j int) bool {
+			return res[i] < res[j]
+		})
+		return res
+	case reflect.Float32, reflect.Float64:
+		var res = make([]float64, s.Len())
+		for i := 0; i < s.Len(); i++ {
+			res[i] = s.Index(i).Float()
+		}
+		sort.Slice(res, func(i int, j int) bool {
+			return res[i] < res[j]
+		})
+		return res
+	case reflect.String:
+		var res = make([]string, s.Len())
+		for i := 0; i < s.Len(); i++ {
+			res[i] = s.Index(i).String()
+		}
+		sort.Slice(res, func(i int, j int) bool {
+			return res[i] < res[j]
+		})
+		return res
+	}
+
+	return array
+}
+
+// Rsort sorts an array in reverse order (highest to lowest)
+func Rsort(array interface{}) interface{} {
+	if array == nil {
+		return nil
+	}
+	kind := reflect.TypeOf(array).Kind()
+	if kind != reflect.Slice && kind != reflect.Array {
+		return nil
+	}
+
+	s := reflect.ValueOf(array)
+	if s.Len() == 0 {
+		return array
+	}
+
+	switch s.Index(0).Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		var res = make([]int64, s.Len())
+		for i := 0; i < s.Len(); i++ {
+			res[i] = s.Index(i).Int()
+		}
+		sort.Slice(res, func(i int, j int) bool {
+			return res[i] > res[j]
+		})
+		return res
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		var res = make([]uint64, s.Len())
+		for i := 0; i < s.Len(); i++ {
+			res[i] = s.Index(i).Uint()
+		}
+		sort.Slice(res, func(i int, j int) bool {
+			return res[i] > res[j]
+		})
+		return res
+	case reflect.Float32, reflect.Float64:
+		var res = make([]float64, s.Len())
+		for i := 0; i < s.Len(); i++ {
+			res[i] = s.Index(i).Float()
+		}
+		sort.Slice(res, func(i int, j int) bool {
+			return res[i] > res[j]
+		})
+		return res
+	case reflect.String:
+		var res = make([]string, s.Len())
+		for i := 0; i < s.Len(); i++ {
+			res[i] = s.Index(i).String()
+		}
+		sort.Slice(res, func(i int, j int) bool {
+			return res[i] > res[j]
+		})
+		return res
+	}
+
+	return array
 }
