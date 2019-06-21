@@ -292,7 +292,7 @@ func TestMicrotime(t *testing.T) {
 	end := Microtime()
 
 	duration := end - start
-	if duration < 0.1 || duration > 0.2 {
+	if duration < 0.1 || duration > 1 {
 		t.Fail()
 	}
 }

@@ -150,6 +150,17 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [copy](https://www.php.net/manual/en/function.copy.php) | [Copy](https://godoc.org/github.com/hyperjiang/php#Copy) |
 | [rename](https://www.php.net/manual/en/function.rename.php) | [Rename](https://godoc.org/github.com/hyperjiang/php#Rename) |
 
+### Network Functions
+
+| PHP function                                         | Golang function                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| [gethostbyaddr](https://php.net/manual/en/function.gethostbyaddr.php) | [GetHostByAddr](https://godoc.org/github.com/hyperjiang/php#GetHostByAddr) |
+| [gethostbyname](https://php.net/manual/en/function.gethostbyname.php) | [GetHostByName](https://godoc.org/github.com/hyperjiang/php#GetHostByName) |
+| [gethostbynamel](https://php.net/manual/en/function.gethostbynamel.php) | [GetHostByNamel](https://godoc.org/github.com/hyperjiang/php#GetHostByNamel) |
+| [gethostname](https://php.net/manual/en/function.gethostname.php) | [GetHostName](https://godoc.org/github.com/hyperjiang/php#GetHostName) |
+| [ip2long](https://php.net/manual/en/function.ip2long.php) | [IP2Long](https://godoc.org/github.com/hyperjiang/php#IP2Long) |
+| [long2ip](https://php.net/manual/en/function.long2ip.php) | [Long2IP](https://godoc.org/github.com/hyperjiang/php#Long2IP) |
+
 ### CSPRNG Functions
 
 | PHP function                                         | Golang function                                            |
