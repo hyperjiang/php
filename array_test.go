@@ -366,3 +366,57 @@ func TestArrayFilter(t *testing.T) {
 	s := "this is a string"
 	mustEqual(t, s, ArrayFilter(s, nil))
 }
+
+func TestArrayPad(t *testing.T) {
+	var a = []interface{}{"a", "b", "c"}
+	var b = []interface{}{"d", "d", "a", "b", "c"}
+	var c = []interface{}{"a", "b", "c", "d", "d"}
+
+	mustEqual(t, a, ArrayPad(a, 0, "d"))
+	mustEqual(t, b, ArrayPad(a, -5, "d"))
+	mustEqual(t, c, ArrayPad(a, 5, "d"))
+}
+
+func TestArrayPop(t *testing.T) {
+	var a = []interface{}{"orange", "banana", "apple", "raspberry"}
+
+	mustEqual(t, nil, ArrayPop(nil))
+
+	if ArrayPop(&a) != "raspberry" {
+		t.Fail()
+	}
+	mustEqual(t, []interface{}{"orange", "banana", "apple"}, a)
+}
+
+func TestArrayPush(t *testing.T) {
+	var a = []interface{}{"orange", "banana"}
+
+	mustEqual(t, 0, ArrayPush(nil))
+
+	if ArrayPush(&a, "apple", "raspberry") != 4 {
+		t.Fail()
+	}
+	mustEqual(t, []interface{}{"orange", "banana", "apple", "raspberry"}, a)
+}
+
+func TestArrayShift(t *testing.T) {
+	var a = []interface{}{"orange", "banana", "apple", "raspberry"}
+
+	mustEqual(t, nil, ArrayShift(nil))
+
+	if ArrayShift(&a) != "orange" {
+		t.Fail()
+	}
+	mustEqual(t, []interface{}{"banana", "apple", "raspberry"}, a)
+}
+
+func TestArrayUnshift(t *testing.T) {
+	var a = []interface{}{"orange", "banana"}
+
+	mustEqual(t, 0, ArrayUnshift(nil))
+
+	if ArrayUnshift(&a, "apple", "raspberry") != 4 {
+		t.Fail()
+	}
+	mustEqual(t, []interface{}{"apple", "raspberry", "orange", "banana"}, a)
+}

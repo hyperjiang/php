@@ -78,6 +78,11 @@
 | [array_intersect](https://php.net/manual/en/function.array-intersect.php) | [ArrayIntersect](https://godoc.org/github.com/hyperjiang/php#ArrayIntersect) |
 | [array_keys](https://php.net/manual/en/function.array-keys.php) | [ArrayKeys](https://godoc.org/github.com/hyperjiang/php#ArrayKeys) |
 | [array_key_exists](https://www.php.net/manual/en/function.array-key-exists.php) | [ArrayKeyExists](https://godoc.org/github.com/hyperjiang/php#ArrayKeyExists) |
+| [array_pad](https://php.net/manual/en/function.array-pad.php) | [ArrayPad](https://godoc.org/github.com/hyperjiang/php#ArrayPad) |
+| [array_pop](https://php.net/manual/en/function.array-pop.php) | [ArrayPop](https://godoc.org/github.com/hyperjiang/php#ArrayPop) |
+| [array_push](https://php.net/manual/en/function.array-push.php) | [ArrayPush](https://godoc.org/github.com/hyperjiang/php#ArrayPush) |
+| [array_shift](https://php.net/manual/en/function.array-shift.php) | [ArrayShift](https://godoc.org/github.com/hyperjiang/php#ArrayShift) |
+| [array_unshift](https://php.net/manual/en/function.array-unshift.php) | [ArrayUnshift](https://godoc.org/github.com/hyperjiang/php#ArrayUnshift) |
 | [array_unique](https://php.net/manual/en/function.array-unique.php) | [ArrayUnique](https://godoc.org/github.com/hyperjiang/php#ArrayUnique) |
 | [count](https://php.net/manual/en/function.count.php) | [Count](https://godoc.org/github.com/hyperjiang/php#Count) |
 | [in_array](https://php.net/manual/en/function.in-array.php) | [InArray](https://godoc.org/github.com/hyperjiang/php#InArray) |

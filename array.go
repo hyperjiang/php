@@ -334,3 +334,64 @@ func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{}
 
 	return input
 }
+
+// ArrayPad pads array to the specified length with a value
+func ArrayPad(array []interface{}, size int, value interface{}) []interface{} {
+	if size == 0 || (size > 0 && size < len(array)) || (size < 0 && size > -len(array)) {
+		return array
+	}
+	n := size
+	if size < 0 {
+		n = -size
+	}
+	n -= len(array)
+	tmp := make([]interface{}, n)
+	for i := 0; i < n; i++ {
+		tmp[i] = value
+	}
+	if size > 0 {
+		return append(array, tmp...)
+	}
+	return append(tmp, array...)
+}
+
+// ArrayPop pops the element off the end of array
+func ArrayPop(s *[]interface{}) interface{} {
+	if s == nil || len(*s) == 0 {
+		return nil
+	}
+	ep := len(*s) - 1
+	e := (*s)[ep]
+	*s = (*s)[:ep]
+	return e
+}
+
+// ArrayPush pushes one or more elements onto the end of array,
+// returns the new number of elements in the array.
+func ArrayPush(s *[]interface{}, elements ...interface{}) int {
+	if s == nil {
+		return 0
+	}
+	*s = append(*s, elements...)
+	return len(*s)
+}
+
+// ArrayShift shifts an element off the beginning of array
+func ArrayShift(s *[]interface{}) interface{} {
+	if s == nil || len(*s) == 0 {
+		return nil
+	}
+	f := (*s)[0]
+	*s = (*s)[1:]
+	return f
+}
+
+// ArrayUnshift prepends one or more elements to the beginning of a array,
+// returns the new number of elements in the array.
+func ArrayUnshift(s *[]interface{}, elements ...interface{}) int {
+	if s == nil {
+		return 0
+	}
+	*s = append(elements, *s...)
+	return len(*s)
+}
