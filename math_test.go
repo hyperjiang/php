@@ -273,3 +273,165 @@ func TestDecbin(t *testing.T) {
 		})
 	}
 }
+
+func TestCeil(t *testing.T) {
+	if Ceil(4.3) != 5 {
+		t.Fail()
+	}
+	if Ceil(9.999) != 10 {
+		t.Fail()
+	}
+	if Ceil(-3.14) != -3 {
+		t.Fail()
+	}
+}
+
+func TestFloor(t *testing.T) {
+	if Floor(4.3) != 4 {
+		t.Fail()
+	}
+	if Floor(9.999) != 9 {
+		t.Fail()
+	}
+	if Floor(-3.14) != -4 {
+		t.Fail()
+	}
+}
+
+func TestPi(t *testing.T) {
+	if Pi() < 3.14 || Pi() > 3.15 {
+		t.Fail()
+	}
+}
+
+func TestDechex(t *testing.T) {
+	type args struct {
+		number int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{10},
+			"a",
+		},
+		{
+			"2",
+			args{47},
+			"2f",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Dechex(tt.args.number); got != tt.want {
+				t.Errorf("Dechex() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestHexdec(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    int64
+		wantErr bool
+	}{
+		{
+			"1",
+			args{"ee"},
+			int64(238),
+			false,
+		},
+		{
+			"2",
+			args{"a0"},
+			int64(160),
+			false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := Hexdec(tt.args.str)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Hexdec() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("Hexdec() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestDecoct(t *testing.T) {
+	type args struct {
+		number int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{15},
+			"17",
+		},
+		{
+			"2",
+			args{264},
+			"410",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Decoct(tt.args.number); got != tt.want {
+				t.Errorf("Decoct() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestOctdec(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    int64
+		wantErr bool
+	}{
+		{
+			"1",
+			args{"77"},
+			int64(63),
+			false,
+		},
+		{
+			"2",
+			args{"45"},
+			int64(37),
+			false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := Octdec(tt.args.str)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Octdec() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("Octdec() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

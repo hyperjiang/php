@@ -78,3 +78,38 @@ func Bindec(str string) (string, error) {
 func Decbin(number int64) string {
 	return strconv.FormatInt(number, 2)
 }
+
+// Dechex converts decimal to hexadecimal
+func Dechex(number int64) string {
+	return strconv.FormatInt(number, 16)
+}
+
+// Hexdec converts hexadecimal to decimal
+func Hexdec(str string) (int64, error) {
+	return strconv.ParseInt(str, 16, 0)
+}
+
+// Decoct converts decimal to octal
+func Decoct(number int64) string {
+	return strconv.FormatInt(number, 8)
+}
+
+// Octdec converts octal to decimal
+func Octdec(str string) (int64, error) {
+	return strconv.ParseInt(str, 8, 0)
+}
+
+// Ceil returns the next highest integer value by rounding up value if necessary
+func Ceil(value float64) float64 {
+	return math.Ceil(value)
+}
+
+// Floor returns the next lowest integer value by rounding down value if necessary
+func Floor(value float64) float64 {
+	return math.Floor(value)
+}
+
+// Pi gets value of pi
+func Pi() float64 {
+	return math.Pi
+}

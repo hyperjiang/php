@@ -67,6 +67,13 @@
 | [base_convert](https://php.net/manual/en/function.base-convert.php) | [BaseConvert](https://godoc.org/github.com/hyperjiang/php#BaseConvert) |
 | [bindec](https://php.net/manual/en/function.bindec.php) | [Bindec](https://godoc.org/github.com/hyperjiang/php#Bindec) |
 | [decbin](https://php.net/manual/en/function.decbin.php) | [Decbin](https://godoc.org/github.com/hyperjiang/php#Decbin) |
+| [dechex](https://php.net/manual/en/function.dechex.php) | [Dechex](https://godoc.org/github.com/hyperjiang/php#Dechex) |
+| [hexdec](https://php.net/manual/en/function.hexdec.php) | [Hexdec](https://godoc.org/github.com/hyperjiang/php#Hexdec) |
+| [decoct](https://php.net/manual/en/function.decoct.php) | [Decoct](https://godoc.org/github.com/hyperjiang/php#Decoct) |
+| [octdec](https://php.net/manual/en/function.octdec.php) | [Octdec](https://godoc.org/github.com/hyperjiang/php#Octdec) |
+| [ceil](https://php.net/manual/en/function.ceil.php) | [Ceil](https://godoc.org/github.com/hyperjiang/php#Ceil) |
+| [floor](https://php.net/manual/en/function.floor.php) | [Floor](https://godoc.org/github.com/hyperjiang/php#Floor) |
+| [pi](https://php.net/manual/en/function.pi.php) | [Pi](https://godoc.org/github.com/hyperjiang/php#Pi) |
 | [mt_rand](https://php.net/manual/en/function.mt-rand.php) | [MtRand](https://godoc.org/github.com/hyperjiang/php#MtRand) |
 | [rand](https://php.net/manual/en/function.rand.php) | [Rand](https://godoc.org/github.com/hyperjiang/php#Rand) |
 | [round](https://php.net/manual/en/function.round.php) | [Round](https://godoc.org/github.com/hyperjiang/php#Round) |
