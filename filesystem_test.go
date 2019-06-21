@@ -328,6 +328,19 @@ func TestFileExists(t *testing.T) {
 	Unlink(filename)
 }
 
+func TestFileSize(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+	Unlink(filename)
+	if _, err := FileSize(filename); err == nil { // not exists
+		t.Fail()
+	}
+	Touch(filename)
+	if size, err := FileSize(filename); err != nil || size != 0 {
+		t.Fail()
+	}
+	Unlink(filename)
+}
+
 func TestRename(t *testing.T) {
 	var oldname = "/tmp/hyperjiangphpfilesystemtest.old"
 	Touch(oldname)
@@ -337,4 +350,17 @@ func TestRename(t *testing.T) {
 		t.Fail()
 	}
 	Unlink(newname)
+}
+
+func TestFileGetContents(t *testing.T) {
+	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+	Unlink(filename)
+	if err := FilePutContents(filename, "Hello world!"); err != nil {
+		t.Errorf("FilePutContents failed")
+	}
+	str, err := FileGetContents(filename)
+	if str != "Hello world!" || err != nil {
+		t.Fail()
+	}
+	Unlink(filename)
 }

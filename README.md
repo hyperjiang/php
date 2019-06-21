@@ -147,8 +147,11 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [is_writable](https://www.php.net/manual/en/function.is-writable.php) | [IsWritable](https://godoc.org/github.com/hyperjiang/php#IsWritable) |
 | [is_link](https://www.php.net/manual/en/function.is-link.php) | [IsLink](https://godoc.org/github.com/hyperjiang/php#IsLink) |
 | [file_exists](https://www.php.net/manual/en/function.file-exists.php) | [FileExists](https://godoc.org/github.com/hyperjiang/php#FileExists) |
+| [filesize](https://www.php.net/manual/en/function.filesize.php) | [Filesize](https://godoc.org/github.com/hyperjiang/php#Filesize) |
 | [copy](https://www.php.net/manual/en/function.copy.php) | [Copy](https://godoc.org/github.com/hyperjiang/php#Copy) |
 | [rename](https://www.php.net/manual/en/function.rename.php) | [Rename](https://godoc.org/github.com/hyperjiang/php#Rename) |
+| [file_get_contents](https://www.php.net/manual/en/function.file-get-contents.php) | [FileGetContents](https://godoc.org/github.com/hyperjiang/php#FileGetContents) |
+| [file_put_contents](https://www.php.net/manual/en/function.file-put-contents.php) | [FilePutContents](https://godoc.org/github.com/hyperjiang/php#FilePutContents) |
 
 ### Network Functions
 

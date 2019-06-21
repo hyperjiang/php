@@ -2,6 +2,7 @@ package php
 
 import (
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"syscall"
@@ -47,7 +48,7 @@ func Unlink(filename string) error {
 }
 
 // Mkdir attempts to create the directory specified by pathname.
-func Mkdir(pathname string, mode uint32, recursive bool) error {
+func Mkdir(pathname string, mode os.FileMode, recursive bool) error {
 	if mode == 0 {
 		mode = 0777
 	}
@@ -76,7 +77,7 @@ func Link(target, link string) error {
 }
 
 // Chmod changes file mode
-func Chmod(filename string, mode uint32) error {
+func Chmod(filename string, mode os.FileMode) error {
 	return os.Chmod(filename, os.FileMode(mode))
 }
 
@@ -157,7 +158,27 @@ func FileExists(filename string) bool {
 	return true
 }
 
+// FileSize gets file size
+func FileSize(filename string) (int64, error) {
+	info, err := os.Stat(filename)
+	if err != nil {
+		return 0, err
+	}
+	return info.Size(), nil
+}
+
 // Rename renames a file or directory
 func Rename(oldname, newname string) error {
 	return os.Rename(oldname, newname)
+}
+
+// FilePutContents writes data to a file
+func FilePutContents(filename string, data string) error {
+	return ioutil.WriteFile(filename, []byte(data), 0666)
+}
+
+// FileGetContents reads entire file into a string
+func FileGetContents(filename string) (string, error) {
+	data, err := ioutil.ReadFile(filename)
+	return string(data), err
 }
