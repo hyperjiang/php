@@ -192,3 +192,84 @@ func TestMtRand(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestBaseConvert(t *testing.T) {
+	if _, err := BaseConvert("a", 10, -1); err == nil {
+		t.Fail()
+	}
+	if v, err := BaseConvert("a37334", 16, 2); err != nil || v != "101000110111001100110100" {
+		t.Fail()
+	}
+}
+
+func TestBindec(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    string
+		wantErr bool
+	}{
+		{
+			"1",
+			args{"110011"},
+			"51",
+			false,
+		},
+		{
+			"2",
+			args{"000110011"},
+			"51",
+			false,
+		},
+		{
+			"3",
+			args{"111"},
+			"7",
+			false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := Bindec(tt.args.str)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Bindec() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("Bindec() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestDecbin(t *testing.T) {
+	type args struct {
+		number int64
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"1",
+			args{12},
+			"1100",
+		},
+		{
+			"2",
+			args{26},
+			"11010",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Decbin(tt.args.number); got != tt.want {
+				t.Errorf("Decbin() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

@@ -64,7 +64,11 @@
 | PHP function                                         | Golang function                                            |
 | ---------------------------------------------------- | ---------------------------------------------------------- |
 | [abs](https://php.net/manual/en/function.abs.php) | [Abs](https://godoc.org/github.com/hyperjiang/php#Abs) |
+| [base_convert](https://php.net/manual/en/function.base-convert.php) | [BaseConvert](https://godoc.org/github.com/hyperjiang/php#BaseConvert) |
+| [bindec](https://php.net/manual/en/function.bindec.php) | [Bindec](https://godoc.org/github.com/hyperjiang/php#Bindec) |
+| [decbin](https://php.net/manual/en/function.decbin.php) | [Decbin](https://godoc.org/github.com/hyperjiang/php#Decbin) |
 | [mt_rand](https://php.net/manual/en/function.mt-rand.php) | [MtRand](https://godoc.org/github.com/hyperjiang/php#MtRand) |
+| [rand](https://php.net/manual/en/function.rand.php) | [Rand](https://godoc.org/github.com/hyperjiang/php#Rand) |
 | [round](https://php.net/manual/en/function.round.php) | [Round](https://godoc.org/github.com/hyperjiang/php#Round) |
 
 ### PHP Array Functions

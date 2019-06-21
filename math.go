@@ -46,11 +46,35 @@ func Abs(number float64) float64 {
 	return math.Abs(number)
 }
 
-// MtRand generates a random value
+// MtRand is alias of Rand()
 func MtRand(min, max int) int {
+	return Rand(min, max)
+}
+
+// Rand generates a random integer
+func Rand(min, max int) int {
 	if min > max {
 		return 0
 	}
 	m := int(Abs(float64(min)))
 	return rand.Intn(max+m) - m
+}
+
+// BaseConvert converts a number between arbitrary bases
+func BaseConvert(number string, frombase, tobase int) (string, error) {
+	i, err := strconv.ParseInt(number, frombase, 0)
+	if err != nil {
+		return "", err
+	}
+	return strconv.FormatInt(i, tobase), nil
+}
+
+// Bindec converts a binary number to an integer
+func Bindec(str string) (string, error) {
+	return BaseConvert(str, 2, 10)
+}
+
+// Decbin converts decimal to binary
+func Decbin(number int64) string {
+	return strconv.FormatInt(number, 2)
 }
