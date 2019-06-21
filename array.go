@@ -395,3 +395,67 @@ func ArrayUnshift(s *[]interface{}, elements ...interface{}) int {
 	*s = append(elements, *s...)
 	return len(*s)
 }
+
+// ArrayReverse returns an array with elements in reverse order
+func ArrayReverse(s []interface{}) []interface{} {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		s[i], s[j] = s[j], s[i]
+	}
+	return s
+}
+
+// ArraySlice extracts a slice of the array
+func ArraySlice(array []interface{}, offset, length uint) []interface{} {
+	if offset > uint(len(array)) {
+		return nil
+	}
+	end := offset + length
+	if end < uint(len(array)) {
+		return array[offset:end]
+	}
+	return array[offset:]
+}
+
+// ArraySum returns the sum of values in an array
+func ArraySum(array interface{}) interface{} {
+	if array == nil {
+		return nil
+	}
+	if reflect.TypeOf(array).Kind() != reflect.Slice {
+		return nil
+	}
+
+	s := reflect.ValueOf(array)
+	if s.Len() == 0 {
+		return 0
+	}
+
+	switch s.Index(0).Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		var sum int64
+		for i := 0; i < s.Len(); i++ {
+			sum += s.Index(i).Int()
+		}
+		return sum
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		var sum uint64
+		for i := 0; i < s.Len(); i++ {
+			sum += s.Index(i).Uint()
+		}
+		return sum
+	case reflect.Float32, reflect.Float64:
+		var sum float64
+		for i := 0; i < s.Len(); i++ {
+			sum += s.Index(i).Float()
+		}
+		return sum
+	case reflect.String:
+		var sum string
+		for i := 0; i < s.Len(); i++ {
+			sum += s.Index(i).String()
+		}
+		return sum
+	}
+
+	return nil
+}

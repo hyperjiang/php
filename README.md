@@ -83,6 +83,9 @@
 | [array_pad](https://php.net/manual/en/function.array-pad.php) | [ArrayPad](https://godoc.org/github.com/hyperjiang/php#ArrayPad) |
 | [array_pop](https://php.net/manual/en/function.array-pop.php) | [ArrayPop](https://godoc.org/github.com/hyperjiang/php#ArrayPop) |
 | [array_push](https://php.net/manual/en/function.array-push.php) | [ArrayPush](https://godoc.org/github.com/hyperjiang/php#ArrayPush) |
+| [array_reverse](https://php.net/manual/en/function.array-reverse.php) | [ArraySlice](https://godoc.org/github.com/hyperjiang/php#ArraySlice) |
+| [array_slice](https://php.net/manual/en/function.array-slice.php) | [ArrayReverse](https://godoc.org/github.com/hyperjiang/php#ArrayReverse) |
+| [array_sum](https://php.net/manual/en/function.array-sum.php) | [ArraySum](https://godoc.org/github.com/hyperjiang/php#ArraySum) |
 | [array_shift](https://php.net/manual/en/function.array-shift.php) | [ArrayShift](https://godoc.org/github.com/hyperjiang/php#ArrayShift) |
 | [array_unshift](https://php.net/manual/en/function.array-unshift.php) | [ArrayUnshift](https://godoc.org/github.com/hyperjiang/php#ArrayUnshift) |
 | [array_unique](https://php.net/manual/en/function.array-unique.php) | [ArrayUnique](https://godoc.org/github.com/hyperjiang/php#ArrayUnique) |

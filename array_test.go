@@ -420,3 +420,80 @@ func TestArrayUnshift(t *testing.T) {
 	}
 	mustEqual(t, []interface{}{"apple", "raspberry", "orange", "banana"}, a)
 }
+
+func TestArrayReverse(t *testing.T) {
+	var a = []interface{}{"a", "b", "c"}
+	var b = []interface{}{"c", "b", "a"}
+	mustEqual(t, b, ArrayReverse(a))
+}
+
+func TestArraySlice(t *testing.T) {
+	var a = []interface{}{"a", "b", "c"}
+	var b = []interface{}{"a"}
+
+	if ArraySlice(a, 10, 1) != nil {
+		t.Fail()
+	}
+
+	mustEqual(t, b, ArraySlice(a, 0, 1))
+	mustEqual(t, a, ArraySlice(a, 0, 10))
+}
+
+func TestArraySum(t *testing.T) {
+	type args struct {
+		array interface{}
+	}
+	tests := []struct {
+		name string
+		args args
+		want interface{}
+	}{
+		{
+			"1",
+			args{nil},
+			nil,
+		},
+		{
+			"2",
+			args{[]int{}},
+			0,
+		},
+		{
+			"3",
+			args{[]string{"a", "b", "c"}},
+			"abc",
+		},
+		{
+			"4",
+			args{[]int{1, 2, 3, 4, 5}},
+			int64(15),
+		},
+		{
+			"5",
+			args{[]uint{1, 2, 3, 4, 5}},
+			uint64(15),
+		},
+		{
+			"6",
+			args{[]float64{1, 2, 3, 4, 5}},
+			float64(15),
+		},
+		{
+			"7",
+			args{[][]int{[]int{1}, []int{2}}},
+			nil,
+		},
+		{
+			"8",
+			args{struct{}{}},
+			nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := ArraySum(tt.args.array); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ArraySum() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
