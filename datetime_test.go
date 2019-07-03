@@ -7,76 +7,177 @@ import (
 )
 
 func TestStrtotime(t *testing.T) {
+	ts170101 := int64(1483228800) // the UTC timestamp of 2017-01-01
+	ts170111 := int64(1484092800) // the UTC timestamp of 2017-01-11
 
-	expected := int64(1483228800) // the UTC timestamp of 2017-01-01
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name string
+		args args
+		want int64
+	}{
+		{
+			"1",
+			args{"2017-01-01"},
+			ts170101,
+		},
+		{
+			"2",
+			args{"2017-1-01"},
+			ts170101,
+		},
+		{
+			"3",
+			args{"2017-1-1"},
+			ts170101,
+		},
+		{
+			"4",
+			args{"20170101"},
+			ts170101,
+		},
+		{
+			"5",
+			args{"2017-1-11"},
+			ts170111,
+		},
+		{
+			"6",
+			args{"2017-01-01 00:00:00"},
+			ts170101,
+		},
+		{
+			"7",
+			args{"17-01-01"},
+			ts170101,
+		},
+		{
+			"8",
+			args{"20170101000000"},
+			ts170101,
+		},
+		{
+			"9",
+			args{"2017"},
+			ts170101,
+		},
+		{
+			"10",
+			args{"2017-07-14T10:40:00+08:00"},
+			1500000000,
+		},
+		{
+			"11",
+			args{"Fri, 14 Jul 2017 02:40:00 +0000"},
+			1500000000,
+		},
+		{
+			"12",
+			args{"xxx"},
+			-1,
+		},
+		{
+			"13",
+			args{"+1 day"},
+			Time() + 86400,
+		},
+		{
+			"14",
+			args{"+2 days"},
+			Time() + 86400*2,
+		},
+		{
+			"15",
+			args{"-1 day"},
+			Time() - 86400,
+		},
+		{
+			"16",
+			args{"+1 month"},
+			Time() + 86400*30,
+		},
+		{
+			"17",
+			args{"+1 year"},
+			Time() + 86400*365,
+		},
+		{
+			"18",
+			args{"+1 week"},
+			Time() + 86400*7,
+		},
+		{
+			"19",
+			args{"+1 hour"},
+			Time() + 3600,
+		},
+		{
+			"20",
+			args{"+1 minute"},
+			Time() + 60,
+		},
+		{
+			"21",
+			args{"+1 second"},
+			Time() + 1,
+		},
+		{
+			"22",
+			args{"2017-01-1"},
+			ts170101,
+		},
+		{
+			"23",
+			args{"17-01-1"},
+			ts170101,
+		},
+		{
+			"24",
+			args{"2017-1-01 00:00:00"},
+			ts170101,
+		},
+		{
+			"25",
+			args{"2017-1-1 00:00:00"},
+			ts170101,
+		},
+		{
+			"26",
+			args{"2017-01-1 00:00:00"},
+			ts170101,
+		},
+		{
+			"27",
+			args{"17-01-01 00:00:00"},
+			ts170101,
+		},
+		{
+			"28",
+			args{"17-1-01 00:00:00"},
+			ts170101,
+		},
+		{
+			"29",
+			args{"17-1-1 00:00:00"},
+			ts170101,
+		},
+		{
+			"30",
+			args{"17-01-1 00:00:00"},
+			ts170101,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := Strtotime(tt.args.str); got != tt.want {
+				t.Errorf("Strtotime() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 
-	if Strtotime("2017-01-01") != expected {
-		t.Fail()
-	}
-	if Strtotime("2017-1-01") != expected {
-		t.Fail()
-	}
-	if Strtotime("2017-1-1") != expected {
-		t.Fail()
-	}
-	if Strtotime("2017-1-11") != 1484092800 {
-		t.Fail()
-	}
-	if Strtotime("20170101") != expected {
-		t.Fail()
-	}
-	if Strtotime("2017-01-01 00:00:00") != expected {
-		t.Fail()
-	}
-	if Strtotime("17-01-01") != expected {
-		t.Fail()
-	}
-	if Strtotime("20170101000000") != expected {
-		t.Fail()
-	}
-	if Strtotime("2017") != expected {
-		t.Fail()
-	}
-	if Strtotime("2017-07-14T10:40:00+08:00") != 1500000000 {
-		t.Fail()
-	}
-	if Strtotime("now") == -1 {
-		t.Fail()
-	}
-	if Strtotime("Now") == -1 {
-		t.Fail()
-	}
-	if Strtotime("xxx") != -1 {
-		t.Fail()
-	}
-	if Strtotime("Fri, 14 Jul 2017 02:40:00 +0000") != 1500000000 {
-		t.Fail()
-	}
-	if (Strtotime("+1 day") - Time()) != 86400 {
-		t.Fail()
-	}
-	if (Strtotime("+2 days") - Time()) != 86400*2 {
-		t.Fail()
-	}
-	if (Strtotime("-1 day") - Time()) != -86400 {
-		t.Fail()
-	}
-	if (Strtotime("+1 month") - Time()) != 86400*30 {
-		t.Fail()
-	}
-	if (Strtotime("+1 year") - Time()) != 86400*365 {
-		t.Fail()
-	}
-	if (Strtotime("+1 week") - Time()) != 86400*7 {
-		t.Fail()
-	}
-	if (Strtotime("+1 hour") - Time()) != 3600 {
-		t.Fail()
-	}
-	if (Strtotime("+1 minute") - Time()) != 60 {
-		t.Fail()
-	}
-	if (Strtotime("+1 second") - Time()) != 1 {
+	if Strtotime("now") == -1 || Strtotime("Now") == -1 {
 		t.Fail()
 	}
 }

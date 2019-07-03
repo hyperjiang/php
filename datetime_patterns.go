@@ -25,6 +25,11 @@ func init() {
 			format: "Y-m-d",
 		},
 		pattern{
+			regexp: "^\\d{4}-\\d{2}-\\d{1}$",
+			layout: "2006-01-2",
+			format: "Y-m-j",
+		},
+		pattern{
 			regexp: "^\\d{4}-\\d{1}-\\d{2}$",
 			layout: "2006-1-02",
 			format: "Y-n-d",
@@ -40,6 +45,11 @@ func init() {
 			format: "y-m-d",
 		},
 		pattern{
+			regexp: "^\\d{2}-\\d{2}-\\d{1}$",
+			layout: "06-01-2",
+			format: "y-m-j",
+		},
+		pattern{
 			regexp: "^\\d{2}-\\d{1}-\\d{2}$",
 			layout: "06-1-02",
 			format: "y-n-d",
@@ -53,6 +63,41 @@ func init() {
 			regexp: "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$",
 			layout: "2006-01-02 15:04:05",
 			format: "Y-m-d H:i:s",
+		},
+		pattern{
+			regexp: "^\\d{4}-\\d{2}-\\d{1} \\d{2}:\\d{2}:\\d{2}$",
+			layout: "2006-01-2 15:04:05",
+			format: "Y-m-j H:i:s",
+		},
+		pattern{
+			regexp: "^\\d{4}-\\d{1}-\\d{2} \\d{2}:\\d{2}:\\d{2}$",
+			layout: "2006-1-02 15:04:05",
+			format: "Y-n-d H:i:s",
+		},
+		pattern{
+			regexp: "^\\d{4}-\\d{1}-\\d{1} \\d{2}:\\d{2}:\\d{2}$",
+			layout: "2006-1-2 15:04:05",
+			format: "Y-n-j H:i:s",
+		},
+		pattern{
+			regexp: "^\\d{2}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$",
+			layout: "06-01-02 15:04:05",
+			format: "y-m-d H:i:s",
+		},
+		pattern{
+			regexp: "^\\d{2}-\\d{2}-\\d{1} \\d{2}:\\d{2}:\\d{2}$",
+			layout: "06-01-2 15:04:05",
+			format: "y-m-j H:i:s",
+		},
+		pattern{
+			regexp: "^\\d{2}-\\d{1}-\\d{2} \\d{2}:\\d{2}:\\d{2}$",
+			layout: "06-1-02 15:04:05",
+			format: "y-n-d H:i:s",
+		},
+		pattern{
+			regexp: "^\\d{2}-\\d{1}-\\d{1} \\d{2}:\\d{2}:\\d{2}$",
+			layout: "06-1-2 15:04:05",
+			format: "y-n-j H:i:s",
 		},
 		pattern{
 			regexp: "^\\d{8}$",
