@@ -153,6 +153,13 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [file_get_contents](https://www.php.net/manual/en/function.file-get-contents.php) | [FileGetContents](https://godoc.org/github.com/hyperjiang/php#FileGetContents) |
 | [file_put_contents](https://www.php.net/manual/en/function.file-put-contents.php) | [FilePutContents](https://godoc.org/github.com/hyperjiang/php#FilePutContents) |
 
+### Image Functions
+
+| PHP function                                         | Golang function                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| [getimagesize](https://www.php.net/manual/en/function.getimagesize.php) | [GetImageSize](https://godoc.org/github.com/hyperjiang/php#GetImageSize) |
+| [getimagesizefromstring](https://www.php.net/manual/en/function.getimagesizefromstring.php) | [GetImageSizeFromString](https://godoc.org/github.com/hyperjiang/php#GetImageSizeFromString) |
+
 ### Network Functions
 
 | PHP function                                         | Golang function                                            |
