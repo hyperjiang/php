@@ -171,6 +171,13 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [ip2long](https://php.net/manual/en/function.ip2long.php) | [IP2Long](https://godoc.org/github.com/hyperjiang/php#IP2Long) |
 | [long2ip](https://php.net/manual/en/function.long2ip.php) | [Long2IP](https://godoc.org/github.com/hyperjiang/php#Long2IP) |
 
+### JSON Functions
+
+| PHP function                             | Golang function                          |
+| ---------------------------------------- | ---------------------------------------- |
+| [json_decode](https://php.net/manual/en/function.json-decode.php) | [JSONDecode](https://godoc.org/github.com/hyperjiang/php#JSONDecode) |
+| [json_encode](https://php.net/manual/en/function.json-encode.php) | [JSONEncode](https://godoc.org/github.com/hyperjiang/php#JSONEncode) |
+
 ### CSPRNG Functions
 
 | PHP function                                         | Golang function                                            |
