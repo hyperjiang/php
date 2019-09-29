@@ -1,6 +1,7 @@
 package php
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -27,51 +28,11 @@ func Microtime() float64 {
 //
 // Note that this function does not fully cover PHP's strtotime function yet
 func Strtotime(str string) int64 {
-
-	if strings.ToLower(str) == "now" {
-		return Time()
+	t, err := DateCreate(str)
+	if err != nil {
+		return -1
 	}
-
-	reg := regexp.MustCompile("(\\+|\\-)\\s?(\\d)\\s?(day|month|year|week|hour|minute|second)s?")
-	matches := reg.FindStringSubmatch(str)
-	if matches != nil {
-		var diff int64
-		num, _ := strconv.ParseInt(matches[2], 10, 64)
-		switch matches[3] {
-		case "day":
-			diff = num * 86400
-		case "month":
-			diff = num * 86400 * 30
-		case "year":
-			diff = num * 86400 * 365
-		case "week":
-			diff = num * 86400 * 7
-		case "hour":
-			diff = num * 3600
-		case "minute":
-			diff = num * 60
-		case "second":
-			diff = num
-		}
-		if matches[1] == "+" {
-			return Time() + diff
-		}
-		return Time() - diff
-	}
-
-	for _, p := range _defaultPatterns {
-
-		reg = regexp.MustCompile(p.regexp)
-
-		if reg.MatchString(str) {
-			t, err := time.Parse(p.layout, str)
-			if err == nil {
-				return t.Unix()
-			}
-		}
-	}
-
-	return -1
+	return t.Unix()
 }
 
 // IsLeapYear checks if the given time is in a leap year
@@ -246,4 +207,58 @@ func Checkdate(month, day, year int) bool {
 	}
 	_, err := time.Parse("2006-1-2", fmt.Sprintf("%04d-%d-%d", year, month, day))
 	return err == nil
+}
+
+// DateCreateFromFormat parses a date/time string according to a specified format
+func DateCreateFromFormat(f string, t string) (time.Time, error) {
+	return time.Parse(convertLayout(f), t)
+}
+
+// DateCreate parses a date/time string and return a time.Time.
+// Supported Date and Time Formats: https://www.php.net/manual/en/datetime.formats.php
+func DateCreate(str string) (time.Time, error) {
+	if strings.ToLower(str) == "now" {
+		return time.Now(), nil
+	}
+
+	reg := regexp.MustCompile("(\\+|\\-)\\s?(\\d)\\s?(day|month|year|week|hour|minute|second)s?")
+	matches := reg.FindStringSubmatch(str)
+	if matches != nil {
+		var diff int64
+		num, _ := strconv.ParseInt(matches[2], 10, 64)
+		switch matches[3] {
+		case "day":
+			diff = num * 86400
+		case "month":
+			diff = num * 86400 * 30
+		case "year":
+			diff = num * 86400 * 365
+		case "week":
+			diff = num * 86400 * 7
+		case "hour":
+			diff = num * 3600
+		case "minute":
+			diff = num * 60
+		case "second":
+			diff = num
+		}
+		if matches[1] == "+" {
+			return time.Now().Add(time.Duration(diff) * time.Second), nil
+		}
+		return time.Now().Add(-time.Duration(diff) * time.Second), nil
+	}
+
+	for _, p := range _defaultPatterns {
+
+		reg = regexp.MustCompile(p.regexp)
+
+		if reg.MatchString(str) {
+			t, err := time.Parse(p.layout, str)
+			if err == nil {
+				return t, nil
+			}
+		}
+	}
+
+	return time.Time{}, errors.New("Unsupported date/time string: " + str)
 }

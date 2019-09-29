@@ -17,6 +17,8 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [strtotime](https://php.net/manual/en/function.strtotime.php) | [Strtotime](https://godoc.org/github.com/hyperjiang/php#Strtotime) |
 | [time](https://php.net/manual/en/function.time.php) | [Time](https://godoc.org/github.com/hyperjiang/php#Time) |
 | [microtime](https://php.net/manual/en/function.microtime.php) | [Microtime](https://godoc.org/github.com/hyperjiang/php#Microtime) |
+| [date_create_from_format](https://www.php.net/manual/en/function.date-create-from-format.php) | [DateCreateFromFormat](https://godoc.org/github.com/hyperjiang/php#DateCreateFromFormat) |
+| [date_create](https://www.php.net/manual/en/function.date-create.php) | [DateCreate](https://godoc.org/github.com/hyperjiang/php#DateCreate) |
 
 ### String Functions
 

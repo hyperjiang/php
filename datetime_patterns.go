@@ -17,6 +17,9 @@ type patterns []pattern
 
 var _defaultPatterns patterns
 
+// formatMap is the mapping of php date format to golang layout
+var formatMap map[string]string
+
 func init() {
 	_defaultPatterns = patterns{
 		pattern{
@@ -126,6 +129,27 @@ func init() {
 		},
 	}
 
+	formatMap = map[string]string{
+		"d": "02",
+		"j": "2",
+		"m": "01",
+		"n": "1",
+		"Y": "2006",
+		"y": "06",
+		"H": "15",
+		"h": "03",
+		"g": "3",
+		"i": "04",
+		"s": "05",
+		"M": "Jan",
+		"F": "January",
+		"D": "Mon",
+		"l": "Monday",
+		"e": "MST",
+		"T": "MST",
+		"O": "-0700",
+		"P": "-07:00",
+	}
 }
 
 // getPattern gets the matched pattern by the given php style date/time format string
@@ -138,4 +162,17 @@ func getPattern(format string) (pattern, error) {
 	}
 
 	return pattern{}, errors.New("No pattern found")
+}
+
+// convertLayout converts php date format string to golang date layout
+func convertLayout(format string) string {
+	var layout string
+	for _, s := range format {
+		if v, ok := formatMap[string(s)]; ok {
+			layout += v
+		} else {
+			layout += string(s)
+		}
+	}
+	return layout
 }

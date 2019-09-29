@@ -2,6 +2,7 @@ package php
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 	"time"
 )
@@ -395,5 +396,55 @@ func TestMicrotime(t *testing.T) {
 	duration := end - start
 	if duration < 0.1 || duration > 1 {
 		t.Fail()
+	}
+}
+
+func TestDateCreateFromFormat(t *testing.T) {
+	type args struct {
+		f string
+		t string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    string
+		wantErr bool
+	}{
+		{
+			"1",
+			args{"j-M-Y", "15-Feb-2009"},
+			"2009-02-15 00:00:00",
+			false,
+		},
+		{
+			"2",
+			args{"j-F-Y", "15-January-2009"},
+			"2009-01-15 00:00:00",
+			false,
+		},
+		{
+			"3",
+			args{"D M d H:i:s O Y", "Mon Jan 15 10:10:10 +0800 2009"},
+			"2009-01-15 10:10:10",
+			false,
+		},
+		{
+			"4",
+			args{"l M d H:i:s T Y", "Monday Jan 15 10:10:10 EST 2009"},
+			"2009-01-15 10:10:10",
+			false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := DateCreateFromFormat(tt.args.f, tt.args.t)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("DateCreateFromFormat() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got.Format("2006-01-02 15:04:05"), tt.want) {
+				t.Errorf("DateCreateFromFormat() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
