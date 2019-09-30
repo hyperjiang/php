@@ -486,3 +486,28 @@ func TestDateTimezoneSet(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestDateDiff(t *testing.T) {
+	t1, err := DateCreate("2019-09-30")
+	if err != nil {
+		t.Fail()
+	}
+	t2, err := DateCreate("2019-10-01")
+	if err != nil {
+		t.Fail()
+	}
+	d := DateDiff(t1, t2)
+	if d.Hours() != 24.0 {
+		t.Fail()
+	}
+}
+
+func TestDateFormat(t *testing.T) {
+	date, err := DateCreate("2019-09-30")
+	if err != nil {
+		t.Fail()
+	}
+	if DateFormat(date, "Y-m-d H:i:s") != "2019-09-30 00:00:00" {
+		t.Fail()
+	}
+}

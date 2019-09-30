@@ -298,3 +298,13 @@ func DateTimezoneSet(t time.Time, tz string) (time.Time, error) {
 	}
 	return t.In(loc), nil
 }
+
+// DateDiff returns the difference between two times (t2 - t1)
+func DateDiff(t1 time.Time, t2 time.Time) time.Duration {
+	return t2.Sub(t1)
+}
+
+// DateFormat returns a string formatted according to the given format string using the given time
+func DateFormat(t time.Time, f string) string {
+	return format(f, t)
+}
