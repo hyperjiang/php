@@ -262,3 +262,24 @@ func DateCreate(str string) (time.Time, error) {
 
 	return time.Time{}, errors.New("Unsupported date/time string: " + str)
 }
+
+// DateDateSet sets the date by year, month and day
+func DateDateSet(year, month, day int) (time.Time, error) {
+	return time.Parse("2006-1-2", fmt.Sprintf("%04d-%d-%d", year, month, day))
+}
+
+// DateDefaultTimezoneGet gets the default timezone
+func DateDefaultTimezoneGet() string {
+	tz, _ := time.Now().Local().Zone()
+	return tz
+}
+
+// DateDefaultTimezoneSet sets the default timezone
+func DateDefaultTimezoneSet(tz string) error {
+	loc, err := time.LoadLocation(tz)
+	if err != nil {
+		return err
+	}
+	time.Local = loc
+	return nil
+}

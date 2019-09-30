@@ -19,6 +19,9 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [microtime](https://php.net/manual/en/function.microtime.php) | [Microtime](https://godoc.org/github.com/hyperjiang/php#Microtime) |
 | [date_create_from_format](https://www.php.net/manual/en/function.date-create-from-format.php) | [DateCreateFromFormat](https://godoc.org/github.com/hyperjiang/php#DateCreateFromFormat) |
 | [date_create](https://www.php.net/manual/en/function.date-create.php) | [DateCreate](https://godoc.org/github.com/hyperjiang/php#DateCreate) |
+| [date_date_set](https://www.php.net/manual/en/function.date-date-set.php) | [DateDateSet](https://godoc.org/github.com/hyperjiang/php#DateDateSet) |
+| [date_default_timezone_get](https://www.php.net/manual/en/function.date-default-timezone-get.php) | [DateDefaultTimezoneGet](https://godoc.org/github.com/hyperjiang/php#DateDefaultTimezoneGet) |
+| [date_default_timezone_set](https://www.php.net/manual/en/function.date-default-timezone-set.php) | [DateDefaultTimezoneSet](https://godoc.org/github.com/hyperjiang/php#DateDefaultTimezoneSet) |
 
 ### String Functions
 

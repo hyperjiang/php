@@ -448,3 +448,25 @@ func TestDateCreateFromFormat(t *testing.T) {
 		})
 	}
 }
+
+func TestDateDateSet(t *testing.T) {
+	date, err := DateDateSet(2001, 2, 3)
+	if err != nil || date.Format("2006-01-02") != "2001-02-03" {
+		t.Fail()
+	}
+}
+
+func TestDateDefaultTimezoneSet(t *testing.T) {
+	tz := "Asia/Shanghai"
+	err := DateDefaultTimezoneSet(tz)
+	if err != nil {
+		t.Fail()
+	}
+	if DateDefaultTimezoneGet() != "CST" { // China Standard Time
+		t.Fail()
+	}
+
+	if err := DateDefaultTimezoneSet("unknown/timezone"); err == nil {
+		t.Fail()
+	}
+}
