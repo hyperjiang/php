@@ -22,6 +22,8 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [date_date_set](https://www.php.net/manual/en/function.date-date-set.php) | [DateDateSet](https://godoc.org/github.com/hyperjiang/php#DateDateSet) |
 | [date_default_timezone_get](https://www.php.net/manual/en/function.date-default-timezone-get.php) | [DateDefaultTimezoneGet](https://godoc.org/github.com/hyperjiang/php#DateDefaultTimezoneGet) |
 | [date_default_timezone_set](https://www.php.net/manual/en/function.date-default-timezone-set.php) | [DateDefaultTimezoneSet](https://godoc.org/github.com/hyperjiang/php#DateDefaultTimezoneSet) |
+| [date_timezone_get](https://www.php.net/manual/en/function.date-timezone-get.php) | [DateTimezoneGet](https://godoc.org/github.com/hyperjiang/php#DateTimezoneGet) |
+| [date_timezone_set](https://www.php.net/manual/en/function.date-timezone-set.php) | [DateTimezoneSet](https://godoc.org/github.com/hyperjiang/php#DateTimezoneSet) |
 
 ### String Functions
 

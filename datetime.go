@@ -283,3 +283,18 @@ func DateDefaultTimezoneSet(tz string) error {
 	time.Local = loc
 	return nil
 }
+
+// DateTimezoneGet gets the timezone of the given time
+func DateTimezoneGet(t time.Time) string {
+	tz, _ := t.Zone()
+	return tz
+}
+
+// DateTimezoneSet returns a copy of t with the given timezone
+func DateTimezoneSet(t time.Time, tz string) (time.Time, error) {
+	loc, err := time.LoadLocation(tz)
+	if err != nil {
+		return t, err
+	}
+	return t.In(loc), nil
+}

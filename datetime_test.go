@@ -470,3 +470,19 @@ func TestDateDefaultTimezoneSet(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestDateTimezoneSet(t *testing.T) {
+	tz := "Asia/Shanghai"
+	t1 := time.Now()
+	t2, err := DateTimezoneSet(t1, tz)
+	if err != nil {
+		t.Fail()
+	}
+	if DateTimezoneGet(t2) != "CST" { // China Standard Time
+		t.Fail()
+	}
+
+	if _, err := DateTimezoneSet(t1, "unknown/timezone"); err == nil {
+		t.Fail()
+	}
+}
