@@ -511,3 +511,70 @@ func TestDateFormat(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestDateIntervalCreateFromDateString(t *testing.T) {
+	type args struct {
+		str string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    time.Duration
+		wantErr bool
+	}{
+		{
+			"1",
+			args{"1 minute +1 second"},
+			61 * time.Second,
+			false,
+		},
+		{
+			"2",
+			args{"1 day"},
+			86400 * time.Second,
+			false,
+		},
+		{
+			"3",
+			args{"2 weeks"},
+			86400 * 14 * time.Second,
+			false,
+		},
+		{
+			"4",
+			args{"1 year + 1 day"},
+			86400 * 366 * time.Second,
+			false,
+		},
+		{
+			"5",
+			args{"day + 12 hours"},
+			(86400 + 3600*12) * time.Second,
+			false,
+		},
+		{
+			"6",
+			args{"3600 seconds"},
+			3600 * time.Second,
+			false,
+		},
+		{
+			"7",
+			args{"invalid string"},
+			0,
+			true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := DateIntervalCreateFromDateString(tt.args.str)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("DateIntervalCreateFromDateString() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("DateIntervalCreateFromDateString() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

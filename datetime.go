@@ -221,37 +221,13 @@ func DateCreate(str string) (time.Time, error) {
 		return time.Now(), nil
 	}
 
-	reg := regexp.MustCompile("(\\+|\\-)\\s?(\\d)\\s?(day|month|year|week|hour|minute|second)s?")
-	matches := reg.FindStringSubmatch(str)
-	if matches != nil {
-		var diff int64
-		num, _ := strconv.ParseInt(matches[2], 10, 64)
-		switch matches[3] {
-		case "day":
-			diff = num * 86400
-		case "month":
-			diff = num * 86400 * 30
-		case "year":
-			diff = num * 86400 * 365
-		case "week":
-			diff = num * 86400 * 7
-		case "hour":
-			diff = num * 3600
-		case "minute":
-			diff = num * 60
-		case "second":
-			diff = num
-		}
-		if matches[1] == "+" {
-			return time.Now().Add(time.Duration(diff) * time.Second), nil
-		}
-		return time.Now().Add(-time.Duration(diff) * time.Second), nil
+	duration, err := DateIntervalCreateFromDateString(str)
+	if err == nil {
+		return time.Now().Add(duration), nil
 	}
 
 	for _, p := range _defaultPatterns {
-
-		reg = regexp.MustCompile(p.regexp)
-
+		reg := regexp.MustCompile(p.regexp)
 		if reg.MatchString(str) {
 			t, err := time.Parse(p.layout, str)
 			if err == nil {
@@ -307,4 +283,43 @@ func DateDiff(t1 time.Time, t2 time.Time) time.Duration {
 // DateFormat returns a string formatted according to the given format string using the given time
 func DateFormat(t time.Time, f string) string {
 	return format(f, t)
+}
+
+// DateIntervalCreateFromDateString returns a time.Duration from the given string
+func DateIntervalCreateFromDateString(str string) (time.Duration, error) {
+	reg := regexp.MustCompile("((\\+|\\-)?\\s*(\\d*)\\s*(day|month|year|week|hour|minute|second)s?\\s*)+?")
+	matches := reg.FindAllStringSubmatch(str, -1)
+	if matches != nil {
+		var duration int64
+		for _, match := range matches {
+			var diff, num int64
+			if match[3] == "" {
+				num = 1
+			} else {
+				num, _ = strconv.ParseInt(match[3], 10, 64)
+			}
+			switch match[4] {
+			case "day":
+				diff = num * 86400
+			case "month":
+				diff = num * 86400 * 30
+			case "year":
+				diff = num * 86400 * 365
+			case "week":
+				diff = num * 86400 * 7
+			case "hour":
+				diff = num * 3600
+			case "minute":
+				diff = num * 60
+			case "second":
+				diff = num
+			}
+			if match[2] == "-" {
+				diff = -diff
+			}
+			duration += diff
+		}
+		return time.Duration(duration) * time.Second, nil
+	}
+	return 0, errors.New("unsupported string format")
 }
