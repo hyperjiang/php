@@ -578,3 +578,97 @@ func TestDateIntervalCreateFromDateString(t *testing.T) {
 		})
 	}
 }
+
+func TestDateISODateSet(t *testing.T) {
+	type args struct {
+		year int
+		week int
+		day  int
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    string
+		wantErr bool
+	}{
+		{
+			"1",
+			args{2008, 2, 1},
+			"2008-01-07",
+			false,
+		},
+		{
+			"2",
+			args{2008, 2, 7},
+			"2008-01-13",
+			false,
+		},
+		{
+			"3",
+			args{2008, 53, 7},
+			"2009-01-04",
+			false,
+		},
+		{
+			"4",
+			args{2009, 1, 1},
+			"2008-12-29",
+			false,
+		},
+		{
+			"5",
+			args{-1, 1, 1},
+			"0001-01-01",
+			true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := DateISODateSet(tt.args.year, tt.args.week, tt.args.day)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("DateISODateSet() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got.Format("2006-01-02"), tt.want) {
+				t.Errorf("DateISODateSet() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestDateModify(t *testing.T) {
+	date1, _ := DateCreate("2006-12-12")
+	date2, _ := DateCreate("2006-12-13")
+
+	got, err := DateModify(date1, "+1 day")
+	if err != nil || got != date2 {
+		t.Fail()
+	}
+
+	date3, _ := DateCreate("2000-12-31")
+	date4, _ := DateCreate("2001-01-30")
+	got, err = DateModify(date3, "+1 month")
+	if err != nil || got != date4 {
+		t.Fail()
+	}
+
+	_, err = DateModify(date1, "invalid string")
+	if err == nil {
+		t.Fail()
+	}
+}
+
+func TestDateOffsetGet(t *testing.T) {
+	loc, _ := time.LoadLocation("America/New_York")
+	winter, _ := DateCreate("2010-12-21")
+	winter = winter.In(loc)
+	if DateOffsetGet(winter) != -18000 {
+		t.Fail()
+	}
+
+	summer, _ := DateCreate("2008-06-21")
+	summer = summer.In(loc)
+	if DateOffsetGet(summer) != -14400 {
+		t.Fail()
+	}
+}

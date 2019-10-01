@@ -25,6 +25,9 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [date_diff](https://www.php.net/manual/en/function.date-diff.php) | [DateDiff](https://godoc.org/github.com/hyperjiang/php#DateDiff) |
 | [date_format](https://www.php.net/manual/en/function.date-format.php) | [DateFormat](https://godoc.org/github.com/hyperjiang/php#DateFormat) |
 | [date_interval_create_from_date_string](https://www.php.net/manual/en/function.date-interval-create-from-date-string.php) | [DateIntervalCreateFromDateString](https://godoc.org/github.com/hyperjiang/php#DateIntervalCreateFromDateString) |
+| [date_isodate_set](https://www.php.net/manual/en/function.date-isodate-set.php) | [DateISODateSet](https://godoc.org/github.com/hyperjiang/php#DateISODateSet) |
+| [date_modify](https://www.php.net/manual/en/function.date-modify.php) | [DateModify](https://godoc.org/github.com/hyperjiang/php#DateModify) |
+| [date_offset_get](https://www.php.net/manual/en/function.date-offset-get.php) | [DateOffsetGet](https://godoc.org/github.com/hyperjiang/php#DateOffsetGet) |
 | [date_timezone_get](https://www.php.net/manual/en/function.date-timezone-get.php) | [DateTimezoneGet](https://godoc.org/github.com/hyperjiang/php#DateTimezoneGet) |
 | [date_timezone_set](https://www.php.net/manual/en/function.date-timezone-set.php) | [DateTimezoneSet](https://godoc.org/github.com/hyperjiang/php#DateTimezoneSet) |
 

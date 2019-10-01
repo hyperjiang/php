@@ -323,3 +323,31 @@ func DateIntervalCreateFromDateString(str string) (time.Duration, error) {
 	}
 	return 0, errors.New("unsupported string format")
 }
+
+// DateISODateSet sets a date according to the ISO 8601 standard - using weeks and day offsets rather than specific dates
+func DateISODateSet(year, week, day int) (time.Time, error) {
+	firstDateOfYear, err := time.Parse("2006-1-2", fmt.Sprintf("%04d-%d-%d", year, 1, 1))
+	if err != nil {
+		return time.Time{}, err
+	}
+
+	offset := time.Duration(1-firstDateOfYear.Weekday()) * 24 * time.Hour
+	firstDateOfFirstWeek := firstDateOfYear.Add(offset)
+
+	return firstDateOfFirstWeek.Add(time.Duration(((week-1)*7+day-1)*24) * time.Hour), nil
+}
+
+// DateModify alter the time by the given format
+func DateModify(t time.Time, modify string) (time.Time, error) {
+	duration, err := DateIntervalCreateFromDateString(modify)
+	if err != nil {
+		return t, err
+	}
+	return t.Add(duration), nil
+}
+
+// DateOffsetGet returns the timezone offset
+func DateOffsetGet(t time.Time) int {
+	_, offset := t.Zone()
+	return offset
+}
