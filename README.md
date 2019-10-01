@@ -17,6 +17,7 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [strtotime](https://php.net/manual/en/function.strtotime.php) | [Strtotime](https://godoc.org/github.com/hyperjiang/php#Strtotime) |
 | [time](https://php.net/manual/en/function.time.php) | [Time](https://godoc.org/github.com/hyperjiang/php#Time) |
 | [microtime](https://php.net/manual/en/function.microtime.php) | [Microtime](https://godoc.org/github.com/hyperjiang/php#Microtime) |
+| [date_add](https://www.php.net/manual/en/function.date-add.php) | [DateAdd](https://godoc.org/github.com/hyperjiang/php#DateAdd) |
 | [date_create_from_format](https://www.php.net/manual/en/function.date-create-from-format.php) | [DateCreateFromFormat](https://godoc.org/github.com/hyperjiang/php#DateCreateFromFormat) |
 | [date_create](https://www.php.net/manual/en/function.date-create.php) | [DateCreate](https://godoc.org/github.com/hyperjiang/php#DateCreate) |
 | [date_date_set](https://www.php.net/manual/en/function.date-date-set.php) | [DateDateSet](https://godoc.org/github.com/hyperjiang/php#DateDateSet) |
@@ -28,6 +29,7 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [date_isodate_set](https://www.php.net/manual/en/function.date-isodate-set.php) | [DateISODateSet](https://godoc.org/github.com/hyperjiang/php#DateISODateSet) |
 | [date_modify](https://www.php.net/manual/en/function.date-modify.php) | [DateModify](https://godoc.org/github.com/hyperjiang/php#DateModify) |
 | [date_offset_get](https://www.php.net/manual/en/function.date-offset-get.php) | [DateOffsetGet](https://godoc.org/github.com/hyperjiang/php#DateOffsetGet) |
+| [date_sub](https://www.php.net/manual/en/function.date-sub.php) | [DateSub](https://godoc.org/github.com/hyperjiang/php#DateSub) |
 | [date_timezone_get](https://www.php.net/manual/en/function.date-timezone-get.php) | [DateTimezoneGet](https://godoc.org/github.com/hyperjiang/php#DateTimezoneGet) |
 | [date_timezone_set](https://www.php.net/manual/en/function.date-timezone-set.php) | [DateTimezoneSet](https://godoc.org/github.com/hyperjiang/php#DateTimezoneSet) |
 

@@ -351,3 +351,13 @@ func DateOffsetGet(t time.Time) int {
 	_, offset := t.Zone()
 	return offset
 }
+
+// DateAdd adds an amount of days, months, years, hours, minutes and seconds to the time t
+func DateAdd(t time.Time, d time.Duration) time.Time {
+	return t.Add(d)
+}
+
+// DateSub subtracts an amount of days, months, years, hours, minutes and seconds from the time t
+func DateSub(t time.Time, d time.Duration) time.Time {
+	return t.Add(-d)
+}

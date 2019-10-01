@@ -672,3 +672,21 @@ func TestDateOffsetGet(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestDateAdd(t *testing.T) {
+	date1, _ := DateCreate("2000-01-01")
+	date2, _ := DateCreate("2000-01-11")
+	interval, _ := DateIntervalCreateFromDateString("10 days")
+	if DateAdd(date1, interval) != date2 {
+		t.Fail()
+	}
+}
+
+func TestDateSub(t *testing.T) {
+	date1, _ := DateCreate("2000-01-20")
+	date2, _ := DateCreate("2000-01-10")
+	interval, _ := DateIntervalCreateFromDateString("10 days")
+	if DateSub(date1, interval) != date2 {
+		t.Fail()
+	}
+}
