@@ -30,6 +30,8 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [date_modify](https://www.php.net/manual/en/function.date-modify.php) | [DateModify](https://godoc.org/github.com/hyperjiang/php#DateModify) |
 | [date_offset_get](https://www.php.net/manual/en/function.date-offset-get.php) | [DateOffsetGet](https://godoc.org/github.com/hyperjiang/php#DateOffsetGet) |
 | [date_sub](https://www.php.net/manual/en/function.date-sub.php) | [DateSub](https://godoc.org/github.com/hyperjiang/php#DateSub) |
+| [date_timestamp_get](https://www.php.net/manual/en/function.date-timestamp-get.php) | [DateTimestampGet](https://godoc.org/github.com/hyperjiang/php#DateTimestampGet) |
+| [date_timestamp_set](https://www.php.net/manual/en/function.date-timestamp-set.php) | [DateTimestampSet](https://godoc.org/github.com/hyperjiang/php#DateTimestampSet) |
 | [date_timezone_get](https://www.php.net/manual/en/function.date-timezone-get.php) | [DateTimezoneGet](https://godoc.org/github.com/hyperjiang/php#DateTimezoneGet) |
 | [date_timezone_set](https://www.php.net/manual/en/function.date-timezone-set.php) | [DateTimezoneSet](https://godoc.org/github.com/hyperjiang/php#DateTimezoneSet) |
 

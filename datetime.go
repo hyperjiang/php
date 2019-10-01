@@ -361,3 +361,13 @@ func DateAdd(t time.Time, d time.Duration) time.Time {
 func DateSub(t time.Time, d time.Duration) time.Time {
 	return t.Add(-d)
 }
+
+// DateTimestampGet gets the Unix timestamp
+func DateTimestampGet(t time.Time) int64 {
+	return t.Unix()
+}
+
+// DateTimestampSet sets the date and time based on an Unix timestamp
+func DateTimestampSet(timestamp int64) time.Time {
+	return time.Unix(timestamp, 0)
+}

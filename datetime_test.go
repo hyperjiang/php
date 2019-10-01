@@ -690,3 +690,10 @@ func TestDateSub(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestDateTimestampSet(t *testing.T) {
+	var ts int64 = 1171502725
+	if DateTimestampGet(DateTimestampSet(ts)) != ts {
+		t.Fail()
+	}
+}
