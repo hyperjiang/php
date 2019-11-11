@@ -1,20 +1,22 @@
-package php
+package php_test
 
-import "testing"
+import (
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
 
-func TestSimilarText(t *testing.T) {
+var _ = Describe("SimilarText", func() {
 	type args struct {
 		first  string
 		second string
 	}
 	tests := []struct {
-		name        string
 		args        args
 		wantCount   int
 		wantPercent float32
 	}{
 		{
-			"test1",
 			args{
 				"Hello world",
 				"Hallo world",
@@ -23,7 +25,6 @@ func TestSimilarText(t *testing.T) {
 			90.90909,
 		},
 		{
-			"test2",
 			args{
 				"",
 				"Hello world",
@@ -32,7 +33,6 @@ func TestSimilarText(t *testing.T) {
 			0,
 		},
 		{
-			"test3",
 			args{
 				"",
 				"",
@@ -41,7 +41,6 @@ func TestSimilarText(t *testing.T) {
 			0,
 		},
 		{
-			"test4",
 			args{
 				"",
 				"",
@@ -50,7 +49,6 @@ func TestSimilarText(t *testing.T) {
 			0,
 		},
 		{
-			"test5",
 			args{
 				"abc",
 				"ABC",
@@ -59,24 +57,20 @@ func TestSimilarText(t *testing.T) {
 			0,
 		},
 		{
-			"test6",
 			args{
-				"我爱你中国",
-				"我恨你美国",
+				"我爱Golang",
+				"Golang爱我",
 			},
-			3,
-			60,
+			6,
+			75,
 		},
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			gotCount, gotPercent := SimilarText(tt.args.first, tt.args.second)
-			if gotCount != tt.wantCount {
-				t.Errorf("SimilarText() gotCount = %v, want %v", gotCount, tt.wantCount)
-			}
-			if gotPercent != tt.wantPercent {
-				t.Errorf("SimilarText() gotPercent = %v, want %v", gotPercent, tt.wantPercent)
-			}
-		})
-	}
-}
+
+	It("should match the expected values", func() {
+		for _, t := range tests {
+			gotCount, gotPercent := php.SimilarText(t.args.first, t.args.second)
+			Expect(gotCount).To(Equal(t.wantCount))
+			Expect(gotPercent).To(Equal(t.wantPercent))
+		}
+	})
+})

@@ -1,53 +1,47 @@
-package php
+package php_test
 
 import (
-	"testing"
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestGetHostByAddr(t *testing.T) {
-	if _, err := GetHostByAddr("127.0.0.1"); err != nil {
-		t.Fail()
-	}
-	if _, err := GetHostByAddr("300.0.0.1"); err == nil {
-		t.Fail()
-	}
-}
+var _ = Describe("Network Functions", func() {
+	It("GetHostByAddr", func() {
+		_, err := php.GetHostByAddr("127.0.0.1")
+		Expect(err).NotTo(HaveOccurred())
 
-func TestGetHostByName(t *testing.T) {
-	if _, err := GetHostByName("localhost"); err != nil {
-		t.Fail()
-	}
-	if _, err := GetHostByName("invalid-host"); err == nil {
-		t.Fail()
-	}
-}
+		_, err = php.GetHostByAddr("300.0.0.1")
+		Expect(err).To(HaveOccurred())
+	})
 
-func TestGetHostByNamel(t *testing.T) {
-	if _, err := GetHostByNamel("localhost"); err != nil {
-		t.Fail()
-	}
-	if _, err := GetHostByNamel("invalid-host"); err == nil {
-		t.Fail()
-	}
-}
+	It("GetHostByName", func() {
+		_, err := php.GetHostByName("localhost")
+		Expect(err).NotTo(HaveOccurred())
 
-func TestGetHostName(t *testing.T) {
-	if _, err := GetHostName(); err != nil {
-		t.Fail()
-	}
-}
+		_, err = php.GetHostByName("invalid-host")
+		Expect(err).To(HaveOccurred())
+	})
 
-func TestIP2Long(t *testing.T) {
-	if IP2Long("127.0.0.1") != 2130706433 {
-		t.Fail()
-	}
-	if IP2Long("333.33.3.3") != 0 {
-		t.Fail()
-	}
-}
+	It("GetHostByNamel", func() {
+		_, err := php.GetHostByNamel("localhost")
+		Expect(err).NotTo(HaveOccurred())
 
-func TestLong2IP(t *testing.T) {
-	if Long2IP(2130706433) != "127.0.0.1" {
-		t.Fail()
-	}
-}
+		_, err = php.GetHostByNamel("invalid-host")
+		Expect(err).To(HaveOccurred())
+	})
+
+	It("GetHostName", func() {
+		_, err := php.GetHostName()
+		Expect(err).NotTo(HaveOccurred())
+	})
+
+	It("IP2Long", func() {
+		Expect(php.IP2Long("127.0.0.1")).To(Equal(uint32(2130706433)))
+		Expect(php.IP2Long("333.33.3.3")).To(BeZero())
+	})
+
+	It("Long2IP", func() {
+		Expect(php.Long2IP(2130706433)).To(Equal("127.0.0.1"))
+	})
+})

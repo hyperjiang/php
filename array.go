@@ -6,7 +6,8 @@ import (
 	"sort"
 )
 
-// ArrayUnique removes duplicate values from an array
+// ArrayUnique removes duplicate values from an array,
+// if the input is not a slice or empty then return the original input
 //
 // you can use type assertion to convert the result to the type of input
 func ArrayUnique(array interface{}) interface{} {
@@ -161,7 +162,7 @@ func InArray(needle interface{}, haystack interface{}) bool {
 	return false
 }
 
-// ArrayChunk splits an array into chunks
+// ArrayChunk splits an array into chunks, returns nil if size < 1
 func ArrayChunk(array []interface{}, size int) [][]interface{} {
 	if size < 1 {
 		return nil

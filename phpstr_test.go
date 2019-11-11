@@ -1,742 +1,557 @@
-package php
+package php_test
 
 import (
-	"reflect"
-	"testing"
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestSubstr(t *testing.T) {
-
-	str := "abcdef"
-
-	if Substr(str, 1, 0) != "bcdef" {
-		t.Fail()
-	}
-
-	if Substr(str, 1, 3) != "bcd" {
-		t.Fail()
-	}
-
-	if Substr(str, 0, 4) != "abcd" {
-		t.Fail()
-	}
-
-	if Substr(str, 0, 8) != "abcdef" {
-		t.Fail()
-	}
-
-	if Substr(str, 10, 0) != "" {
-		t.Fail()
-	}
-
-	if Substr(str, -1, 1) != "f" {
-		t.Fail()
-	}
-
-	if Substr(str, -100, 0) != "abcdef" {
-		t.Fail()
-	}
-
-	if Substr(str, -1, 0) != "f" {
-		t.Fail()
-	}
-
-	if Substr(str, -2, 0) != "ef" {
-		t.Fail()
-	}
-
-	if Substr(str, -3, 1) != "d" {
-		t.Fail()
-	}
-
-	if Substr(str, 0, -1) != "abcde" {
-		t.Fail()
-	}
-
-	if Substr(str, 2, -1) != "cde" {
-		t.Fail()
-	}
-
-	if Substr(str, 4, -4) != "" {
-		t.Fail()
-	}
-
-	if Substr(str, 0, -10) != "" {
-		t.Fail()
-	}
-
-	if Substr(str, -3, -1) != "de" {
-		t.Fail()
-	}
-
-	if Substr("", 0, 0) != "" {
-		t.Fail()
-	}
-
-	if Substr("我是中文abc", 2, 3) != "中文a" {
-		t.Fail()
-	}
-}
-
-func TestStrlen(t *testing.T) {
-	if Strlen("abc") != 3 {
-		t.Fail()
-	}
-
-	if Strlen("中文") != 2 {
-		t.Fail()
-	}
-}
-
-func TestStrpos(t *testing.T) {
-	if Strpos("chicken", "ken") != 4 {
-		t.Fail()
-	}
-	if Strpos("chicken", "hello") != -1 {
-		t.Fail()
-	}
-	if Strpos("我是中文abc", "中文") != 2 {
-		t.Fail()
-	}
-}
-
-func TestStrrpos(t *testing.T) {
-	if Strrpos("go gopher", "go") != 3 {
-		t.Fail()
-	}
-	if Strrpos("go gopher", "GO") != -1 {
-		t.Fail()
-	}
-	if Strrpos("中文abc中文def", "中文") != 5 {
-		t.Fail()
-	}
-}
-
-func TestStripos(t *testing.T) {
-	if Stripos("go gopher", "go") != 0 {
-		t.Fail()
-	}
-	if Stripos("go gopher", "GO") != 0 {
-		t.Fail()
-	}
-}
-
-func TestStrripos(t *testing.T) {
-	if Strripos("go gopher", "go") != 3 {
-		t.Fail()
-	}
-	if Strripos("go gopher", "GO") != 3 {
-		t.Fail()
-	}
-}
-
-func TestReplace(t *testing.T) {
-	if Replace("中文", "China", "中文 abc") != "China abc" {
-		t.Fail()
-	}
-	if Replace(123, "一二三", "123456") != "一二三456" {
-		t.Fail()
-	}
-	if Replace(123, 321, "123456") != "321456" {
-		t.Fail()
-	}
-
-	phrase := "You should eat fruits, vegetables, and fiber every day."
-	healthy := []string{"fruits", "vegetables", "fiber"}
-	yummy := []string{"pizza", "beer", "ice cream"}
-	if Replace(healthy, yummy, phrase) != "You should eat pizza, beer, and ice cream every day." {
-		t.Fail()
-	}
-
-	search := []string{"A", "B", "C", "D", "E"}
-	replace := []string{"B", "C", "D", "E", "F"}
-	subject := "A"
-	if Replace(search, replace, subject) != "F" {
-		t.Fail()
-	}
-
-	if Replace('a', 'b', "aee") != "bee" {
-		t.Fail()
-	}
-
-	if Replace([]int{1}, 2, "123") != "123" {
-		t.Fail()
-	}
-
-	if Replace(1, []int{2}, "123") != "123" {
-		t.Fail()
-	}
-}
-
-func TestIreplace(t *testing.T) {
-	if Ireplace("中文", "China", "中文 abc") != "China abc" {
-		t.Fail()
-	}
-	if Ireplace(123, "一二三", "123456") != "一二三456" {
-		t.Fail()
-	}
-	if Ireplace(123, 321, "123456") != "321456" {
-		t.Fail()
-	}
-
-	phrase := "You should eat FRUITS, VEGETABLES, and FIBER every day."
-	healthy := []string{"fruits", "vegetables", "fiber"}
-	yummy := []string{"pizza", "beer", "ice cream"}
-	if Ireplace(healthy, yummy, phrase) != "You should eat pizza, beer, and ice cream every day." {
-		t.Fail()
-	}
-
-	search := []string{"A", "B", "c", "d", "E"}
-	replace := []string{"b", "C", "D", "e", "F"}
-	subject := "A"
-	if Ireplace(search, replace, subject) != "F" {
-		t.Fail()
-	}
-
-	if Ireplace('a', 'b', "Aee") != "bee" {
-		t.Fail()
-	}
-
-	if Ireplace([]int{1}, 2, "123") != "123" {
-		t.Fail()
-	}
-
-	if Ireplace(1, []int{2}, "123") != "123" {
-		t.Fail()
-	}
-}
-
-func TestAddslashes(t *testing.T) {
-	if Addslashes("He said \"Hello O'Reilly\" & disappeared.") != "He said \\\"Hello O\\'Reilly\\\" & disappeared." {
-		t.Fail()
-	}
-}
-
-func TestStripslashes(t *testing.T) {
-	if Stripslashes("Is your name O\\'reilly?") != "Is your name O'reilly?" {
-		t.Fail()
-	}
-	str := "He said \\\"Hello O\\'Reilly\\\" & disappeared."
-	if Stripslashes(str) != "He said \"Hello O'Reilly\" & disappeared." {
-		t.Fail()
-	}
-}
-
-func TestChr(t *testing.T) {
-	if Chr(97) != "a" {
-		t.Fail()
-	}
-	if Chr(-159) != "a" {
-		t.Fail()
-	}
-	if Chr(833) != "A" {
-		t.Fail()
-	}
-}
-
-func TestOrd(t *testing.T) {
-	if Ord("a") != 97 {
-		t.Fail()
-	}
-	if Ord("\n") != 10 {
-		t.Fail()
-	}
-}
-
-func TestExplode(t *testing.T) {
-	pizza := "piece1 piece2 piece3 piece4 piece5 piece6"
-	pieces := Explode(" ", pizza)
-	if pieces[0] != "piece1" || pieces[5] != "piece6" {
-		t.Fail()
-	}
-}
-
-func TestImplode(t *testing.T) {
-	array := []string{"lastname", "email", "phone"}
-
-	if (Implode(",", array)) != "lastname,email,phone" {
-		t.Fail()
-	}
-
-	if (Implode("hello", []string{})) != "" {
-		t.Fail()
-	}
-}
-
-func TestLcfirst(t *testing.T) {
-	if Lcfirst("HelloWorld") != "helloWorld" {
-		t.Fail()
-	}
-}
-
-func TestUcfirst(t *testing.T) {
-	if Ucfirst("hello world!") != "Hello world!" {
-		t.Fail()
-	}
-}
-
-func TestMd5(t *testing.T) {
-	if Md5("apple") != "1f3870be274f6c49b3e31a0c6728957f" {
-		t.Fail()
-	}
-}
-
-func TestMd5File(t *testing.T) {
-	h1, _ := Md5File("./LICENSE")
-	if h1 != "ed92d7885d31d79240594cd0e4a09fb7" {
-		t.Fail()
-	}
-
-	h2, _ := Md5File("./non-existent-file")
-	if h2 != "" {
-		t.Fail()
-	}
-}
-
-func TestStrstr(t *testing.T) {
-	email := "name@example.com"
-	domain := Strstr(email, "@")
-	if domain != "@example.com" {
-		t.Fail()
-	}
-
-	if Strstr("abc", "d") != "" {
-		t.Fail()
-	}
-
-	if Strstr("我是中文，能正常解析不？", "能") != "能正常解析不？" {
-		t.Fail()
-	}
-}
-
-func TestStristr(t *testing.T) {
-	email := "USER@EXAMPLE.com"
-	domain := Stristr(email, "e")
-	if domain != "ER@EXAMPLE.com" {
-		t.Fail()
-	}
-
-	if Stristr("abc", "d") != "" {
-		t.Fail()
-	}
-
-	if Stristr("我是中文，能正常解析不？", "能") != "能正常解析不？" {
-		t.Fail()
-	}
-}
-
-func TestCrc32(t *testing.T) {
-	if Crc32("The quick brown fox jumped over the lazy dog.") != 2191738434 {
-		t.Fail()
-	}
-}
-
-func TestBin2hex(t *testing.T) {
-	if Bin2hex([]byte("Hello")) != "48656c6c6f" {
-		t.Fail()
-	}
-}
-
-func TestHex2bin(t *testing.T) {
-	if string(Hex2bin("6578616d706c65206865782064617461")) != "example hex data" {
-		t.Fail()
-	}
-}
-
-func TestTrim(t *testing.T) {
-	type args struct {
-		str   string
-		chars []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{str: "\t\tThese are a few words :) ...  "},
-			"These are a few words :) ...",
-		},
-		{
-			"2",
-			args{str: "\t\tThese are a few words :) ...  ", chars: []string{" ", "\t", "."}},
-			"These are a few words :)",
-		},
-		{
-			"3",
-			args{str: "Hello World", chars: []string{"H", "d", "l", "e"}},
-			"o Wor",
-		},
-		{
-			"4",
-			args{str: "Hello World", chars: []string{"H", "d", "W", "r"}},
-			"ello Worl",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Trim(tt.args.str, tt.args.chars...); got != tt.want {
-				t.Errorf("Trim() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestLtrim(t *testing.T) {
-	type args struct {
-		str   string
-		chars []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{str: "\t\tThese are a few words :) ...  "},
-			"These are a few words :) ...  ",
-		},
-		{
-			"2",
-			args{str: "\t\tThese are a few words :) ...  ", chars: []string{" ", "\t", "."}},
-			"These are a few words :) ...  ",
-		},
-		{
-			"3",
-			args{str: "Hello World", chars: []string{"H", "d", "l", "e"}},
-			"o World",
-		},
-		{
-			"4",
-			args{str: "Hello World", chars: []string{"H", "d", "W", "r"}},
-			"ello World",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Ltrim(tt.args.str, tt.args.chars...); got != tt.want {
-				t.Errorf("Ltrim() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestRtrim(t *testing.T) {
-	type args struct {
-		str   string
-		chars []string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{str: "\t\tThese are a few words :) ...  "},
-			"\t\tThese are a few words :) ...",
-		},
-		{
-			"2",
-			args{str: "\t\tThese are a few words :) ...  ", chars: []string{" ", "\t", "."}},
-			"\t\tThese are a few words :)",
-		},
-		{
-			"3",
-			args{str: "Hello World", chars: []string{"H", "d", "l", "e"}},
-			"Hello Wor",
-		},
-		{
-			"4",
-			args{str: "Hello World", chars: []string{"H", "d", "W", "r"}},
-			"Hello Worl",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Rtrim(tt.args.str, tt.args.chars...); got != tt.want {
-				t.Errorf("Rtrim() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestHTMLSpecialchars(t *testing.T) {
-	if HTMLSpecialchars("<a href='test'>Test</a>") != "&lt;a href=&#39;test&#39;&gt;Test&lt;/a&gt;" {
-		t.Fail()
-	}
-	if HTMLSpecialchars("<Il était une fois un être>.") != "&lt;Il était une fois un être&gt;." {
-		t.Fail()
-	}
-}
-
-func TestHTMLSpecialcharsDecode(t *testing.T) {
-	if HTMLSpecialcharsDecode("&lt;a href=&#39;test&#39;&gt;Test&lt;/a&gt;") != "<a href='test'>Test</a>" {
-		t.Fail()
-	}
-	if HTMLSpecialcharsDecode("<p>this -&gt; &quot;</p>") != "<p>this -> \"</p>" {
-		t.Fail()
-	}
-}
-
-func TestStrWordCount(t *testing.T) {
-	var expected = []string{
-		"Hello",
-		"fri3nd,",
-		"you're",
-		"looking",
-		"good",
-		"today!",
-	}
-	var res = StrWordCount("Hello fri3nd, you're looking          good today!")
-	if !reflect.DeepEqual(expected, res) {
-		t.Fail()
-	}
-}
-
-func TestNumberFormat(t *testing.T) {
-	type args struct {
-		number       float64
-		decimals     int
-		decPoint     string
-		thousandsSep string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{1234.56, 0, ".", ","},
-			"1,235",
-		},
-		{
-			"2",
-			args{123456.78, 2, ".", ","},
-			"123,456.78",
-		},
-		{
-			"3",
-			args{123456.78, 3, ".", ","},
-			"123,456.780",
-		},
-		{
-			"4",
-			args{123456789, 1, ".", ","},
-			"123,456,789.0",
-		},
-		{
-			"5",
-			args{-1234.56, 0, ".", ","},
-			"-1,235",
-		},
-		{
-			"6",
-			args{-1234.56, -1, ".", ","},
-			"-1,235",
-		},
-		{
-			"7",
-			args{1234.56, 2, ",", " "},
-			"1 234,56",
-		},
-		{
-			"8",
-			args{1234.5678, 2, ".", ""},
-			"1234.57",
-		},
-		{
-			"9",
-			args{1234.56, 1, "", ","},
-			"1,2346",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := NumberFormat(tt.args.number, tt.args.decimals, tt.args.decPoint, tt.args.thousandsSep); got != tt.want {
-				t.Errorf("NumberFormat() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestDefaultNumberFormat(t *testing.T) {
-	if DefaultNumberFormat(1234.56, 0) != "1,235" {
-		t.Fail()
-	}
-}
-
-func TestSha1(t *testing.T) {
-	if Sha1("apple") != "d0be2dc421be4fcd0172e5afceea3970e2f3d940" {
-		t.Fail()
-	}
-}
-
-func TestSha1File(t *testing.T) {
-	h1, _ := Sha1File("./LICENSE")
-	if h1 != "404a894bedbe7256611b7bc5887eb3efb06de19f" {
-		t.Fail()
-	}
-
-	h2, _ := Sha1File("./non-existent-file")
-	if h2 != "" {
-		t.Fail()
-	}
-}
-
-func TestStrRepeat(t *testing.T) {
-	if StrRepeat("-=", 10) != "-=-=-=-=-=-=-=-=-=-=" {
-		t.Fail()
-	}
-}
-
-func TestStrPad(t *testing.T) {
-	type args struct {
-		input     string
-		padLength int
-		padString string
-		padType   int
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{"input", 10, "ab", StrPadBoth},
-			"abinputaba",
-		},
-		{
-			"2",
-			args{"Alien", 10, "", StrPadRight},
-			"Alien     ",
-		},
-		{
-			"3",
-			args{"Alien", 10, "-=", StrPadLeft},
-			"-=-=-Alien",
-		},
-		{
-			"4",
-			args{"Alien", 10, "_", StrPadBoth},
-			"__Alien___",
-		},
-		{
-			"5",
-			args{"Alien", 3, "*", StrPadBoth},
-			"Alien",
-		},
-		{
-			"6",
-			args{"input", 6, "p", StrPadBoth},
-			"inputp",
-		},
-		{
-			"7",
-			args{"input", 6, "p", 100000},
-			"inputp",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := StrPad(tt.args.input, tt.args.padLength, tt.args.padString, tt.args.padType); got != tt.want {
-				t.Errorf("StrPad() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestStrtoupper(t *testing.T) {
-	if Strtoupper("Mary Had A Little Lamb and She LOVED It So") != "MARY HAD A LITTLE LAMB AND SHE LOVED IT SO" {
-		t.Fail()
-	}
-}
-
-func TestStrtolower(t *testing.T) {
-	if Strtolower("Mary Had A Little Lamb and She LOVED It So") != "mary had a little lamb and she loved it so" {
-		t.Fail()
-	}
-}
-
-func TestStrrev(t *testing.T) {
-	if Strrev("Hello world!") != "!dlrow olleH" {
-		t.Fail()
-	}
-}
-
-func TestUcwords(t *testing.T) {
-	type args struct {
-		str string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{"hello world!"},
-			"Hello World!",
-		},
-		{
-			"2",
-			args{"HELLO WORLD!"},
-			"HELLO WORLD!",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Ucwords(tt.args.str); got != tt.want {
-				t.Errorf("Ucwords() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestUcname(t *testing.T) {
-	type args struct {
-		str string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{"JEAN-LUC PICARD"},
-			"Jean-Luc Picard",
-		},
-		{
-			"2",
-			args{"MILES O'BRIEN"},
-			"Miles O'Brien",
-		},
-		{
-			"3",
-			args{"WILLIAM RIKER"},
-			"William Riker",
-		},
-		{
-			"4",
-			args{"geordi la forge"},
-			"Geordi La Forge",
-		},
-		{
-			"5",
-			args{"bEvErly CRuSHeR"},
-			"Beverly Crusher",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Ucname(tt.args.str); got != tt.want {
-				t.Errorf("Ucname() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+var _ = Describe("String Functions", func() {
+
+	It("Substr", func() {
+		str := "abcdef"
+		tests := []struct {
+			start  int
+			length int
+			want   string
+		}{
+			{1, 3, "bcd"},
+			{0, 4, "abcd"},
+			{0, 8, "abcdef"},
+			{10, 0, ""},
+			{-1, 1, "f"},
+			{-100, 0, "abcdef"},
+			{-1, 0, "f"},
+			{-2, 0, "ef"},
+			{-3, 1, "d"},
+			{0, -1, "abcde"},
+			{2, -1, "cde"},
+			{4, -4, ""},
+			{0, -10, ""},
+			{-3, -1, "de"},
+		}
+		for _, t := range tests {
+			Expect(php.Substr(str, t.start, t.length)).To(Equal(t.want))
+		}
+
+		Expect(php.Substr("", 0, 0)).To(Equal(""))
+		Expect(php.Substr("我是中文abc", 2, 3)).To(Equal("中文a"))
+	})
+
+	It("Strlen", func() {
+		Expect(php.Strlen("abc")).To(Equal(3))
+		Expect(php.Strlen("中文")).To(Equal(2))
+	})
+
+	It("Strpos", func() {
+		tests := []struct {
+			haystack string
+			needle   string
+			want     int
+		}{
+			{"chicken", "ken", 4},
+			{"chicken", "hello", -1},
+			{"我是中文abc", "中文", 2},
+		}
+		for _, t := range tests {
+			Expect(php.Strpos(t.haystack, t.needle)).To(Equal(t.want))
+		}
+	})
+
+	It("Strrpos", func() {
+		tests := []struct {
+			haystack string
+			needle   string
+			want     int
+		}{
+			{"go gopher", "go", 3},
+			{"go gopher", "GO", -1},
+			{"中文abc中文def", "中文", 5},
+		}
+		for _, t := range tests {
+			Expect(php.Strrpos(t.haystack, t.needle)).To(Equal(t.want))
+		}
+	})
+
+	It("Stripos", func() {
+		tests := []struct {
+			haystack string
+			needle   string
+			want     int
+		}{
+			{"go gopher", "go", 0},
+			{"go gopher", "GO", 0},
+		}
+		for _, t := range tests {
+			Expect(php.Stripos(t.haystack, t.needle)).To(Equal(t.want))
+		}
+	})
+
+	It("Strripos", func() {
+		tests := []struct {
+			haystack string
+			needle   string
+			want     int
+		}{
+			{"go gopher", "go", 3},
+			{"go gopher", "GO", 3},
+		}
+		for _, t := range tests {
+			Expect(php.Strripos(t.haystack, t.needle)).To(Equal(t.want))
+		}
+	})
+
+	It("Replace", func() {
+		tests := []struct {
+			search  interface{}
+			replace interface{}
+			subject string
+			want    string
+		}{
+			{"中文", "China", "中文 abc", "China abc"},
+			{123, "一二三", "123456", "一二三456"},
+			{123, 321, "123456", "321456"},
+			{
+				[]string{"fruits", "vegetables", "fiber"},
+				[]string{"pizza", "beer", "ice cream"},
+				"You should eat fruits, vegetables, and fiber every day.",
+				"You should eat pizza, beer, and ice cream every day.",
+			},
+			{
+				[]string{"A", "B", "C", "D", "E"},
+				[]string{"B", "C", "D", "E", "F"},
+				"A",
+				"F",
+			},
+			{'a', 'b', "aee", "bee"},
+			{[]int{1}, 2, "123", "123"},
+			{1, []int{2}, "123", "123"},
+		}
+		for _, t := range tests {
+			Expect(php.Replace(t.search, t.replace, t.subject)).To(Equal(t.want))
+		}
+	})
+
+	It("Ireplace", func() {
+		tests := []struct {
+			search  interface{}
+			replace interface{}
+			subject string
+			want    string
+		}{
+			{"中文", "China", "中文 abc", "China abc"},
+			{123, "一二三", "123456", "一二三456"},
+			{123, 321, "123456", "321456"},
+			{
+				[]string{"fruits", "vegetables", "fiber"},
+				[]string{"pizza", "beer", "ice cream"},
+				"You should eat FRUITS, VEGETABLES, and FIBER every day.",
+				"You should eat pizza, beer, and ice cream every day.",
+			},
+			{
+				[]string{"A", "B", "c", "d", "E"},
+				[]string{"b", "C", "D", "e", "F"},
+				"A",
+				"F",
+			},
+			{'a', 'b', "Aee", "bee"},
+			{[]int{1}, 2, "123", "123"},
+			{1, []int{2}, "123", "123"},
+		}
+		for _, t := range tests {
+			Expect(php.Ireplace(t.search, t.replace, t.subject)).To(Equal(t.want))
+		}
+	})
+
+	It("Addslashes", func() {
+		Expect(php.Addslashes("He said \"Hello O'Reilly\" & disappeared.")).To(Equal("He said \\\"Hello O\\'Reilly\\\" & disappeared."))
+	})
+
+	It("Stripslashes", func() {
+		Expect(php.Stripslashes("Is your name O\\'reilly?")).To(Equal("Is your name O'reilly?"))
+		Expect(php.Stripslashes("He said \\\"Hello O\\'Reilly\\\" & disappeared.")).To(Equal("He said \"Hello O'Reilly\" & disappeared."))
+	})
+
+	It("Chr", func() {
+		Expect(php.Chr(97)).To(Equal("a"))
+		Expect(php.Chr(-159)).To(Equal("a"))
+		Expect(php.Chr(833)).To(Equal("A"))
+	})
+
+	It("Ord", func() {
+		Expect(php.Ord("a")).To(Equal(rune(97)))
+		Expect(php.Ord("\n")).To(Equal(rune(10)))
+	})
+
+	It("Explode", func() {
+		pizza := "piece1 piece2 piece3 piece4 piece5 piece6"
+		pieces := php.Explode(" ", pizza)
+		Expect(pieces[0]).To(Equal("piece1"))
+		Expect(pieces[5]).To(Equal("piece6"))
+	})
+
+	It("Implode", func() {
+		array := []string{"lastname", "email", "phone"}
+		Expect(php.Implode(",", array)).To(Equal("lastname,email,phone"))
+		Expect(php.Implode("hello", []string{})).To(Equal(""))
+	})
+
+	It("Lcfirst", func() {
+		Expect(php.Lcfirst("HelloWorld")).To(Equal("helloWorld"))
+	})
+
+	It("Ucfirst", func() {
+		Expect(php.Ucfirst("hello world!")).To(Equal("Hello world!"))
+	})
+
+	It("Md5", func() {
+		Expect(php.Md5("apple")).To(Equal("1f3870be274f6c49b3e31a0c6728957f"))
+	})
+
+	It("Md5File", func() {
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{"./LICENSE", "ed92d7885d31d79240594cd0e4a09fb7"},
+			{"./non-existent-file", ""},
+		}
+		for _, t := range tests {
+			h, _ := php.Md5File(t.input)
+			Expect(h).To(Equal(t.want))
+		}
+	})
+
+	It("Strstr", func() {
+		tests := []struct {
+			haystack string
+			needle   string
+			want     string
+		}{
+			{"name@example.com", "@", "@example.com"},
+			{"abc", "d", ""},
+			{"我是中文，能正常解析不？", "能", "能正常解析不？"},
+		}
+		for _, t := range tests {
+			Expect(php.Strstr(t.haystack, t.needle)).To(Equal(t.want))
+		}
+	})
+
+	It("Stristr", func() {
+		tests := []struct {
+			haystack string
+			needle   string
+			want     string
+		}{
+			{"USER@EXAMPLE.com", "e", "ER@EXAMPLE.com"},
+			{"abc", "d", ""},
+			{"我是中文，能正常解析不？", "能", "能正常解析不？"},
+		}
+		for _, t := range tests {
+			Expect(php.Stristr(t.haystack, t.needle)).To(Equal(t.want))
+		}
+	})
+
+	It("Crc32", func() {
+		Expect(php.Crc32("The quick brown fox jumped over the lazy dog.")).To(Equal(uint32(2191738434)))
+	})
+
+	It("Bin2hex", func() {
+		Expect(php.Bin2hex([]byte("Hello"))).To(Equal("48656c6c6f"))
+	})
+
+	It("Hex2bin", func() {
+		Expect(php.Hex2bin("6578616d706c65206865782064617461")).To(Equal([]byte("example hex data")))
+	})
+
+	It("Trim", func() {
+		tests := []struct {
+			str   string
+			chars []string
+			want  string
+		}{
+			{
+				"\t\tThese are a few words :) ...  ",
+				nil,
+				"These are a few words :) ...",
+			},
+			{
+				"\t\tThese are a few words :) ...  ",
+				[]string{" ", "\t", "."},
+				"These are a few words :)",
+			},
+			{
+				"Hello World",
+				[]string{"H", "d", "l", "e"},
+				"o Wor",
+			},
+			{
+				"Hello World",
+				[]string{"H", "d", "W", "r"},
+				"ello Worl",
+			},
+		}
+		for _, t := range tests {
+			Expect(php.Trim(t.str, t.chars...)).To(Equal(t.want))
+		}
+	})
+
+	It("Ltrim", func() {
+		tests := []struct {
+			str   string
+			chars []string
+			want  string
+		}{
+			{
+				"\t\tThese are a few words :) ...  ",
+				nil,
+				"These are a few words :) ...  ",
+			},
+			{
+				"\t\tThese are a few words :) ...  ",
+				[]string{" ", "\t", "."},
+				"These are a few words :) ...  ",
+			},
+			{
+				"Hello World",
+				[]string{"H", "d", "l", "e"},
+				"o World",
+			},
+			{
+				"Hello World",
+				[]string{"H", "d", "W", "r"},
+				"ello World",
+			},
+		}
+		for _, t := range tests {
+			Expect(php.Ltrim(t.str, t.chars...)).To(Equal(t.want))
+		}
+	})
+
+	It("Rtrim", func() {
+		tests := []struct {
+			str   string
+			chars []string
+			want  string
+		}{
+			{
+				"\t\tThese are a few words :) ...  ",
+				nil,
+				"\t\tThese are a few words :) ...",
+			},
+			{
+				"\t\tThese are a few words :) ...  ",
+				[]string{" ", "\t", "."},
+				"\t\tThese are a few words :)",
+			},
+			{
+				"Hello World",
+				[]string{"H", "d", "l", "e"},
+				"Hello Wor",
+			},
+			{
+				"Hello World",
+				[]string{"H", "d", "W", "r"},
+				"Hello Worl",
+			},
+		}
+		for _, t := range tests {
+			Expect(php.Rtrim(t.str, t.chars...)).To(Equal(t.want))
+		}
+	})
+
+	It("HTMLSpecialchars", func() {
+		Expect(php.HTMLSpecialchars("<a href='test'>Test</a>")).To(Equal("&lt;a href=&#39;test&#39;&gt;Test&lt;/a&gt;"))
+		Expect(php.HTMLSpecialchars("<Il était une fois un être>.")).To(Equal("&lt;Il était une fois un être&gt;."))
+	})
+
+	It("HTMLSpecialcharsDecode", func() {
+		Expect(php.HTMLSpecialcharsDecode("&lt;a href=&#39;test&#39;&gt;Test&lt;/a&gt;")).To(Equal("<a href='test'>Test</a>"))
+		Expect(php.HTMLSpecialcharsDecode("<p>this -&gt; &quot;</p>")).To(Equal("<p>this -> \"</p>"))
+	})
+
+	It("StrWordCount", func() {
+		var want = []string{
+			"Hello",
+			"fri3nd,",
+			"you're",
+			"looking",
+			"good",
+			"today!",
+		}
+		var res = php.StrWordCount("Hello fri3nd, you're looking          good today!")
+		Expect(res).To(Equal(want))
+	})
+
+	It("NumberFormat", func() {
+		type args struct {
+			number       float64
+			decimals     int
+			decPoint     string
+			thousandsSep string
+		}
+		tests := []struct {
+			args args
+			want string
+		}{
+			{
+				args{1234.56, 0, ".", ","},
+				"1,235",
+			},
+			{
+				args{123456.78, 2, ".", ","},
+				"123,456.78",
+			},
+			{
+				args{123456.78, 3, ".", ","},
+				"123,456.780",
+			},
+			{
+				args{123456789, 1, ".", ","},
+				"123,456,789.0",
+			},
+			{
+				args{-1234.56, 0, ".", ","},
+				"-1,235",
+			},
+			{
+				args{-1234.56, -1, ".", ","},
+				"-1,235",
+			},
+			{
+				args{1234.56, 2, ",", " "},
+				"1 234,56",
+			},
+			{
+				args{1234.5678, 2, ".", ""},
+				"1234.57",
+			},
+			{
+				args{1234.56, 1, "", ","},
+				"1,2346",
+			},
+		}
+		for _, t := range tests {
+			Expect(php.NumberFormat(t.args.number, t.args.decimals, t.args.decPoint, t.args.thousandsSep)).To(Equal(t.want))
+		}
+	})
+
+	It("DefaultNumberFormat", func() {
+		Expect(php.DefaultNumberFormat(1234.56, 0)).To(Equal("1,235"))
+	})
+
+	It("Sha1", func() {
+		Expect(php.Sha1("apple")).To(Equal("d0be2dc421be4fcd0172e5afceea3970e2f3d940"))
+	})
+
+	It("Sha1File", func() {
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{"./LICENSE", "404a894bedbe7256611b7bc5887eb3efb06de19f"},
+			{"./non-existent-file", ""},
+		}
+		for _, t := range tests {
+			h, _ := php.Sha1File(t.input)
+			Expect(h).To(Equal(t.want))
+		}
+	})
+
+	It("StrRepeat", func() {
+		Expect(php.StrRepeat("-=", 10)).To(Equal("-=-=-=-=-=-=-=-=-=-="))
+	})
+
+	It("StrPad", func() {
+		type args struct {
+			input     string
+			padLength int
+			padString string
+			padType   int
+		}
+		tests := []struct {
+			args args
+			want string
+		}{
+			{
+				args{"input", 10, "ab", php.StrPadBoth},
+				"abinputaba",
+			},
+			{
+				args{"Alien", 10, "", php.StrPadRight},
+				"Alien     ",
+			},
+			{
+				args{"Alien", 10, "-=", php.StrPadLeft},
+				"-=-=-Alien",
+			},
+			{
+				args{"Alien", 10, "_", php.StrPadBoth},
+				"__Alien___",
+			},
+			{
+				args{"Alien", 3, "*", php.StrPadBoth},
+				"Alien",
+			},
+			{
+				args{"input", 6, "p", php.StrPadBoth},
+				"inputp",
+			},
+			{
+				args{"input", 6, "p", 100000},
+				"inputp",
+			},
+		}
+		for _, t := range tests {
+			Expect(php.StrPad(t.args.input, t.args.padLength, t.args.padString, t.args.padType)).To(Equal(t.want))
+		}
+	})
+
+	It("Strtoupper", func() {
+		Expect(php.Strtoupper("Mary Had A Little Lamb and She LOVED It So")).To(Equal("MARY HAD A LITTLE LAMB AND SHE LOVED IT SO"))
+	})
+
+	It("Strtolower", func() {
+		Expect(php.Strtolower("Mary Had A Little Lamb and She LOVED It So")).To(Equal("mary had a little lamb and she loved it so"))
+	})
+
+	It("Strrev", func() {
+		Expect(php.Strrev("Hello world!")).To(Equal("!dlrow olleH"))
+	})
+
+	It("Ucwords", func() {
+		Expect(php.Ucwords("hello world!")).To(Equal("Hello World!"))
+		Expect(php.Ucwords("HELLO WORLD!")).To(Equal("HELLO WORLD!"))
+	})
+
+	It("Ucname", func() {
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{
+				"JEAN-LUC PICARD",
+				"Jean-Luc Picard",
+			},
+			{
+				"MILES O'BRIEN",
+				"Miles O'Brien",
+			},
+			{
+				"WILLIAM RIKER",
+				"William Riker",
+			},
+			{
+				"geordi la forge",
+				"Geordi La Forge",
+			},
+			{
+				"bEvErly CRuSHeR",
+				"Beverly Crusher",
+			},
+		}
+		for _, t := range tests {
+			Expect(php.Ucname(t.input)).To(Equal(t.want))
+		}
+	})
+})

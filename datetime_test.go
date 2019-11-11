@@ -1,699 +1,362 @@
-package php
+package php_test
 
 import (
 	"fmt"
-	"reflect"
-	"testing"
 	"time"
+
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestStrtotime(t *testing.T) {
-	ts170101 := int64(1483228800) // the UTC timestamp of 2017-01-01
-	ts170111 := int64(1484092800) // the UTC timestamp of 2017-01-11
+var _ = Describe("Date/Time Functions", func() {
 
-	type args struct {
-		str string
-	}
-	tests := []struct {
-		name string
-		args args
-		want int64
-	}{
-		{
-			"1",
-			args{"2017-01-01"},
-			ts170101,
-		},
-		{
-			"2",
-			args{"2017-1-01"},
-			ts170101,
-		},
-		{
-			"3",
-			args{"2017-1-1"},
-			ts170101,
-		},
-		{
-			"4",
-			args{"20170101"},
-			ts170101,
-		},
-		{
-			"5",
-			args{"2017-1-11"},
-			ts170111,
-		},
-		{
-			"6",
-			args{"2017-01-01 00:00:00"},
-			ts170101,
-		},
-		{
-			"7",
-			args{"17-01-01"},
-			ts170101,
-		},
-		{
-			"8",
-			args{"20170101000000"},
-			ts170101,
-		},
-		{
-			"9",
-			args{"2017"},
-			ts170101,
-		},
-		{
-			"10",
-			args{"2017-07-14T10:40:00+08:00"},
-			1500000000,
-		},
-		{
-			"11",
-			args{"Fri, 14 Jul 2017 02:40:00 +0000"},
-			1500000000,
-		},
-		{
-			"12",
-			args{"xxx"},
-			-1,
-		},
-		{
-			"13",
-			args{"+1 day"},
-			Time() + 86400,
-		},
-		{
-			"14",
-			args{"+2 days"},
-			Time() + 86400*2,
-		},
-		{
-			"15",
-			args{"-1 day"},
-			Time() - 86400,
-		},
-		{
-			"16",
-			args{"+1 month"},
-			Time() + 86400*30,
-		},
-		{
-			"17",
-			args{"+1 year"},
-			Time() + 86400*365,
-		},
-		{
-			"18",
-			args{"+1 week"},
-			Time() + 86400*7,
-		},
-		{
-			"19",
-			args{"+1 hour"},
-			Time() + 3600,
-		},
-		{
-			"20",
-			args{"+1 minute"},
-			Time() + 60,
-		},
-		{
-			"21",
-			args{"+1 second"},
-			Time() + 1,
-		},
-		{
-			"22",
-			args{"2017-01-1"},
-			ts170101,
-		},
-		{
-			"23",
-			args{"17-01-1"},
-			ts170101,
-		},
-		{
-			"24",
-			args{"2017-1-01 00:00:00"},
-			ts170101,
-		},
-		{
-			"25",
-			args{"2017-1-1 00:00:00"},
-			ts170101,
-		},
-		{
-			"26",
-			args{"2017-01-1 00:00:00"},
-			ts170101,
-		},
-		{
-			"27",
-			args{"17-01-01 00:00:00"},
-			ts170101,
-		},
-		{
-			"28",
-			args{"17-1-01 00:00:00"},
-			ts170101,
-		},
-		{
-			"29",
-			args{"17-1-1 00:00:00"},
-			ts170101,
-		},
-		{
-			"30",
-			args{"17-01-1 00:00:00"},
-			ts170101,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Strtotime(tt.args.str); got != tt.want {
-				t.Errorf("Strtotime() = %v, want %v", got, tt.want)
-			}
+	It("Strtotime", func() {
+		ts170101 := int64(1483228800) // the UTC timestamp of 2017-01-01
+		ts170111 := int64(1484092800) // the UTC timestamp of 2017-01-11
+
+		tests := []struct {
+			input string
+			want  int64
+		}{
+			{"2017-01-01", ts170101},
+			{"2017-1-01", ts170101},
+			{"2017-1-1", ts170101},
+			{"20170101", ts170101},
+			{"2017-1-11", ts170111},
+			{"2017-01-01 00:00:00", ts170101},
+			{"17-01-01", ts170101},
+			{"20170101000000", ts170101},
+			{"2017", ts170101},
+			{"2017-07-14T10:40:00+08:00", 1500000000},
+			{"Fri, 14 Jul 2017 02:40:00 +0000", 1500000000},
+			{"xxx", -1},
+			{"+1 day", php.Time() + 86400},
+			{"+2 days", php.Time() + 86400*2},
+			{"-1 day", php.Time() - 86400},
+			{"+1 month", php.Time() + 86400*30},
+			{"+1 year", php.Time() + 86400*365},
+			{"+1 week", php.Time() + 86400*7},
+			{"+1 hour", php.Time() + 3600},
+			{"+1 minute", php.Time() + 60},
+			{"+1 second", php.Time() + 1},
+			{"2017-01-1", ts170101},
+			{"17-01-1", ts170101},
+			{"2017-1-01 00:00:00", ts170101},
+			{"2017-1-1 00:00:00", ts170101},
+			{"2017-01-1 00:00:00", ts170101},
+			{"17-01-01 00:00:00", ts170101},
+			{"17-1-01 00:00:00", ts170101},
+			{"17-1-1 00:00:00", ts170101},
+			{"17-01-1 00:00:00", ts170101},
+		}
+		for _, t := range tests {
+			Expect(php.Strtotime(t.input)).To(Equal(t.want))
+		}
+
+		Expect(php.Strtotime("now")).To(BeNumerically(">", 0))
+	})
+
+	It("Date", func() {
+		ts := int64(1500000000)
+
+		tests := []struct {
+			format    string
+			timestamp int64
+			want      string
+		}{
+			{"Y-m-d H:i:s", ts, "2017-07-14 02:40:00"},
+			{"Y-m d", ts, "2017-07 14"},
+			{"c", ts, "2017-07-14T02:40:00+00:00"},
+			{"Y n j", ts, "2017 7 14"},
+			{"D", ts, "Fri"},
+			{"z", ts, "194"},
+			{"M", ts, "Jul"},
+			{"l", ts, "Friday"},
+			{"L", ts, "0"},
+			{"L", php.Strtotime("2016-01-01"), "1"},
+			{"w", ts, "5"},
+			{"w", php.Strtotime("2017-07-09"), "0"},
+			{"W", ts, "28"},
+			{"F", ts, "July"},
+			{"o", ts, "2017"},
+			{"y", ts, "17"},
+			{"a A", ts, "am AM"},
+			{"t", ts, "31"},
+			{"t", php.Strtotime("2017-02-01"), "28"},
+			{"t", php.Strtotime("2017-12-11"), "31"},
+			{"g G h H", ts, "2 2 02 02"},
+			{"g G h H", php.Strtotime("2017-07-01 18:00:00"), "6 18 06 18"},
+			{"i s", ts, "40 00"},
+			{"e T", ts, "UTC UTC"},
+			{"O P", ts, "+0000 +00:00"},
+			{"U", ts, fmt.Sprintf("%v", ts)},
+			{"r", ts, "Fri, 14 Jul 2017 02:40:00 +0000"},
+			{"Y年m月d日", ts, "2017年07月14日"},
+		}
+		for _, t := range tests {
+			Expect(php.Date(t.format, t.timestamp)).To(Equal(t.want))
+		}
+	})
+
+	It("Today", func() {
+		Expect(php.Today("Y-m-d")).To(Equal(time.Now().Format("2006-01-02")))
+		Expect(php.Today("xxx")).To(Equal("xxx"))
+	})
+
+	It("LocalDate", func() {
+		ts := int64(1500000000)
+
+		zone, offset := time.Unix(0, 0).Zone()
+
+		// offset is the seconds east of UTC.
+		if zone != "GMT" {
+			// note that BST is one hour ahead of UTC, so the below assertion will fail in GMT timezone
+			Expect(php.LocalDate("Y-m-d H:i:s", ts)).To(Equal(php.Date("Y-m-d H:i:s", ts+int64(offset))))
+		}
+	})
+
+	It("FirstDateOfMonth", func() {
+		ts := int64(1500000000)
+		d := time.Unix(ts, 0) // 2017-07-14
+		fd := php.FirstDateOfMonth(d)
+
+		Expect(fd.Format("2006-01-02")).To(Equal("2017-07-01"))
+	})
+
+	It("FirstDateOfLastMonth", func() {
+		tests := []struct {
+			input time.Time
+			want  string
+		}{
+			{time.Date(2017, time.July, 14, 0, 0, 0, 0, time.UTC), "2017-06-01"},
+			{time.Date(2018, time.January, 1, 0, 0, 0, 0, time.UTC), "2017-12-01"},
+		}
+		for _, t := range tests {
+			Expect(php.FirstDateOfLastMonth(t.input).Format("2006-01-02")).To(Equal(t.want))
+		}
+	})
+
+	It("Checkdate", func() {
+		type args struct {
+			month int
+			day   int
+			year  int
+		}
+		tests := []struct {
+			args args
+			want bool
+		}{
+			{args{12, 31, 2000}, true},
+			{args{12, 31, 1}, true},
+			{args{12, 31, 0}, false},
+			{args{2, 29, 2001}, false},
+		}
+		for _, t := range tests {
+			Expect(php.Checkdate(t.args.month, t.args.day, t.args.year)).To(Equal(t.want))
+		}
+	})
+
+	It("Microtime", func() {
+		start := php.Microtime()
+
+		time.Sleep(100 * time.Millisecond)
+
+		end := php.Microtime()
+		duration := end - start
+
+		Expect(duration).To(BeNumerically(">=", 0.1))
+		Expect(duration).To(BeNumerically("<=", 1))
+	})
+
+	It("DateCreateFromFormat", func() {
+		type args struct {
+			f string
+			t string
+		}
+		tests := []struct {
+			args args
+			want string
+		}{
+			{
+				args{"j-M-Y", "15-Feb-2009"},
+				"2009-02-15 00:00:00",
+			},
+			{
+				args{"j-F-Y", "15-January-2009"},
+				"2009-01-15 00:00:00",
+			},
+			{
+				args{"D M d H:i:s O Y", "Mon Jan 15 10:10:10 +0800 2009"},
+				"2009-01-15 10:10:10",
+			},
+			{
+				args{"l M d H:i:s T Y", "Monday Jan 15 10:10:10 EST 2009"},
+				"2009-01-15 10:10:10",
+			},
+		}
+
+		for _, t := range tests {
+			d, err := php.DateCreateFromFormat(t.args.f, t.args.t)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(d.Format("2006-01-02 15:04:05")).To(Equal(t.want))
+		}
+	})
+
+	It("DateDateSet", func() {
+		date, err := php.DateDateSet(2001, 2, 3)
+
+		Expect(err).NotTo(HaveOccurred())
+		Expect(date.Format("2006-01-02")).To(Equal("2001-02-03"))
+	})
+
+	It("DateDefaultTimezoneSet and DateDefaultTimezoneGet", func() {
+		tz := "Asia/Shanghai"
+		err := php.DateDefaultTimezoneSet(tz)
+		Expect(err).NotTo(HaveOccurred())
+		Expect(php.DateDefaultTimezoneGet()).To(Equal("CST")) // China Standard Time
+
+		err = php.DateDefaultTimezoneSet("unknown/timezone")
+		Expect(err).To(HaveOccurred())
+	})
+
+	It("DateTimezoneSet and DateTimezoneGet", func() {
+		tz := "Asia/Shanghai"
+		t1 := time.Now()
+		t2, err := php.DateTimezoneSet(t1, tz)
+		Expect(err).NotTo(HaveOccurred())
+		Expect(php.DateTimezoneGet(t2)).To(Equal("CST")) // China Standard Time
+
+		_, err = php.DateTimezoneSet(t1, "unknown/timezone")
+		Expect(err).To(HaveOccurred())
+	})
+
+	It("DateDiff", func() {
+		t1, err := php.DateCreate("2019-09-30")
+		Expect(err).NotTo(HaveOccurred())
+		t2, err := php.DateCreate("2019-10-01")
+		Expect(err).NotTo(HaveOccurred())
+		d := php.DateDiff(t1, t2)
+		Expect(d.Hours()).To(Equal(24.0))
+	})
+
+	It("DateFormat", func() {
+		date, err := php.DateCreate("2019-09-30")
+		Expect(err).NotTo(HaveOccurred())
+		Expect(php.DateFormat(date, "Y-m-d H:i:s")).To(Equal("2019-09-30 00:00:00"))
+	})
+
+	It("DateIntervalCreateFromDateString", func() {
+		tests := []struct {
+			input string
+			want  time.Duration
+		}{
+			{"1 minute +1 second", 61 * time.Second},
+			{"1 day", 86400 * time.Second},
+			{"2 weeks", 86400 * 14 * time.Second},
+			{"1 year + 1 day", 86400 * 366 * time.Second},
+			{"day + 12 hours", (86400 + 3600*12) * time.Second},
+			{"3600 seconds", 3600 * time.Second},
+		}
+		for _, t := range tests {
+			d, err := php.DateIntervalCreateFromDateString(t.input)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(d).To(Equal(t.want))
+		}
+
+		_, err := php.DateIntervalCreateFromDateString("invalid string")
+		Expect(err).To(HaveOccurred())
+	})
+
+	It("DateISODateSet", func() {
+		type args struct {
+			year int
+			week int
+			day  int
+		}
+		tests := []struct {
+			args args
+			want string
+		}{
+			{args{2008, 2, 1}, "2008-01-07"},
+			{args{2008, 2, 7}, "2008-01-13"},
+			{args{2008, 53, 7}, "2009-01-04"},
+			{args{2009, 1, 1}, "2008-12-29"},
+		}
+		for _, t := range tests {
+			d, err := php.DateISODateSet(t.args.year, t.args.week, t.args.day)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(d.Format("2006-01-02")).To(Equal(t.want))
+		}
+
+		_, err := php.DateISODateSet(-1, 1, 1)
+		Expect(err).To(HaveOccurred())
+	})
+
+	Describe("DateModify", func() {
+		It("+1 day", func() {
+			date1, _ := php.DateCreate("2006-12-12")
+			date2, _ := php.DateCreate("2006-12-13")
+
+			got, err := php.DateModify(date1, "+1 day")
+
+			Expect(err).NotTo(HaveOccurred())
+			Expect(got).To(Equal(date2))
 		})
-	}
+		It("+1 month", func() {
+			date1, _ := php.DateCreate("2000-12-31")
+			date2, _ := php.DateCreate("2001-01-30")
 
-	if Strtotime("now") == -1 || Strtotime("Now") == -1 {
-		t.Fail()
-	}
-}
+			got, err := php.DateModify(date1, "+1 month")
 
-func TestDate(t *testing.T) {
-
-	ts := int64(1500000000)
-
-	if Date("Y-m-d H:i:s", ts) != "2017-07-14 02:40:00" {
-		t.Fail()
-	}
-
-	if Date("Y-m d", ts) != "2017-07 14" {
-		t.Fail()
-	}
-
-	if Date("c", ts) != "2017-07-14T02:40:00+00:00" {
-		t.Fail()
-	}
-
-	if Date("Y n j", ts) != "2017 7 14" {
-		t.Fail()
-	}
-
-	if Date("D", ts) != "Fri" {
-		t.Fail()
-	}
-
-	if Date("z", ts) != "194" {
-		t.Fail()
-	}
-
-	if Date("M", ts) != "Jul" {
-		t.Fail()
-	}
-
-	if Date("l", ts) != "Friday" {
-		t.Fail()
-	}
-
-	if Date("L", ts) != "0" {
-		t.Fail()
-	}
-	if Date("L", Strtotime("2016-01-01")) != "1" {
-		t.Fail()
-	}
-
-	if Date("w", ts) != "5" {
-		t.Fail()
-	}
-
-	if Date("w", Strtotime("2017-07-09")) != "0" {
-		t.Fail()
-	}
-
-	if Date("W", ts) != "28" {
-		t.Fail()
-	}
-
-	if Date("F", ts) != "July" {
-		t.Fail()
-	}
-
-	if Date("o", ts) != "2017" {
-		t.Fail()
-	}
-
-	if Date("y", ts) != "17" {
-		t.Fail()
-	}
-
-	if Date("a A", ts) != "am AM" {
-		t.Fail()
-	}
-
-	if Date("t", ts) != "31" {
-		t.Fail()
-	}
-
-	if Date("t", Strtotime("2017-02-01")) != "28" {
-		t.Fail()
-	}
-
-	if Date("t", Strtotime("2017-12-11")) != "31" {
-		t.Fail()
-	}
-
-	if Date("g G h H", ts) != "2 2 02 02" {
-		t.Fail()
-	}
-
-	if Date("g G h H", Strtotime("2017-07-01 18:00:00")) != "6 18 06 18" {
-		t.Fail()
-	}
-
-	if Date("i s", ts) != "40 00" {
-		t.Fail()
-	}
-
-	if Date("e T", ts) != "UTC UTC" {
-		t.Fail()
-	}
-
-	if Date("O P", ts) != "+0000 +00:00" {
-		t.Fail()
-	}
-
-	if Date("U", ts) != fmt.Sprintf("%v", ts) {
-		t.Fail()
-	}
-
-	if Date("r", ts) != "Fri, 14 Jul 2017 02:40:00 +0000" {
-		t.Fail()
-	}
-
-	if Date("Y年m月d日", ts) != "2017年07月14日" {
-		t.Fail()
-	}
-}
-
-func TestToday(t *testing.T) {
-	if Today("Y-m-d") != time.Now().Format("2006-01-02") {
-		t.Fail()
-	}
-
-	if Today("xxx") != "xxx" {
-		t.Fail()
-	}
-}
-
-func TestLocalDate(t *testing.T) {
-	ts := int64(1500000000)
-
-	zone, offset := time.Unix(0, 0).Zone()
-
-	// offset is the seconds east of UTC.
-	// Note that BST is one hour ahead of UTC
-	if LocalDate("Y-m-d H:i:s", ts) != Date("Y-m-d H:i:s", ts+int64(offset)) && zone != "GMT" {
-		t.Fail()
-	}
-}
-
-func TestFirstDateOfMonth(t *testing.T) {
-	ts := int64(1500000000)
-	d := time.Unix(ts, 0) // 2017-07-14
-	fd := FirstDateOfMonth(d)
-	if fd.Day() != 1 || fd.Month() != 7 || fd.Year() != 2017 {
-		t.Fail()
-	}
-}
-
-func TestFirstDateOfLastMonth(t *testing.T) {
-	ts := int64(1500000000)
-	d := time.Unix(ts, 0) // 2017-07-14
-	fd := FirstDateOfLastMonth(d)
-	if fd.Day() != 1 || fd.Month() != 6 || fd.Year() != 2017 {
-		t.Fail()
-	}
-
-	d2 := time.Date(2018, time.January, 1, 0, 0, 0, 0, time.UTC)
-	fd2 := FirstDateOfLastMonth(d2)
-	if fd2.Day() != 1 || fd2.Month() != 12 || fd2.Year() != 2017 {
-		t.Fail()
-	}
-}
-
-func TestCheckdate(t *testing.T) {
-	type args struct {
-		month int
-		day   int
-		year  int
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{12, 31, 2000},
-			true,
-		},
-		{
-			"2",
-			args{12, 31, 1},
-			true,
-		},
-		{
-			"3",
-			args{12, 31, 0},
-			false,
-		},
-		{
-			"4",
-			args{2, 29, 2001},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Checkdate(tt.args.month, tt.args.day, tt.args.year); got != tt.want {
-				t.Errorf("Checkdate() = %v, want %v", got, tt.want)
-			}
+			Expect(err).NotTo(HaveOccurred())
+			Expect(got).To(Equal(date2))
 		})
-	}
-}
-
-func TestMicrotime(t *testing.T) {
-	start := Microtime()
-
-	time.Sleep(100 * time.Millisecond)
-
-	end := Microtime()
-
-	duration := end - start
-	if duration < 0.1 || duration > 1 {
-		t.Fail()
-	}
-}
-
-func TestDateCreateFromFormat(t *testing.T) {
-	type args struct {
-		f string
-		t string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    string
-		wantErr bool
-	}{
-		{
-			"1",
-			args{"j-M-Y", "15-Feb-2009"},
-			"2009-02-15 00:00:00",
-			false,
-		},
-		{
-			"2",
-			args{"j-F-Y", "15-January-2009"},
-			"2009-01-15 00:00:00",
-			false,
-		},
-		{
-			"3",
-			args{"D M d H:i:s O Y", "Mon Jan 15 10:10:10 +0800 2009"},
-			"2009-01-15 10:10:10",
-			false,
-		},
-		{
-			"4",
-			args{"l M d H:i:s T Y", "Monday Jan 15 10:10:10 EST 2009"},
-			"2009-01-15 10:10:10",
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := DateCreateFromFormat(tt.args.f, tt.args.t)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("DateCreateFromFormat() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got.Format("2006-01-02 15:04:05"), tt.want) {
-				t.Errorf("DateCreateFromFormat() = %v, want %v", got, tt.want)
-			}
+		It("invalid input", func() {
+			date, _ := php.DateCreate("2006-12-12")
+			_, err := php.DateModify(date, "invalid string")
+			Expect(err).To(HaveOccurred())
 		})
-	}
-}
+	})
 
-func TestDateDateSet(t *testing.T) {
-	date, err := DateDateSet(2001, 2, 3)
-	if err != nil || date.Format("2006-01-02") != "2001-02-03" {
-		t.Fail()
-	}
-}
+	It("DateOffsetGet", func() {
+		loc, _ := time.LoadLocation("America/New_York")
 
-func TestDateDefaultTimezoneSet(t *testing.T) {
-	tz := "Asia/Shanghai"
-	err := DateDefaultTimezoneSet(tz)
-	if err != nil {
-		t.Fail()
-	}
-	if DateDefaultTimezoneGet() != "CST" { // China Standard Time
-		t.Fail()
-	}
+		winter, _ := php.DateCreate("2010-12-21")
+		winter = winter.In(loc)
+		Expect(php.DateOffsetGet(winter)).To(Equal(-18000))
 
-	if err := DateDefaultTimezoneSet("unknown/timezone"); err == nil {
-		t.Fail()
-	}
-}
+		summer, _ := php.DateCreate("2008-06-21")
+		summer = summer.In(loc)
+		Expect(php.DateOffsetGet(summer)).To(Equal(-14400))
+	})
 
-func TestDateTimezoneSet(t *testing.T) {
-	tz := "Asia/Shanghai"
-	t1 := time.Now()
-	t2, err := DateTimezoneSet(t1, tz)
-	if err != nil {
-		t.Fail()
-	}
-	if DateTimezoneGet(t2) != "CST" { // China Standard Time
-		t.Fail()
-	}
+	It("DateAdd", func() {
+		date1, _ := php.DateCreate("2000-01-01")
+		date2, _ := php.DateCreate("2000-01-11")
+		interval, _ := php.DateIntervalCreateFromDateString("10 days")
 
-	if _, err := DateTimezoneSet(t1, "unknown/timezone"); err == nil {
-		t.Fail()
-	}
-}
+		Expect(php.DateAdd(date1, interval)).To(Equal(date2))
+	})
 
-func TestDateDiff(t *testing.T) {
-	t1, err := DateCreate("2019-09-30")
-	if err != nil {
-		t.Fail()
-	}
-	t2, err := DateCreate("2019-10-01")
-	if err != nil {
-		t.Fail()
-	}
-	d := DateDiff(t1, t2)
-	if d.Hours() != 24.0 {
-		t.Fail()
-	}
-}
+	It("DateSub", func() {
+		date1, _ := php.DateCreate("2000-01-20")
+		date2, _ := php.DateCreate("2000-01-10")
+		interval, _ := php.DateIntervalCreateFromDateString("10 days")
 
-func TestDateFormat(t *testing.T) {
-	date, err := DateCreate("2019-09-30")
-	if err != nil {
-		t.Fail()
-	}
-	if DateFormat(date, "Y-m-d H:i:s") != "2019-09-30 00:00:00" {
-		t.Fail()
-	}
-}
+		Expect(php.DateSub(date1, interval)).To(Equal(date2))
+	})
 
-func TestDateIntervalCreateFromDateString(t *testing.T) {
-	type args struct {
-		str string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    time.Duration
-		wantErr bool
-	}{
-		{
-			"1",
-			args{"1 minute +1 second"},
-			61 * time.Second,
-			false,
-		},
-		{
-			"2",
-			args{"1 day"},
-			86400 * time.Second,
-			false,
-		},
-		{
-			"3",
-			args{"2 weeks"},
-			86400 * 14 * time.Second,
-			false,
-		},
-		{
-			"4",
-			args{"1 year + 1 day"},
-			86400 * 366 * time.Second,
-			false,
-		},
-		{
-			"5",
-			args{"day + 12 hours"},
-			(86400 + 3600*12) * time.Second,
-			false,
-		},
-		{
-			"6",
-			args{"3600 seconds"},
-			3600 * time.Second,
-			false,
-		},
-		{
-			"7",
-			args{"invalid string"},
-			0,
-			true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := DateIntervalCreateFromDateString(tt.args.str)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("DateIntervalCreateFromDateString() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got != tt.want {
-				t.Errorf("DateIntervalCreateFromDateString() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("DateTimestampGet", func() {
+		var now = time.Now()
+		Expect(php.DateTimestampGet(now)).To(Equal(now.Unix()))
+	})
 
-func TestDateISODateSet(t *testing.T) {
-	type args struct {
-		year int
-		week int
-		day  int
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    string
-		wantErr bool
-	}{
-		{
-			"1",
-			args{2008, 2, 1},
-			"2008-01-07",
-			false,
-		},
-		{
-			"2",
-			args{2008, 2, 7},
-			"2008-01-13",
-			false,
-		},
-		{
-			"3",
-			args{2008, 53, 7},
-			"2009-01-04",
-			false,
-		},
-		{
-			"4",
-			args{2009, 1, 1},
-			"2008-12-29",
-			false,
-		},
-		{
-			"5",
-			args{-1, 1, 1},
-			"0001-01-01",
-			true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := DateISODateSet(tt.args.year, tt.args.week, tt.args.day)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("DateISODateSet() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got.Format("2006-01-02"), tt.want) {
-				t.Errorf("DateISODateSet() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("DateTimestampSet", func() {
+		var now = time.Now()
+		var ts = now.Unix()
+		var d = now.Sub(php.DateTimestampSet(ts))
 
-func TestDateModify(t *testing.T) {
-	date1, _ := DateCreate("2006-12-12")
-	date2, _ := DateCreate("2006-12-13")
-
-	got, err := DateModify(date1, "+1 day")
-	if err != nil || got != date2 {
-		t.Fail()
-	}
-
-	date3, _ := DateCreate("2000-12-31")
-	date4, _ := DateCreate("2001-01-30")
-	got, err = DateModify(date3, "+1 month")
-	if err != nil || got != date4 {
-		t.Fail()
-	}
-
-	_, err = DateModify(date1, "invalid string")
-	if err == nil {
-		t.Fail()
-	}
-}
-
-func TestDateOffsetGet(t *testing.T) {
-	loc, _ := time.LoadLocation("America/New_York")
-	winter, _ := DateCreate("2010-12-21")
-	winter = winter.In(loc)
-	if DateOffsetGet(winter) != -18000 {
-		t.Fail()
-	}
-
-	summer, _ := DateCreate("2008-06-21")
-	summer = summer.In(loc)
-	if DateOffsetGet(summer) != -14400 {
-		t.Fail()
-	}
-}
-
-func TestDateAdd(t *testing.T) {
-	date1, _ := DateCreate("2000-01-01")
-	date2, _ := DateCreate("2000-01-11")
-	interval, _ := DateIntervalCreateFromDateString("10 days")
-	if DateAdd(date1, interval) != date2 {
-		t.Fail()
-	}
-}
-
-func TestDateSub(t *testing.T) {
-	date1, _ := DateCreate("2000-01-20")
-	date2, _ := DateCreate("2000-01-10")
-	interval, _ := DateIntervalCreateFromDateString("10 days")
-	if DateSub(date1, interval) != date2 {
-		t.Fail()
-	}
-}
-
-func TestDateTimestampSet(t *testing.T) {
-	var ts int64 = 1171502725
-	if DateTimestampGet(DateTimestampSet(ts)) != ts {
-		t.Fail()
-	}
-}
+		Expect(d).To(BeNumerically("<", time.Second))
+	})
+})

@@ -1,104 +1,60 @@
-package php
+package php_test
 
 import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
 	"io/ioutil"
-	"reflect"
-	"testing"
+
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestGetimagesize(t *testing.T) {
-	type args struct {
-		filename string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    ImageInfo
-		wantErr bool
-	}{
-		{
-			"happy flow",
-			args{"./fish.jpg"},
-			ImageInfo{
+var _ = Describe("Image Functions", func() {
+	Describe("GetImageSize", func() {
+		It("happy flow", func() {
+			want := php.ImageInfo{
 				Width:  559,
 				Height: 533,
 				Format: "jpeg",
 				Mime:   "image/jpeg",
-			},
-			false,
-		},
-		{
-			"no such file",
-			args{"./not-exist-file"},
-			ImageInfo{},
-			true,
-		},
-		{
-			"unknown format",
-			args{"./LICENSE"},
-			ImageInfo{},
-			true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetImageSize(tt.args.filename)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("GetImageSize() error = %v, wantErr %v", err, tt.wantErr)
-				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GetImageSize() = %v, want %v", got, tt.want)
-			}
+			got, err := php.GetImageSize("./fish.jpg")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(got).To(Equal(want))
 		})
-	}
-}
 
-func TestGetImageSizeFromString(t *testing.T) {
+		It("file not exist", func() {
+			_, err := php.GetImageSize("./not-exist-file")
+			Expect(err).To(HaveOccurred())
+		})
 
-	data1, _ := ioutil.ReadFile("./fish.jpg")
-	data2, _ := ioutil.ReadFile("./LICENSE")
+		It("unknown format", func() {
+			_, err := php.GetImageSize("./LICENSE")
+			Expect(err).To(HaveOccurred())
+		})
+	})
 
-	type args struct {
-		data []byte
-	}
-	tests := []struct {
-		name    string
-		args    args
-		want    ImageInfo
-		wantErr bool
-	}{
-		{
-			"happy flow",
-			args{data1},
-			ImageInfo{
+	Describe("GetImageSizeFromString", func() {
+		data1, _ := ioutil.ReadFile("./fish.jpg")
+		data2, _ := ioutil.ReadFile("./LICENSE")
+
+		It("happy flow", func() {
+			want := php.ImageInfo{
 				Width:  559,
 				Height: 533,
 				Format: "jpeg",
 				Mime:   "image/jpeg",
-			},
-			false,
-		},
-		{
-			"unknown format",
-			args{data2},
-			ImageInfo{},
-			true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetImageSizeFromString(tt.args.data)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("GetImageSizeFromString() error = %v, wantErr %v", err, tt.wantErr)
-				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GetImageSizeFromString() = %v, want %v", got, tt.want)
-			}
+			got, err := php.GetImageSizeFromString(data1)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(got).To(Equal(want))
 		})
-	}
-}
+
+		It("unknown format", func() {
+			_, err := php.GetImageSizeFromString(data2)
+			Expect(err).To(HaveOccurred())
+		})
+	})
+})

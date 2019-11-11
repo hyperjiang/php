@@ -1,21 +1,21 @@
-package php
+package php_test
 
 import (
-	"testing"
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestGetenvAndPutenv(t *testing.T) {
-	if err := Putenv("xxx"); err == nil {
-		t.Fail()
-	}
-	Putenv("a=b")
-	if Getenv("a") != "b" {
-		t.Fail()
-	}
-}
+var _ = Describe("Misc Functions", func() {
+	It("Putenv and Getenv", func() {
+		err := php.Putenv("xxx")
+		Expect(err).To(HaveOccurred())
+		php.Putenv("a=b")
+		Expect(php.Getenv("a")).To(Equal("b"))
 
-func TestMemoryGetUsage(t *testing.T) {
-	if MemoryGetUsage(true) < MemoryGetUsage(false) {
-		t.Fail()
-	}
-}
+	})
+
+	It("MemoryGetUsage", func() {
+		Expect(php.MemoryGetUsage(true)).To(BeNumerically(">", php.MemoryGetUsage(false)))
+	})
+})

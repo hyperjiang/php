@@ -1,617 +1,513 @@
-package php
+package php_test
 
 import (
-	"reflect"
-	"testing"
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-// expect to be equal
-func mustEqual(t *testing.T, expected, actual interface{}) {
-	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("Expected %v (type %v) - Got %v (type %v)", expected, reflect.TypeOf(expected), actual, reflect.TypeOf(actual))
-	}
-}
-
-func TestArrayUniqueInvalid(t *testing.T) {
-	mustEqual(t, nil, ArrayUnique(nil))
-
-	arr := make(map[int]int)
-	arr[1] = 1
-	arr[2] = 2
-	mustEqual(t, arr, ArrayUnique(arr))
-}
-
-func TestArrayUniqueEmpty(t *testing.T) {
-	arr := []int{}
-	mustEqual(t, arr, ArrayUnique(arr))
-}
-
-func TestArrayUniqueBool(t *testing.T) {
-	arr := []bool{true, true}
-	if len(ArrayUnique(arr).([]bool)) != 1 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueStruct(t *testing.T) {
-
-	type person struct {
-		Name string
-	}
-
-	arr := make([]person, 0, 10)
-
-	arr = append(arr, person{"Hyper"})
-	arr = append(arr, person{"Tony"})
-	arr = append(arr, person{"Jimmy"})
-	arr = append(arr, person{"Hyper"})
-	arr = append(arr, person{"Tony"})
-	arr = append(arr, person{"Jimmy"})
-
-	if len(ArrayUnique(arr).([]interface{})) != 3 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueInt(t *testing.T) {
-	arr := []int{1, 1, 2, 3, 4, -5, -5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]int)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueInt8(t *testing.T) {
-	arr := []int8{1, 1, 2, 3, 4, -5, -5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]int8)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueInt16(t *testing.T) {
-	arr := []int16{1, 1, 2, 3, 4, -5, -5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]int16)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueInt32(t *testing.T) {
-	arr := []int32{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]int32)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueInt64(t *testing.T) {
-	arr := []int64{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]int64)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueUint(t *testing.T) {
-	arr := []uint{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]uint)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueUint8(t *testing.T) {
-	arr := []uint8{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]uint8)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueUint16(t *testing.T) {
-	arr := []uint16{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]uint16)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueUint32(t *testing.T) {
-	arr := []uint32{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]uint32)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueUint64(t *testing.T) {
-	arr := []uint64{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]uint64)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueFloat32(t *testing.T) {
-	arr := []float32{1.0, 1.0, 2, 3, -4, 5.1, 5.2, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]float32)) != 8 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueFloat64(t *testing.T) {
-	arr := []float64{1.0, 1.0, 2, 3, -4, 5.1, 5.2, 6, 7, 7, 7}
-	if len(ArrayUnique(arr).([]float64)) != 8 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueComplex64(t *testing.T) {
-	arr := []complex64{1.0 + 1i, 1.0 + 2i, 2 + 1i, 3 + 2i, -4, 5.1, 5.2, 6, 7 + 3i, 7, 7}
-	if len(ArrayUnique(arr).([]complex64)) != 10 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueComplex128(t *testing.T) {
-	arr := []complex128{1.0 + 1i, 1.0 + 2i, 2 + 1i, 3 + 2i, -4, 5.1, 5.2, 6, 7 + 3i, 7, 7}
-	if len(ArrayUnique(arr).([]complex128)) != 10 {
-		t.Fail()
-	}
-}
-
-func TestArrayUniqueString(t *testing.T) {
-	arr := []string{"1", "1", "2", "3", "a", "ab", "abc", "abc", "abc", "Abc"}
-	if len(ArrayUnique(arr).([]string)) != 7 {
-		t.Fail()
-	}
-}
-
-func TestInArray(t *testing.T) {
-	// Array of string
-	arrStrings := []string{"foo", "bar", "baz"}
-	searchString := "bar"
-	if !InArray(searchString, arrStrings) {
-		t.Fail()
-	}
-
-	// Array of int64
-	arrInt64 := []int64{2016, 2017, 2018, 2019}
-	searchInt64 := int64(2016)
-	if !InArray(searchInt64, arrInt64) {
-		t.Fail()
-	}
-
-	// Example for false searching
-	int64NotExist := int64(2000)
-	if InArray(int64NotExist, arrInt64) {
-		t.Fail()
-	}
-
-	// False searching with different type
-	// Search string inside array of int64
-	searchStringInt64 := "2018"
-	if InArray(searchStringInt64, arrInt64) {
-		t.Fail()
-	}
-
-	// Array of interface
-	arrInterface := []interface{}{"username", 123, int64(10), false}
-	searchElement := false
-	if !InArray(searchElement, arrInterface) {
-		t.Fail()
-	}
-
-	// Map
-	m := make(map[string]string, 3)
-	m["a"] = "Tony"
-	m["b"] = "Jimmy"
-	m["c"] = "Jelly"
-	if !InArray("Tony", m) {
-		t.Fail()
-	}
-}
-
-func TestArrayChunk(t *testing.T) {
-	arr := []interface{}{"a", "b", "c", "d", "e"}
-	res := ArrayChunk(arr, 2)
-	mustEqual(t, [][]interface{}{{"a", "b"}, {"c", "d"}, {"e"}}, res)
-
-	if !reflect.ValueOf(ArrayChunk(arr, 0)).IsNil() {
-		t.Fail()
-	}
-}
-
-func TestArrayColumn(t *testing.T) {
-	var input []map[string]interface{}
-
-	row1 := make(map[string]interface{})
-	row1["id"] = 1
-	row1["first_name"] = "John"
-	row1["last_name"] = "Doe"
-
-	row2 := make(map[string]interface{})
-	row2["id"] = 2
-	row2["first_name"] = "Sally"
-	row2["last_name"] = "Smith"
-
-	row3 := make(map[string]interface{})
-	row3["id"] = 3
-	row3["first_name"] = "Jane"
-	row3["last_name"] = "Jones"
-
-	input = append(input, row1, row2, row3)
-
-	names := ArrayColumn(input, "first_name")
-	mustEqual(t, []interface{}{"John", "Sally", "Jane"}, names)
-}
-
-func TestArrayCombine(t *testing.T) {
-	if ArrayCombine([]interface{}{1, 2}, []interface{}{3}) != nil {
-		t.Fail()
-	}
-	keys := []interface{}{"green", "red", "yellow"}
-	values := []interface{}{"avocado", "apple", "banana"}
-	result := make(map[interface{}]interface{}, 3)
-	result["green"] = "avocado"
-	result["red"] = "apple"
-	result["yellow"] = "banana"
-	mustEqual(t, result, ArrayCombine(keys, values))
-}
-
-func TestArrayDiff(t *testing.T) {
-	array1 := []interface{}{"green", "red", "blue"}
-	array2 := []interface{}{"green", "yellow", "red"}
-	result := []interface{}{"blue"}
-	mustEqual(t, result, ArrayDiff(array1, array2))
-}
-
-func TestArrayIntersect(t *testing.T) {
-	array1 := []interface{}{"green", "red", "blue"}
-	array2 := []interface{}{"green", "yellow", "red"}
-	result := []interface{}{"green", "red"}
-	mustEqual(t, result, ArrayIntersect(array1, array2))
-}
-
-func TestArrayFlip(t *testing.T) {
-	mustEqual(t, nil, ArrayFlip(nil))
-
-	a := []int{}
-	mustEqual(t, nil, ArrayFlip(a))
-
-	b := []int{3, 4, 5}
-	m1 := make(map[interface{}]interface{}, 3)
-	m1[3] = 0
-	m1[4] = 1
-	m1[5] = 2
-	mustEqual(t, m1, ArrayFlip(b))
-
-	c := []string{"oranges", "apples", "pears"}
-	m2 := make(map[interface{}]interface{}, 3)
-	m2["oranges"] = 0
-	m2["apples"] = 1
-	m2["pears"] = 2
-	mustEqual(t, m2, ArrayFlip(c))
-
-	d := make(map[string]int)
-	d["a"] = 1
-	d["b"] = 1
-	d["c"] = 2
-	mustEqual(t, 2, len(ArrayFlip(d).(map[interface{}]interface{})))
-
-	e := make(map[int]int)
-	e[100] = 1
-	e[200] = 2
-	m4 := make(map[interface{}]interface{}, 2)
-	m4[1] = 100
-	m4[2] = 200
-	mustEqual(t, m4, ArrayFlip(e))
-
-	f := "this is a string"
-	mustEqual(t, nil, ArrayFlip(f))
-}
-
-func TestArrayKeys(t *testing.T) {
-	mustEqual(t, nil, ArrayKeys(nil))
-
-	a := []int{}
-	mustEqual(t, nil, ArrayKeys(a))
-
-	m := make(map[string]int, 3)
-	m["a"] = 1
-	m["b"] = 1
-	m["c"] = 2
-	result := []string{"a", "b", "c"}
-	mustEqual(t, result, ArrayKeys(m))
-
-	b := []string{"a", "b", "c"}
-	mustEqual(t, []int{0, 1, 2}, ArrayKeys(b))
-
-	mustEqual(t, nil, ArrayKeys("this is a string"))
-}
-
-func TestArrayKeyExists(t *testing.T) {
-	m := make(map[interface{}]interface{})
-	m["a"] = 1
-	m["b"] = 2
-	if !ArrayKeyExists("a", m) {
-		t.Fail()
-	}
-	if ArrayKeyExists("c", m) {
-		t.Fail()
-	}
-}
-
-func TestCount(t *testing.T) {
-	if Count(nil) != 0 {
-		t.Fail()
-	}
-	if Count([]int{1, 2, 3}) != 3 {
-		t.Fail()
-	}
-}
-
-func TestArrayFilter(t *testing.T) {
-	mustEqual(t, nil, ArrayFilter(nil, nil))
-
-	a := []int{}
-	mustEqual(t, nil, ArrayFilter(a, nil))
-
-	m := make(map[string]int, 3)
-	m["a"] = 1
-	m["b"] = 1
-	m["c"] = 2
-	res := make(map[interface{}]interface{})
-	res["a"] = 1
-	res["b"] = 1
-	mustEqual(t, res, ArrayFilter(m, func(v interface{}) bool { return v.(int) == 1 }))
-
-	b := []string{"a", "b", "c"}
-	mustEqual(t, []interface{}{"b"}, ArrayFilter(b, func(v interface{}) bool { return v.(string) == "b" }))
-
-	c := []string{"c"}
-	mustEqual(t, []interface{}{"c"}, ArrayFilter(c, nil))
-
-	s := "this is a string"
-	mustEqual(t, s, ArrayFilter(s, nil))
-}
-
-func TestArrayPad(t *testing.T) {
-	var a = []interface{}{"a", "b", "c"}
-	var b = []interface{}{"d", "d", "a", "b", "c"}
-	var c = []interface{}{"a", "b", "c", "d", "d"}
-
-	mustEqual(t, a, ArrayPad(a, 0, "d"))
-	mustEqual(t, b, ArrayPad(a, -5, "d"))
-	mustEqual(t, c, ArrayPad(a, 5, "d"))
-}
-
-func TestArrayPop(t *testing.T) {
-	var a = []interface{}{"orange", "banana", "apple", "raspberry"}
-
-	mustEqual(t, nil, ArrayPop(nil))
-
-	if ArrayPop(&a) != "raspberry" {
-		t.Fail()
-	}
-	mustEqual(t, []interface{}{"orange", "banana", "apple"}, a)
-}
-
-func TestArrayPush(t *testing.T) {
-	var a = []interface{}{"orange", "banana"}
-
-	mustEqual(t, 0, ArrayPush(nil))
-
-	if ArrayPush(&a, "apple", "raspberry") != 4 {
-		t.Fail()
-	}
-	mustEqual(t, []interface{}{"orange", "banana", "apple", "raspberry"}, a)
-}
-
-func TestArrayShift(t *testing.T) {
-	var a = []interface{}{"orange", "banana", "apple", "raspberry"}
-
-	mustEqual(t, nil, ArrayShift(nil))
-
-	if ArrayShift(&a) != "orange" {
-		t.Fail()
-	}
-	mustEqual(t, []interface{}{"banana", "apple", "raspberry"}, a)
-}
-
-func TestArrayUnshift(t *testing.T) {
-	var a = []interface{}{"orange", "banana"}
-
-	mustEqual(t, 0, ArrayUnshift(nil))
-
-	if ArrayUnshift(&a, "apple", "raspberry") != 4 {
-		t.Fail()
-	}
-	mustEqual(t, []interface{}{"apple", "raspberry", "orange", "banana"}, a)
-}
-
-func TestArrayReverse(t *testing.T) {
-	var a = []interface{}{"a", "b", "c"}
-	var b = []interface{}{"c", "b", "a"}
-	mustEqual(t, b, ArrayReverse(a))
-}
-
-func TestArraySlice(t *testing.T) {
-	var a = []interface{}{"a", "b", "c"}
-	var b = []interface{}{"a"}
-
-	if ArraySlice(a, 10, 1) != nil {
-		t.Fail()
-	}
-
-	mustEqual(t, b, ArraySlice(a, 0, 1))
-	mustEqual(t, a, ArraySlice(a, 0, 10))
-}
-
-func TestArraySum(t *testing.T) {
-	type args struct {
-		array interface{}
-	}
-	tests := []struct {
-		name string
-		args args
-		want interface{}
-	}{
-		{
-			"1",
-			args{nil},
-			nil,
-		},
-		{
-			"2",
-			args{[]int{}},
-			0,
-		},
-		{
-			"3",
-			args{[]string{"a", "b", "c"}},
-			"abc",
-		},
-		{
-			"4",
-			args{[]int{1, 2, 3, 4, 5}},
-			int64(15),
-		},
-		{
-			"5",
-			args{[]uint{1, 2, 3, 4, 5}},
-			uint64(15),
-		},
-		{
-			"6",
-			args{[]float64{1, 2, 3, 4, 5}},
-			float64(15),
-		},
-		{
-			"7",
-			args{[][]int{[]int{1}, []int{2}}},
-			nil,
-		},
-		{
-			"8",
-			args{struct{}{}},
-			nil,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := ArraySum(tt.args.array); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("ArraySum() = %v, want %v", got, tt.want)
+var _ = Describe("Array Functions", func() {
+	Describe("ArrayUnique", func() {
+		It("if the input is not a slice or empty then return the original input", func() {
+			Expect(php.ArrayUnique(nil)).To(BeNil())
+
+			Expect(php.ArrayUnique(nil)).To(BeNil())
+
+			m := make(map[int]int)
+			m[1] = 1
+			m[2] = 2
+			Expect(php.ArrayUnique(m)).To(Equal(m))
+
+			arr := []int{}
+			Expect(php.ArrayUnique(arr)).To(Equal(arr))
+		})
+
+		It("input is bool array", func() {
+			arr := []bool{true, true}
+			Expect(php.ArrayUnique(arr)).To(HaveLen(1))
+		})
+
+		It("input is struct array", func() {
+			type person struct {
+				Name string
+			}
+
+			arr := make([]person, 0, 10)
+
+			arr = append(arr, person{"Hyper"})
+			arr = append(arr, person{"Tony"})
+			arr = append(arr, person{"Jimmy"})
+			arr = append(arr, person{"Hyper"})
+			arr = append(arr, person{"Tony"})
+			arr = append(arr, person{"Jimmy"})
+
+			Expect(php.ArrayUnique(arr)).To(HaveLen(3))
+		})
+
+		It("input is int array", func() {
+			arr := []int{1, 1, 2, 3, 4, -5, -5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr)).To(HaveLen(7))
+
+			arr2 := []int8{1, 1, 2, 3, 4, -5, -5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr2)).To(HaveLen(7))
+
+			arr3 := []int16{1, 1, 2, 3, 4, -5, -5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr3)).To(HaveLen(7))
+
+			arr4 := []int32{1, 1, 2, 3, 4, -5, -5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr4)).To(HaveLen(7))
+
+			arr5 := []int64{1, 1, 2, 3, 4, -5, -5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr5)).To(HaveLen(7))
+		})
+
+		It("input is uint array", func() {
+			arr := []uint{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr)).To(HaveLen(7))
+
+			arr2 := []uint8{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr2)).To(HaveLen(7))
+
+			arr3 := []uint16{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr3)).To(HaveLen(7))
+
+			arr4 := []uint32{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr4)).To(HaveLen(7))
+
+			arr5 := []uint64{1, 1, 2, 3, 4, 5, 5, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr5)).To(HaveLen(7))
+		})
+
+		It("input is float array", func() {
+			arr := []float32{1.0, 1.0, 2, 3, -4, 5.1, 5.2, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr)).To(HaveLen(8))
+
+			arr2 := []float64{1.0, 1.0, 2, 3, -4, 5.1, 5.2, 6, 7, 7, 7}
+			Expect(php.ArrayUnique(arr2)).To(HaveLen(8))
+		})
+
+		It("input is complex array", func() {
+			arr := []complex64{1.0 + 1i, 1.0 + 2i, 2 + 1i, 3 + 2i, -4, 5.1, 5.2, 6, 7 + 3i, 7, 7}
+			Expect(php.ArrayUnique(arr)).To(HaveLen(10))
+
+			arr2 := []complex128{1.0 + 1i, 1.0 + 2i, 2 + 1i, 3 + 2i, -4, 5.1, 5.2, 6, 7 + 3i, 7, 7}
+			Expect(php.ArrayUnique(arr2)).To(HaveLen(10))
+		})
+
+		It("input is string array", func() {
+			arr := []string{"1", "1", "2", "3", "a", "ab", "abc", "abc", "abc", "Abc"}
+			Expect(php.ArrayUnique(arr)).To(HaveLen(7))
+		})
+	})
+
+	Describe("InArray", func() {
+		It("string array", func() {
+			arrStrings := []string{"foo", "bar", "baz"}
+			searchString := "bar"
+			Expect(php.InArray(searchString, arrStrings)).To(BeTrue())
+		})
+
+		It("int64 array", func() {
+			arrInt64 := []int64{2016, 2017, 2018, 2019}
+			searchInt64 := int64(2016)
+			Expect(php.InArray(searchInt64, arrInt64)).To(BeTrue())
+		})
+
+		It("interface array", func() {
+			arrInterface := []interface{}{"username", 123, int64(10), false}
+			searchElement := false
+			Expect(php.InArray(searchElement, arrInterface)).To(BeTrue())
+		})
+
+		It("map", func() {
+			m := make(map[string]string, 3)
+			m["a"] = "Tony"
+			m["b"] = "Jimmy"
+			m["c"] = "Jelly"
+			Expect(php.InArray("Tony", m)).To(BeTrue())
+		})
+
+		It("false cases", func() {
+			arrInt64 := []int64{2016, 2017, 2018, 2019}
+
+			Expect(php.InArray(int64(2000), arrInt64)).To(BeFalse())
+
+			// search string in array of int64
+			Expect(php.InArray("2018", arrInt64)).To(BeFalse())
+		})
+	})
+
+	Describe("ArrayChunk", func() {
+		It("valid input", func() {
+			arr := []interface{}{"a", "b", "c", "d", "e"}
+			res := php.ArrayChunk(arr, 2)
+			Expect(res).To(Equal([][]interface{}{{"a", "b"}, {"c", "d"}, {"e"}}))
+		})
+
+		It("invalid size", func() {
+			arr := []interface{}{"a", "b", "c", "d", "e"}
+			res := php.ArrayChunk(arr, 0)
+			Expect(res).To(BeNil())
+		})
+	})
+
+	Describe("ArrayCombine", func() {
+		It("valid input", func() {
+			keys := []interface{}{"green", "red", "yellow"}
+			values := []interface{}{"avocado", "apple", "banana"}
+			want := make(map[interface{}]interface{}, 3)
+			want["green"] = "avocado"
+			want["red"] = "apple"
+			want["yellow"] = "banana"
+
+			res := php.ArrayCombine(keys, values)
+			Expect(res).To(Equal(want))
+		})
+
+		It("unmatched size between keys and values", func() {
+			keys := []interface{}{1, 2}
+			values := []interface{}{3}
+			res := php.ArrayCombine(keys, values)
+			Expect(res).To(BeNil())
+		})
+	})
+
+	It("ArrayColumn", func() {
+		var input []map[string]interface{}
+
+		row1 := make(map[string]interface{})
+		row1["id"] = 1
+		row1["first_name"] = "John"
+		row1["last_name"] = "Doe"
+
+		row2 := make(map[string]interface{})
+		row2["id"] = 2
+		row2["first_name"] = "Sally"
+		row2["last_name"] = "Smith"
+
+		row3 := make(map[string]interface{})
+		row3["id"] = 3
+		row3["first_name"] = "Jane"
+		row3["last_name"] = "Jones"
+
+		input = append(input, row1, row2, row3)
+
+		names := php.ArrayColumn(input, "first_name")
+		Expect(names).To(Equal([]interface{}{"John", "Sally", "Jane"}))
+	})
+
+	It("ArrayDiff", func() {
+		array1 := []interface{}{"green", "red", "blue"}
+		array2 := []interface{}{"green", "yellow", "red"}
+		want := []interface{}{"blue"}
+		Expect(php.ArrayDiff(array1, array2)).To(Equal(want))
+	})
+
+	It("ArrayIntersect", func() {
+		array1 := []interface{}{"green", "red", "blue"}
+		array2 := []interface{}{"green", "yellow", "red"}
+		want := []interface{}{"green", "red"}
+		Expect(php.ArrayIntersect(array1, array2)).To(Equal(want))
+	})
+
+	Describe("ArrayFlip", func() {
+		It("int array", func() {
+			input := []int{3, 4, 5}
+			want := make(map[interface{}]interface{}, 3)
+			want[3] = 0
+			want[4] = 1
+			want[5] = 2
+			res := php.ArrayFlip(input)
+			Expect(res).To(Equal(want))
+		})
+
+		It("string array", func() {
+			input := []string{"oranges", "apples", "pears"}
+			want := make(map[interface{}]interface{}, 3)
+			want["oranges"] = 0
+			want["apples"] = 1
+			want["pears"] = 2
+			res := php.ArrayFlip(input)
+			Expect(res).To(Equal(want))
+		})
+
+		It("map[int]int", func() {
+			input := make(map[int]int)
+			input[100] = 1
+			input[200] = 2
+			want := make(map[interface{}]interface{}, 2)
+			want[1] = 100
+			want[2] = 200
+			res := php.ArrayFlip(input)
+			Expect(res).To(Equal(want))
+		})
+
+		It("conflict keys", func() {
+			input := make(map[string]int)
+			input["a"] = 1
+			input["b"] = 1 // value of key b is conflicted with key a
+			input["c"] = 2
+
+			// because map in golang has no sequence, so we can not ensure 1 point to a or b
+			res := php.ArrayFlip(input)
+			Expect(res).To(HaveLen(2))
+		})
+
+		It("invalid input", func() {
+			Expect(php.ArrayFlip(nil)).To(BeNil())
+			Expect(php.ArrayFlip([]int{})).To(BeNil())
+			Expect(php.ArrayFlip("this is a string")).To(BeNil())
+		})
+	})
+
+	Describe("ArrayKeys", func() {
+		It("string array", func() {
+			input := []string{"a", "b", "c"}
+			want := []int{0, 1, 2}
+			res := php.ArrayKeys(input)
+			Expect(res).To(Equal(want))
+		})
+
+		It("map[string]int", func() {
+			input := make(map[string]int, 3)
+			input["a"] = 1
+			input["b"] = 1
+			input["c"] = 2
+			want := []string{"a", "b", "c"}
+			res := php.ArrayKeys(input)
+			Expect(res).To(Equal(want))
+		})
+
+		It("invalid input", func() {
+			Expect(php.ArrayKeys(nil)).To(BeNil())
+			Expect(php.ArrayKeys([]int{})).To(BeNil())
+			Expect(php.ArrayKeys("this is a string")).To(BeNil())
+		})
+	})
+
+	It("ArrayKeyExists", func() {
+		m := make(map[interface{}]interface{})
+		m["a"] = 1
+		m["b"] = 2
+
+		Expect(php.ArrayKeyExists("a", m)).To(BeTrue())
+		Expect(php.ArrayKeyExists("c", m)).To(BeFalse())
+	})
+
+	It("Count", func() {
+		Expect(php.Count(nil)).To(BeZero())
+		Expect(php.Count([]int{1, 2, 3})).To(Equal(3))
+		Expect(php.Count([]string{"foo", "bar", "baz"})).To(Equal(3))
+
+		m := make(map[interface{}]interface{})
+		m["a"] = 1
+		m["b"] = 2
+		Expect(php.Count(m)).To(Equal(2))
+	})
+
+	Describe("ArrayFilter", func() {
+		It("map[string]int", func() {
+			input := make(map[string]int, 3)
+			input["a"] = 1
+			input["b"] = 1
+			input["c"] = 2
+
+			callback := func(v interface{}) bool { return v.(int) == 1 }
+
+			want := make(map[interface{}]interface{})
+			want["a"] = 1
+			want["b"] = 1
+
+			res := php.ArrayFilter(input, callback)
+			Expect(res).To(Equal(want))
+		})
+
+		It("string array", func() {
+			input := []string{"a", "b", "c"}
+			callback := func(v interface{}) bool { return v.(string) == "b" }
+			want := []interface{}{"b"}
+			res := php.ArrayFilter(input, callback)
+			Expect(res).To(Equal(want))
+		})
+
+		It("string", func() {
+			input := "this is a string"
+			want := input
+			Expect(php.ArrayFilter(input, nil)).To(Equal(want))
+		})
+
+		It("nil callback", func() {
+			input := []string{"c"}
+			want := []interface{}{"c"}
+			res := php.ArrayFilter(input, nil)
+			Expect(res).To(Equal(want))
+		})
+
+		It("invalid input", func() {
+			Expect(php.ArrayFilter(nil, nil)).To(BeNil())
+			Expect(php.ArrayFilter([]int{}, nil)).To(BeNil())
+		})
+	})
+
+	It("ArrayPad", func() {
+		var a = []interface{}{"a", "b", "c"}
+		var b = []interface{}{"d", "d", "a", "b", "c"}
+		var c = []interface{}{"a", "b", "c", "d", "d"}
+
+		Expect(php.ArrayPad(a, 0, "d")).To(Equal(a))
+		Expect(php.ArrayPad(a, -5, "d")).To(Equal(b))
+		Expect(php.ArrayPad(a, 5, "d")).To(Equal(c))
+	})
+
+	Describe("ArrayPop", func() {
+		It("valid input", func() {
+			var a = []interface{}{"orange", "banana", "apple", "raspberry"}
+			var b = []interface{}{"orange", "banana", "apple"}
+
+			Expect(php.ArrayPop(&a)).To(Equal("raspberry"))
+			Expect(a).To(Equal(b))
+		})
+		It("nil", func() {
+			Expect(php.ArrayPop(nil)).To(BeNil())
+		})
+	})
+
+	Describe("ArrayPush", func() {
+		It("valid input", func() {
+			var a = []interface{}{"orange", "banana"}
+			var b = []interface{}{"orange", "banana", "apple", "raspberry"}
+
+			Expect(php.ArrayPush(&a, "apple", "raspberry")).To(Equal(4))
+			Expect(a).To(Equal(b))
+		})
+		It("nil", func() {
+			Expect(php.ArrayPush(nil)).To(BeZero())
+		})
+	})
+
+	Describe("ArrayShift", func() {
+		It("valid input", func() {
+			var a = []interface{}{"orange", "banana", "apple", "raspberry"}
+			var b = []interface{}{"banana", "apple", "raspberry"}
+
+			Expect(php.ArrayShift(&a)).To(Equal("orange"))
+			Expect(a).To(Equal(b))
+		})
+		It("nil", func() {
+			Expect(php.ArrayShift(nil)).To(BeNil())
+		})
+	})
+
+	Describe("ArrayUnshift", func() {
+		It("valid input", func() {
+			var a = []interface{}{"orange", "banana"}
+			var b = []interface{}{"apple", "raspberry", "orange", "banana"}
+
+			Expect(php.ArrayUnshift(&a, "apple", "raspberry")).To(Equal(4))
+			Expect(a).To(Equal(b))
+		})
+		It("nil", func() {
+			Expect(php.ArrayUnshift(nil)).To(BeZero())
+		})
+	})
+
+	It("ArrayReverse", func() {
+		var a = []interface{}{"a", "b", "c"}
+		var b = []interface{}{"c", "b", "a"}
+
+		Expect(php.ArrayReverse(a)).To(Equal(b))
+	})
+
+	It("ArraySlice", func() {
+		var a = []interface{}{"a", "b", "c"}
+		var b = []interface{}{"a"}
+
+		Expect(php.ArraySlice(a, 10, 1)).To(BeNil())
+		Expect(php.ArraySlice(a, 0, 1)).To(Equal(b))
+		Expect(php.ArraySlice(a, 0, 10)).To(Equal(a))
+	})
+
+	Describe("ArraySum", func() {
+		It("valid input", func() {
+			tests := []struct {
+				input interface{}
+				want  interface{}
+			}{
+				{[]int{}, 0},
+				{[]string{"a", "b", "c"}, "abc"},
+				{[]int{1, 2, 3, 4, 5}, int64(15)},
+				{[]uint{1, 2, 3, 4, 5}, uint64(15)},
+				{[]float64{1, 2, 3, 4, 5}, float64(15)},
+			}
+			for _, t := range tests {
+				Expect(php.ArraySum(t.input)).To(Equal(t.want))
 			}
 		})
-	}
-}
-
-func TestSort(t *testing.T) {
-	type args struct {
-		array interface{}
-	}
-	tests := []struct {
-		name string
-		args args
-		want interface{}
-	}{
-		{
-			"1",
-			args{nil},
-			nil,
-		},
-		{
-			"2",
-			args{[]int{}},
-			[]int{},
-		},
-		{
-			"3",
-			args{[]string{"c", "a", "b"}},
-			[]string{"a", "b", "c"},
-		},
-		{
-			"4",
-			args{[]int{5, 3, 4, 2, 1}},
-			[]int64{1, 2, 3, 4, 5},
-		},
-		{
-			"5",
-			args{[]uint{1, 5, 3, 2, 4}},
-			[]uint64{1, 2, 3, 4, 5},
-		},
-		{
-			"6",
-			args{[]float64{3, 2, 1, 4, 5}},
-			[]float64{1, 2, 3, 4, 5},
-		},
-		{
-			"7",
-			args{[][]int{[]int{1}, []int{2}}},
-			[][]int{[]int{1}, []int{2}},
-		},
-		{
-			"8",
-			args{struct{}{}},
-			nil,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Sort(tt.args.array); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Sort() = %v, want %v", got, tt.want)
+		It("invalid input", func() {
+			tests := []interface{}{
+				nil,
+				[][]int{[]int{1}, []int{2}},
+				struct{}{},
+			}
+			for _, t := range tests {
+				Expect(php.ArraySum(t)).To(BeNil())
 			}
 		})
-	}
-}
+	})
 
-func TestRsort(t *testing.T) {
-	type args struct {
-		array interface{}
-	}
-	tests := []struct {
-		name string
-		args args
-		want interface{}
-	}{
-		{
-			"1",
-			args{nil},
-			nil,
-		},
-		{
-			"2",
-			args{[]int{}},
-			[]int{},
-		},
-		{
-			"3",
-			args{[]string{"c", "a", "b"}},
-			[]string{"c", "b", "a"},
-		},
-		{
-			"4",
-			args{[]int{1, 2, 3, 4, 5}},
-			[]int64{5, 4, 3, 2, 1},
-		},
-		{
-			"5",
-			args{[]uint{1, 5, 3, 2, 4}},
-			[]uint64{5, 4, 3, 2, 1},
-		},
-		{
-			"6",
-			args{[]float64{3, 2, 1, 4, 5}},
-			[]float64{5, 4, 3, 2, 1},
-		},
-		{
-			"7",
-			args{[][]int{[]int{1}, []int{2}}},
-			[][]int{[]int{1}, []int{2}},
-		},
-		{
-			"8",
-			args{struct{}{}},
-			nil,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Rsort(tt.args.array); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Rsort() = %v, want %v", got, tt.want)
+	Describe("Sort", func() {
+		It("valid input", func() {
+			tests := []struct {
+				input interface{}
+				want  interface{}
+			}{
+				{[]int{}, []int{}},
+				{[]string{"c", "a", "b"}, []string{"a", "b", "c"}},
+				{[]int{5, 3, 4, 2, 1}, []int64{1, 2, 3, 4, 5}},
+				{[]uint{1, 5, 3, 2, 4}, []uint64{1, 2, 3, 4, 5}},
+				{[]float64{3, 2, 1, 4, 5}, []float64{1, 2, 3, 4, 5}},
+				{[][]int{[]int{1}, []int{2}}, [][]int{[]int{1}, []int{2}}},
+			}
+			for _, t := range tests {
+				Expect(php.Sort(t.input)).To(Equal(t.want))
 			}
 		})
-	}
-}
+		It("invalid input", func() {
+			tests := []interface{}{
+				nil,
+				struct{}{},
+			}
+			for _, t := range tests {
+				Expect(php.Sort(t)).To(BeNil())
+			}
+		})
+	})
+
+	Describe("Rsort", func() {
+		It("valid input", func() {
+			tests := []struct {
+				input interface{}
+				want  interface{}
+			}{
+				{[]int{}, []int{}},
+				{[]string{"c", "a", "b"}, []string{"c", "b", "a"}},
+				{[]int{1, 2, 3, 4, 5}, []int64{5, 4, 3, 2, 1}},
+				{[]uint{1, 5, 3, 2, 4}, []uint64{5, 4, 3, 2, 1}},
+				{[]float64{3, 2, 1, 4, 5}, []float64{5, 4, 3, 2, 1}},
+				{[][]int{[]int{1}, []int{2}}, [][]int{[]int{1}, []int{2}}},
+			}
+			for _, t := range tests {
+				Expect(php.Rsort(t.input)).To(Equal(t.want))
+			}
+		})
+		It("invalid input", func() {
+			tests := []interface{}{
+				nil,
+				struct{}{},
+			}
+			for _, t := range tests {
+				Expect(php.Rsort(t)).To(BeNil())
+			}
+		})
+	})
+})

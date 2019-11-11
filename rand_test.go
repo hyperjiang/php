@@ -1,17 +1,18 @@
-package php
+package php_test
 
 import (
-	"testing"
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestRandomBytes(t *testing.T) {
-	if len(RandomBytes(10)) != 10 {
-		t.Fail()
-	}
-}
+var _ = Describe("CSPRNG Functions", func() {
+	It("RandomBytes", func() {
+		Expect(php.RandomBytes(10)).To(HaveLen(10))
 
-func TestRandomString(t *testing.T) {
-	if len(RandomString(10)) != 20 {
-		t.Fail()
-	}
-}
+	})
+
+	It("RandomString", func() {
+		Expect(php.RandomString(10)).To(HaveLen(20))
+	})
+})

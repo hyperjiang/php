@@ -1,366 +1,278 @@
-package php
+package php_test
 
 import (
 	"os"
-	"testing"
+
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestDirname(t *testing.T) {
-	type args struct {
-		path string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{"/etc/passwd"},
-			"/etc",
-		},
-		{
-			"2",
-			args{"/etc"},
-			"/",
-		},
-		{
-			"3",
-			args{"."},
-			".",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Dirname(tt.args.path); got != tt.want {
-				t.Errorf("Dirname() = %v, want %v", got, tt.want)
-			}
+var _ = Describe("Filesystem Functions", func() {
+
+	It("Dirname", func() {
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{"/etc/passwd", "/etc"},
+			{"/etc", "/"},
+			{".", "."},
+		}
+		for _, t := range tests {
+			Expect(php.Dirname(t.input)).To(Equal(t.want))
+		}
+	})
+
+	It("DirnameWithLevels", func() {
+		type args struct {
+			path   string
+			levels int
+		}
+		tests := []struct {
+			args args
+			want string
+		}{
+			{args{"/usr/local/lib", 2}, "/usr"},
+			{args{"/usr/local/lib", 0}, "/usr/local/lib"},
+		}
+		for _, t := range tests {
+			Expect(php.DirnameWithLevels(t.args.path, t.args.levels)).To(Equal(t.want))
+		}
+	})
+
+	It("Realpath", func() {
+		dir, _ := os.Getwd()
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{"/etc/", "/etc"},
+			{"/etc/..", "/"},
+			{".", dir},
+		}
+		for _, t := range tests {
+			Expect(php.Realpath(t.input)).To(Equal(t.want))
+		}
+	})
+
+	It("Touch and Unlink", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+
+		err := php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
+
+		err = php.Unlink(filename)
+		Expect(err).NotTo(HaveOccurred())
+	})
+
+	Describe("Mkdir and Rmdir", func() {
+		var path = "/tmp/hyperjiangphpfilesystemtestdir"
+		var subPath = "/tmp/hyperjiangphpfilesystemtestdir/dir"
+
+		It("no recursive", func() {
+			err := php.Mkdir(path, 0666, false)
+			Expect(err).NotTo(HaveOccurred())
+
+			// clean up
+			err = php.Rmdir(path)
+			Expect(err).NotTo(HaveOccurred())
 		})
-	}
-}
 
-func TestDirnameWithLevels(t *testing.T) {
-	type args struct {
-		path   string
-		levels int
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{"/usr/local/lib", 2},
-			"/usr",
-		},
-		{
-			"2",
-			args{"/usr/local/lib", 0},
-			"/usr/local/lib",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := DirnameWithLevels(tt.args.path, tt.args.levels); got != tt.want {
-				t.Errorf("DirnameWithLevels() = %v, want %v", got, tt.want)
-			}
+		It("recursive", func() {
+			err := php.Mkdir(subPath, 0, true)
+			Expect(err).NotTo(HaveOccurred())
+
+			// clean up
+			err = php.Rmdir(subPath)
+			Expect(err).NotTo(HaveOccurred())
+			err = php.Rmdir(path)
+			Expect(err).NotTo(HaveOccurred())
 		})
-	}
-}
+	})
 
-func TestRealpath(t *testing.T) {
+	It("IsFile", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+		php.Unlink(filename)
+		Expect(php.IsFile(filename)).To(BeFalse()) // file not exists
 
-	dir, _ := os.Getwd()
+		php.Touch(filename)
+		Expect(php.IsFile(filename)).To(BeTrue())
+		php.Unlink(filename)
+	})
 
-	type args struct {
-		path string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{"/etc/"},
-			"/etc",
-		},
-		{
-			"2",
-			args{"/etc/.."},
-			"/",
-		},
-		{
-			"3",
-			args{"."},
-			dir,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Realpath(tt.args.path); got != tt.want {
-				t.Errorf("Realpath() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("IsDir", func() {
+		var pathname = "/tmp/hyperjiangphpfilesystemtestdir"
+		php.Rmdir(pathname)
+		Expect(php.IsDir(pathname)).To(BeFalse()) // dir not exists
 
-func TestTouch(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-	if got := Touch(filename); got != nil {
-		t.Errorf("Touch() = %v, want %v", got, nil)
-	}
-	Unlink(filename)
-}
+		php.Mkdir(pathname, 0, false)
+		Expect(php.IsDir(pathname)).To(BeTrue())
+		php.Rmdir(pathname)
+	})
 
-func TestMkdir(t *testing.T) {
-	var pathname = "/tmp/hyperjiangphpfilesystemtestdir"
-	if got := Mkdir(pathname, 0666, false); got != nil {
-		t.Errorf("Mkdir() = %v, want %v", got, nil)
-	}
-	// clean up
-	Rmdir(pathname)
+	It("IsExecutable", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.exe"
+		php.Unlink(filename)
+		Expect(php.IsExecutable(filename)).To(BeFalse()) // file not exists
 
-	var pathname2 = "/tmp/hyperjiangphpfilesystemtestdir/dir"
-	if got := Mkdir(pathname2, 0, true); got != nil {
-		t.Errorf("Mkdir() = %v, want %v", got, nil)
-	}
-	// clean up
-	Rmdir(pathname2)
-	Rmdir(pathname)
-}
+		php.Touch(filename)
+		Expect(php.IsExecutable(filename)).To(BeFalse()) // not executable
 
-func TestIsFile(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-	Unlink(filename)
-	if IsFile(filename) { // not exists
-		t.Fail()
-	}
-	Touch(filename)
-	if !IsFile(filename) {
-		t.Fail()
-	}
-	Unlink(filename)
-}
+		php.Chmod(filename, 0777)
+		Expect(php.IsExecutable(filename)).To(BeTrue())
+		php.Unlink(filename)
+	})
 
-func TestIsDir(t *testing.T) {
-	var pathname = "/tmp/hyperjiangphpfilesystemtestdir"
-	Rmdir(pathname)
-	if IsDir(pathname) { // not exists
-		t.Fail()
-	}
-	Mkdir(pathname, 0, false)
-	if !IsDir(pathname) {
-		t.Fail()
-	}
-	Rmdir(pathname)
-}
+	It("IsReadable", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+		php.Unlink(filename)
+		Expect(php.IsReadable(filename)).To(BeFalse()) // file not exists
 
-func TestIsExecutable(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.exe"
-	Unlink(filename)
-	if IsExecutable(filename) { // not exists
-		t.Fail()
-	}
-	Touch(filename)
-	if IsExecutable(filename) { // not executable
-		t.Fail()
-	}
-	Chmod(filename, 0777)
-	if !IsExecutable(filename) {
-		t.Fail()
-	}
-	Unlink(filename)
-}
+		php.Touch(filename)
+		Expect(php.IsReadable(filename)).To(BeTrue())
 
-func TestIsReadable(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-	Unlink(filename)
-	if IsReadable(filename) { // not exists
-		t.Fail()
-	}
-	Touch(filename)
-	if !IsReadable(filename) {
-		t.Fail()
-	}
-	Chmod(filename, 0222)
-	if IsReadable(filename) { // not readable
-		t.Fail()
-	}
-	Unlink(filename)
-}
+		php.Chmod(filename, 0222)
+		Expect(php.IsReadable(filename)).To(BeFalse()) // not readable
+		php.Unlink(filename)
+	})
 
-func TestIsWritable(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-	Unlink(filename)
-	if IsWritable(filename) { // not exists
-		t.Fail()
-	}
-	Touch(filename)
-	if !IsWritable(filename) {
-		t.Fail()
-	}
-	Chmod(filename, 0555)
-	if IsWritable(filename) { // not writable
-		t.Fail()
-	}
-	Unlink(filename)
-}
+	It("IsWritable", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+		php.Unlink(filename)
+		Expect(php.IsWritable(filename)).To(BeFalse()) // file not exists
 
-func TestIsLink(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-	Touch(filename)
-	defer Unlink(filename)
+		php.Touch(filename)
+		Expect(php.IsWritable(filename)).To(BeTrue())
 
-	var link = "/tmp/hyperjiangphpfilesystemtest.link"
-	Unlink(link)
-	if IsLink(link) { // not exists
-		t.Fail()
-	}
+		php.Chmod(filename, 0555)
+		Expect(php.IsWritable(filename)).To(BeFalse()) // not writable
+		php.Unlink(filename)
+	})
 
-	if err := Symlink(filename, link); err != nil {
-		t.Error("Create symbolic link failed")
-	}
-	if !IsLink(link) {
-		t.Fail()
-	}
-	Unlink(link)
-}
+	It("Symlink and IsLink", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+		php.Touch(filename)
+		defer php.Unlink(filename)
 
-func TestBasename(t *testing.T) {
-	type args struct {
-		path string
-	}
-	tests := []struct {
-		name string
-		args args
-		want string
-	}{
-		{
-			"1",
-			args{"/etc/sudoers.d"},
-			"sudoers.d",
-		},
-		{
-			"2",
-			args{"/etc/"},
-			"etc",
-		},
-		{
-			"3",
-			args{"."},
-			".",
-		},
-		{
-			"4",
-			args{"/"},
-			"/",
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := Basename(tt.args.path); got != tt.want {
-				t.Errorf("Basename() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+		var link = "/tmp/hyperjiangphpfilesystemtest.link"
+		php.Unlink(link)
+		Expect(php.IsLink(link)).To(BeFalse()) // file not exists
 
-func TestChown(t *testing.T) {
-	var filename = "/tmp/tmpfile"
-	Touch(filename)
-	defer Unlink(filename)
+		err := php.Symlink(filename, link)
+		Expect(err).NotTo(HaveOccurred())
 
-	if err := Chown(filename, os.Getuid(), os.Getegid()); err != nil {
-		t.Fail()
-	}
-}
+		Expect(php.IsLink(link)).To(BeTrue())
+		php.Unlink(link)
+	})
 
-func TestLink(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-	Touch(filename)
-	defer Unlink(filename)
+	It("Basename", func() {
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{"/etc/sudoers.d", "sudoers.d"},
+			{"/etc/", "etc"},
+			{".", "."},
+			{"/", "/"},
+		}
+		for _, t := range tests {
+			Expect(php.Basename(t.input)).To(Equal(t.want))
+		}
+	})
 
-	var link = "/tmp/hyperjiangphpfilesystemtest.link"
-	Unlink(link)
+	It("Chown", func() {
+		var filename = "/tmp/tmpfile"
+		php.Touch(filename)
+		defer php.Unlink(filename)
 
-	if err := Link(filename, link); err != nil {
-		t.Error("Create hard link failed")
-	}
-	Unlink(link)
-}
+		err := php.Chown(filename, os.Getuid(), os.Getegid())
+		Expect(err).NotTo(HaveOccurred())
+	})
 
-func TestCopy(t *testing.T) {
-	var src = "/tmp/hyperjiangphpfilesystemtest.src"
-	var dst = "/tmp/hyperjiangphpfilesystemtest.dst"
-	Unlink(src)
-	Unlink(dst)
+	It("Link", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+		php.Touch(filename)
+		defer php.Unlink(filename)
 
-	if err := Copy(src, dst); err == nil {
-		t.Error("Copy should fail because src file does not exist")
-	}
+		var link = "/tmp/hyperjiangphpfilesystemtest.link"
+		php.Unlink(link)
 
-	Touch(src)
-	defer Unlink(src)
+		err := php.Link(filename, link)
+		Expect(err).NotTo(HaveOccurred())
+		php.Unlink(link)
+	})
 
-	if err := Copy(src, "/tmp/nodir/hyperjiangphpfilesystemtest.dst"); err == nil {
-		t.Error("Copy should fail because the directory of dst file does not exist")
-	}
+	It("Copy", func() {
+		var src = "/tmp/hyperjiangphpfilesystemtest.src"
+		var dst = "/tmp/hyperjiangphpfilesystemtest.dst"
+		php.Unlink(src)
+		php.Unlink(dst)
 
-	if err := Copy(src, dst); err != nil {
-		t.Fail()
-	}
+		err := php.Copy(src, dst)
+		Expect(err).To(HaveOccurred(), "Copy should fail because src file does not exist")
 
-	Unlink(dst)
-}
+		php.Touch(src)
+		defer php.Unlink(src)
 
-func TestFileExists(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-	Unlink(filename)
-	if FileExists(filename) { // not exists
-		t.Fail()
-	}
-	Touch(filename)
-	if !FileExists(filename) {
-		t.Fail()
-	}
-	Unlink(filename)
-}
+		err = php.Copy(src, "/tmp/nodir/hyperjiangphpfilesystemtest.dst")
+		Expect(err).To(HaveOccurred(), "Copy should fail because the directory of dst file does not exist")
 
-func TestFileSize(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-	Unlink(filename)
-	if _, err := FileSize(filename); err == nil { // not exists
-		t.Fail()
-	}
-	Touch(filename)
-	if size, err := FileSize(filename); err != nil || size != 0 {
-		t.Fail()
-	}
-	Unlink(filename)
-}
+		err = php.Copy(src, dst)
+		Expect(err).NotTo(HaveOccurred())
 
-func TestRename(t *testing.T) {
-	var oldname = "/tmp/hyperjiangphpfilesystemtest.old"
-	Touch(oldname)
-	var newname = "/tmp/hyperjiangphpfilesystemtest.new"
-	Rename(oldname, newname)
-	if FileExists(oldname) || !FileExists(newname) {
-		t.Fail()
-	}
-	Unlink(newname)
-}
+		php.Unlink(dst)
+	})
 
-func TestFileGetContents(t *testing.T) {
-	var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-	Unlink(filename)
-	if err := FilePutContents(filename, "Hello world!"); err != nil {
-		t.Errorf("FilePutContents failed")
-	}
-	str, err := FileGetContents(filename)
-	if str != "Hello world!" || err != nil {
-		t.Fail()
-	}
-	Unlink(filename)
-}
+	It("FileExists", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+		php.Unlink(filename)
+		Expect(php.FileExists(filename)).To(BeFalse()) // file not exists
+
+		php.Touch(filename)
+		Expect(php.FileExists(filename)).To(BeTrue())
+		php.Unlink(filename)
+	})
+
+	It("FileSize", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+		php.Unlink(filename)
+		_, err := php.FileSize(filename)
+		Expect(err).To(HaveOccurred())
+
+		php.Touch(filename)
+		size, err := php.FileSize(filename)
+		Expect(err).NotTo(HaveOccurred())
+		Expect(size).To(BeZero())
+
+		php.Unlink(filename)
+	})
+
+	It("Rename", func() {
+		var oldname = "/tmp/hyperjiangphpfilesystemtest.old"
+		php.Touch(oldname)
+
+		var newname = "/tmp/hyperjiangphpfilesystemtest.new"
+		php.Rename(oldname, newname)
+
+		Expect(php.FileExists(oldname)).To(BeFalse())
+		Expect(php.FileExists(newname)).To(BeTrue())
+
+		php.Unlink(newname)
+	})
+
+	It("FilePutContents and FileGetContents", func() {
+		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
+		php.Unlink(filename)
+
+		const msg = "Hello world!"
+		err := php.FilePutContents(filename, msg)
+		Expect(err).NotTo(HaveOccurred())
+
+		str, err := php.FileGetContents(filename)
+		Expect(err).NotTo(HaveOccurred())
+		Expect(str).To(Equal(msg))
+
+		php.Unlink(filename)
+	})
+})

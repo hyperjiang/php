@@ -1,799 +1,219 @@
-package php
+package php_test
 
 import (
-	"testing"
+	"github.com/hyperjiang/php"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
-func TestCtypeAlnum(t *testing.T) {
-	type args struct {
-		text string
+var _ = Describe("Ctype Functions", func() {
+	type testcase struct {
+		input string
+		want  bool
 	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"0"},
-			true,
-		},
-		{
-			"2",
-			args{"53"},
-			true,
-		},
-		{
-			"3",
-			args{"asdf"},
-			true,
-		},
-		{
-			"4",
-			args{"ADD"},
-			true,
-		},
-		{
-			"5",
-			args{"A1cbad"},
-			true,
-		},
-		{
-			"6",
-			args{""},
-			false,
-		},
-		{
-			"7",
-			args{"-127"},
-			false,
-		},
-		{
-			"8",
-			args{"53.0"},
-			false,
-		},
-		{
-			"9",
-			args{"asd df"},
-			false,
-		},
-		{
-			"10",
-			args{"é"},
-			false,
-		},
-		{
-			"11",
-			args{"!asdf"},
-			false,
-		},
-		{
-			"12",
-			args{"\x00asdf"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypeAlnum(tt.args.text); got != tt.want {
-				t.Errorf("CtypeAlnum() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
 
-func TestCtypeAlpha(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"asdf"},
-			true,
-		},
-		{
-			"2",
-			args{"ADD"},
-			true,
-		},
-		{
-			"3",
-			args{"bAcbad"},
-			true,
-		},
-		{
-			"4",
-			args{""},
-			false,
-		},
-		{
-			"5",
-			args{"-127"},
-			false,
-		},
-		{
-			"6",
-			args{"53.0"},
-			false,
-		},
-		{
-			"7",
-			args{"asd df"},
-			false,
-		},
-		{
-			"8",
-			args{"é"},
-			false,
-		},
-		{
-			"9",
-			args{"!asdf"},
-			false,
-		},
-		{
-			"10",
-			args{"\x00asdf"},
-			false,
-		},
-		{
-			"11",
-			args{"13addfadsf2"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypeAlpha(tt.args.text); got != tt.want {
-				t.Errorf("CtypeAlpha() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypeAlnum", func() {
+		tests := []testcase{
+			{"0", true},
+			{"53", true},
+			{"asdf", true},
+			{"ADD", true},
+			{"A1cbad", true},
+			{"", false},
+			{"-127", false},
+			{"53.0", false},
+			{"asd df", false},
+			{"é", false},
+			{"!asdf", false},
+			{"\x00asdf", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypeAlnum(t.input)).To(Equal(t.want))
+		}
+	})
 
-func TestCtypeCntrl(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"\x00"},
-			true,
-		},
-		{
-			"2",
-			args{"\n"},
-			true,
-		},
-		{
-			"3",
-			args{"\r"},
-			true,
-		},
-		{
-			"4",
-			args{""},
-			false,
-		},
-		{
-			"5",
-			args{"-127"},
-			false,
-		},
-		{
-			"6",
-			args{"53.0"},
-			false,
-		},
-		{
-			"7",
-			args{"asd df"},
-			false,
-		},
-		{
-			"8",
-			args{"é"},
-			false,
-		},
-		{
-			"9",
-			args{"!asdf"},
-			false,
-		},
-		{
-			"10",
-			args{"1234"},
-			false,
-		},
-		{
-			"11",
-			args{"\x00asdf"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypeCntrl(tt.args.text); got != tt.want {
-				t.Errorf("CtypeCntrl() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypeAlpha", func() {
+		tests := []testcase{
+			{"asdf", true},
+			{"ADD", true},
+			{"bAcbad", true},
+			{"", false},
+			{"-127", false},
+			{"53.0", false},
+			{"asd df", false},
+			{"é", false},
+			{"!asdf", false},
+			{"\x00asdf", false},
+			{"13addfadsf2", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypeAlpha(t.input)).To(Equal(t.want))
+		}
+	})
 
-func TestCtypeDigit(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"0"},
-			true,
-		},
-		{
-			"2",
-			args{"53"},
-			true,
-		},
-		{
-			"3",
-			args{"01234"},
-			true,
-		},
-		{
-			"4",
-			args{""},
-			false,
-		},
-		{
-			"5",
-			args{"-127"},
-			false,
-		},
-		{
-			"6",
-			args{"53.0"},
-			false,
-		},
-		{
-			"7",
-			args{"asd df"},
-			false,
-		},
-		{
-			"8",
-			args{"é"},
-			false,
-		},
-		{
-			"9",
-			args{"!asdf"},
-			false,
-		},
-		{
-			"10",
-			args{"1234B"},
-			false,
-		},
-		{
-			"11",
-			args{"\x00asdf"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypeDigit(tt.args.text); got != tt.want {
-				t.Errorf("CtypeDigit() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypeCntrl", func() {
+		tests := []testcase{
+			{"\x00", true},
+			{"\n", true},
+			{"\r", true},
+			{"", false},
+			{"-127", false},
+			{"53.0", false},
+			{"asd df", false},
+			{"é", false},
+			{"!asdf", false},
+			{"1234", false},
+			{"\x00asdf", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypeCntrl(t.input)).To(Equal(t.want))
+		}
+	})
 
-func TestCtypeGraph(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"-127"},
-			true,
-		},
-		{
-			"2",
-			args{"A1cbad"},
-			true,
-		},
-		{
-			"3",
-			args{"LKA#@%.54"},
-			true,
-		},
-		{
-			"4",
-			args{""},
-			false,
-		},
-		{
-			"5",
-			args{"asd df"},
-			false,
-		},
-		{
-			"6",
-			args{"é"},
-			false,
-		},
-		{
-			"7",
-			args{"\r"},
-			false,
-		},
-		{
-			"8",
-			args{"\n"},
-			false,
-		},
-		{
-			"9",
-			args{"\t"},
-			false,
-		},
-		{
-			"10",
-			args{"\x00asdf"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypeGraph(tt.args.text); got != tt.want {
-				t.Errorf("CtypeGraph() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypeDigit", func() {
+		tests := []testcase{
+			{"0", true},
+			{"53", true},
+			{"01234", true},
+			{"", false},
+			{"-127", false},
+			{"53.0", false},
+			{"asd df", false},
+			{"é", false},
+			{"!asdf", false},
+			{"1234B", false},
+			{"\x00asdf", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypeDigit(t.input)).To(Equal(t.want))
+		}
+	})
 
-func TestCtypeLower(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"asdf"},
-			true,
-		},
-		{
-			"2",
-			args{""},
-			false,
-		},
-		{
-			"3",
-			args{"-127"},
-			false,
-		},
-		{
-			"4",
-			args{"53.0"},
-			false,
-		},
-		{
-			"5",
-			args{"asd df"},
-			false,
-		},
-		{
-			"6",
-			args{"DD"},
-			false,
-		},
-		{
-			"7",
-			args{"123"},
-			false,
-		},
-		{
-			"8",
-			args{"é"},
-			false,
-		},
-		{
-			"9",
-			args{"!asdf"},
-			false,
-		},
-		{
-			"10",
-			args{"1234B"},
-			false,
-		},
-		{
-			"11",
-			args{"\x00asdf"},
-			false,
-		},
-		{
-			"12",
-			args{"\n"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypeLower(tt.args.text); got != tt.want {
-				t.Errorf("CtypeLower() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypeGraph", func() {
+		tests := []testcase{
+			{"-127", true},
+			{"A1cbad", true},
+			{"LKA#@%.54", true},
+			{"", false},
+			{"asd df", false},
+			{"é", false},
+			{"\r", false},
+			{"\n", false},
+			{"\t", false},
+			{"\x00asdf", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypeGraph(t.input)).To(Equal(t.want))
+		}
+	})
 
-func TestCtypePrint(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"-127!!"},
-			true,
-		},
-		{
-			"2",
-			args{"Asd df2"},
-			true,
-		},
-		{
-			"3",
-			args{"LKA#@%.54"},
-			true,
-		},
-		{
-			"4",
-			args{""},
-			false,
-		},
-		{
-			"5",
-			args{"\r\n\t"},
-			false,
-		},
-		{
-			"6",
-			args{"é"},
-			false,
-		},
-		{
-			"7",
-			args{"\x00asdf"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypePrint(tt.args.text); got != tt.want {
-				t.Errorf("CtypePrint() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypeLower", func() {
+		tests := []testcase{
+			{"asdf", true},
+			{"", false},
+			{"-127", false},
+			{"53.0", false},
+			{"asd df", false},
+			{"DD", false},
+			{"123", false},
+			{"é", false},
+			{"!asdf", false},
+			{"1234B", false},
+			{"\x00asdf", false},
+			{"\n", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypeLower(t.input)).To(Equal(t.want))
+		}
+	})
 
-func TestCtypePunct(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"@@!#^$"},
-			true,
-		},
-		{
-			"2",
-			args{"*&$()"},
-			true,
-		},
-		{
-			"3",
-			args{""},
-			false,
-		},
-		{
-			"4",
-			args{"ABasdk!@!$#"},
-			false,
-		},
-		{
-			"5",
-			args{"\r\n\t"},
-			false,
-		},
-		{
-			"6",
-			args{"é"},
-			false,
-		},
-		{
-			"7",
-			args{"\x00asdf"},
-			false,
-		},
-		{
-			"8",
-			args{"!@ # $"},
-			false,
-		},
-		{
-			"9",
-			args{"123"},
-			false,
-		},
-		{
-			"10",
-			args{"abc"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypePunct(tt.args.text); got != tt.want {
-				t.Errorf("CtypePunct() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypePrint", func() {
+		tests := []testcase{
+			{"-127!!", true},
+			{"Asd df2", true},
+			{"LKA#@%.54", true},
+			{"", false},
+			{"\r\n\t", false},
+			{"é", false},
+			{"\x00asdf", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypePrint(t.input)).To(Equal(t.want))
+		}
+	})
 
-func TestCtypeSpace(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{" "},
-			true,
-		},
-		{
-			"2",
-			args{"\r\n\t"},
-			true,
-		},
-		{
-			"3",
-			args{""},
-			false,
-		},
-		{
-			"4",
-			args{"\x01"},
-			false,
-		},
-		{
-			"6",
-			args{"é"},
-			false,
-		},
-		{
-			"7",
-			args{"\x00asdf"},
-			false,
-		},
-		{
-			"8",
-			args{"!@ # $"},
-			false,
-		},
-		{
-			"9",
-			args{"123"},
-			false,
-		},
-		{
-			"10",
-			args{"abc"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypeSpace(tt.args.text); got != tt.want {
-				t.Errorf("CtypeSpace() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypePunct", func() {
+		tests := []testcase{
+			{"@@!#^$", true},
+			{"*&$()", true},
+			{"", false},
+			{"ABasdk!@!$#", false},
+			{"\r\n\t", false},
+			{"é", false},
+			{"\x00asdf", false},
+			{"!@ # $", false},
+			{"123", false},
+			{"abc", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypePunct(t.input)).To(Equal(t.want))
+		}
+	})
 
-func TestCtypeUpper(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"ASDF"},
-			true,
-		},
-		{
-			"2",
-			args{""},
-			false,
-		},
-		{
-			"3",
-			args{"-127"},
-			false,
-		},
-		{
-			"4",
-			args{"53.0"},
-			false,
-		},
-		{
-			"5",
-			args{"ASD DF"},
-			false,
-		},
-		{
-			"6",
-			args{"abc"},
-			false,
-		},
-		{
-			"7",
-			args{"123"},
-			false,
-		},
-		{
-			"8",
-			args{"é"},
-			false,
-		},
-		{
-			"9",
-			args{"!ASDF"},
-			false,
-		},
-		{
-			"10",
-			args{"1234B"},
-			false,
-		},
-		{
-			"11",
-			args{"\x00ASDF"},
-			false,
-		},
-		{
-			"12",
-			args{"\n"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypeUpper(tt.args.text); got != tt.want {
-				t.Errorf("CtypeUpper() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypeSpace", func() {
+		tests := []testcase{
+			{" ", true},
+			{"\r\n\t", true},
+			{"", false},
+			{"\x01", false},
+			{"é", false},
+			{"\x00asdf", false},
+			{"!@ # $", false},
+			{"123", false},
+			{"abc", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypeSpace(t.input)).To(Equal(t.want))
+		}
+	})
 
-func TestCtypeXdigit(t *testing.T) {
-	type args struct {
-		text string
-	}
-	tests := []struct {
-		name string
-		args args
-		want bool
-	}{
-		{
-			"1",
-			args{"01234"},
-			true,
-		},
-		{
-			"2",
-			args{"A4fD"},
-			true,
-		},
-		{
-			"3",
-			args{""},
-			false,
-		},
-		{
-			"4",
-			args{"-127"},
-			false,
-		},
-		{
-			"5",
-			args{"53.0"},
-			false,
-		},
-		{
-			"6",
-			args{"ASD DF"},
-			false,
-		},
-		{
-			"7",
-			args{"hhh"},
-			false,
-		},
-		{
-			"8",
-			args{"é"},
-			false,
-		},
-		{
-			"9",
-			args{"!ASDF"},
-			false,
-		},
-		{
-			"10",
-			args{"Z"},
-			false,
-		},
-		{
-			"11",
-			args{"\x00ASDF"},
-			false,
-		},
-		{
-			"12",
-			args{"\n"},
-			false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := CtypeXdigit(tt.args.text); got != tt.want {
-				t.Errorf("CtypeXdigit() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+	It("CtypeUpper", func() {
+		tests := []testcase{
+			{"ASDF", true},
+			{"", false},
+			{"-127", false},
+			{"53.0", false},
+			{"ASD DF", false},
+			{"abc", false},
+			{"123", false},
+			{"é", false},
+			{"!ASDF", false},
+			{"1234B", false},
+			{"\x00ASDF", false},
+			{"\n", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypeUpper(t.input)).To(Equal(t.want))
+		}
+	})
+
+	It("CtypeXdigit", func() {
+		tests := []testcase{
+			{"01234", true},
+			{"A4fD", true},
+			{"", false},
+			{"-127", false},
+			{"53.0", false},
+			{"ASD DF", false},
+			{"hhh", false},
+			{"é", false},
+			{"!ASDF", false},
+			{"Z", false},
+			{"\x00ASDF", false},
+			{"\n", false},
+		}
+		for _, t := range tests {
+			Expect(php.CtypeXdigit(t.input)).To(Equal(t.want))
+		}
+	})
+})
