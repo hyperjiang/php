@@ -7,7 +7,6 @@ import (
 )
 
 var _ = Describe("String Functions", func() {
-
 	It("Substr", func() {
 		str := "abcdef"
 		tests := []struct {

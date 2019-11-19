@@ -28,7 +28,7 @@ const (
 // RuneMatchFunc is function to check if a rune match some condition
 type RuneMatchFunc func(rune) bool
 
-// Substr returns the portion of string specified by the start and length parameters.
+// Substr returns the portion of string specified by the start and length parameters
 //
 // The behaviour of this function is mostly the same as the PHP mb_substr function,
 //
@@ -36,9 +36,9 @@ type RuneMatchFunc func(rune) bool
 //
 // except that:
 //
-// 1) If start or length is invalid, empty string will be return;
+// 1) If start or length is invalid, empty string will be return
 //
-// 2) If length is 0, the substring starting from start until the end of the string will be returned.
+// 2) If length is 0, the substring starting from start until the end of the string will be returned
 func Substr(str string, start, length int) string {
 
 	rs := []rune(str)
@@ -207,7 +207,7 @@ func Ireplace(search, replace interface{}, subject string) string {
 
 // Addslashes quote string with slashes
 //
-// The characters to be escaped are single quote ('), double quote (") and backslash (\).
+// The characters to be escaped are single quote ('), double quote (") and backslash (\)
 func Addslashes(str string) string {
 	return Replace([]string{"\\", "'", "\""}, []string{"\\\\", "\\'", "\\\""}, str)
 }
@@ -232,13 +232,13 @@ func Ord(character string) rune {
 }
 
 // Explode returns an slice of strings, each of which is a substring of str
-// formed by splitting it on boundaries formed by the string delimiter.
+// formed by splitting it on boundaries formed by the string delimiter
 func Explode(delimiter, str string) []string {
 	return strings.Split(str, delimiter)
 }
 
 // Implode returns a string containing a string representation of all the slice
-// elements in the same order, with the glue string between each element.
+// elements in the same order, with the glue string between each element
 func Implode(glue string, pieces []string) string {
 	return strings.Join(pieces, glue)
 }
@@ -362,9 +362,11 @@ func StrWordCount(str string) []string {
 
 // NumberFormat formats a number with grouped thousands
 //
-// decimals: sets the number of decimal points.
-// decPoint: sets the separator for the decimal point.
-// thousandsSep: sets the thousands separator.
+// decimals: sets the number of decimal points
+//
+// decPoint: sets the separator for the decimal point
+//
+// thousandsSep: sets the thousands separator
 func NumberFormat(number float64, decimals int, decPoint, thousandsSep string) string {
 	if decimals < 0 {
 		decimals = 0

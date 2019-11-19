@@ -47,7 +47,7 @@ func Unlink(filename string) error {
 	return syscall.Unlink(filename)
 }
 
-// Mkdir attempts to create the directory specified by pathname.
+// Mkdir attempts to create the directory specified by pathname
 func Mkdir(pathname string, mode os.FileMode, recursive bool) error {
 	if mode == 0 {
 		mode = 0777
@@ -128,7 +128,7 @@ func IsLink(filename string) bool {
 	return fi.Mode()&os.ModeSymlink == os.ModeSymlink
 }
 
-// Copy copies the src file to dst. Any existing file will be overwritten and will not copy file attributes.
+// Copy copies the src file to dst, any existing file will be overwritten and will not copy file attributes
 func Copy(src, dst string) error {
 	in, err := os.Open(src)
 	if err != nil {

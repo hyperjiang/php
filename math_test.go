@@ -7,7 +7,6 @@ import (
 )
 
 var _ = Describe("Math Functions", func() {
-
 	It("Round", func() {
 		type args struct {
 			val       float64

@@ -3,8 +3,9 @@ package php
 // SimilarText calculate the similarity between two strings
 // returns the number of matching chars in both strings and the similarity percent
 // note that there is a little difference between the original php function that
-// a multi-byte character is counted as 1 while it would be 2 in php.
-// This function is case sensitive.
+// a multi-byte character is counted as 1 while it would be 2 in php
+//
+// This function is case sensitive
 func SimilarText(first, second string) (count int, percent float32) {
 	txt1 := []rune(first)
 	len1 := len(txt1)

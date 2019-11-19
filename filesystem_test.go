@@ -9,7 +9,6 @@ import (
 )
 
 var _ = Describe("Filesystem Functions", func() {
-
 	It("Dirname", func() {
 		tests := []struct {
 			input string

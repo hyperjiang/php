@@ -41,7 +41,7 @@ func Round(val float64, precision int) float64 {
 	return res
 }
 
-// Abs returns the absolute value of number.
+// Abs returns the absolute value of number
 func Abs(number float64) float64 {
 	return math.Abs(number)
 }

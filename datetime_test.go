@@ -10,7 +10,6 @@ import (
 )
 
 var _ = Describe("Date/Time Functions", func() {
-
 	It("Strtotime", func() {
 		ts170101 := int64(1483228800) // the UTC timestamp of 2017-01-01
 		ts170111 := int64(1484092800) // the UTC timestamp of 2017-01-11

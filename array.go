@@ -369,7 +369,7 @@ func ArrayPop(s *[]interface{}) interface{} {
 }
 
 // ArrayPush pushes one or more elements onto the end of array,
-// returns the new number of elements in the array.
+// returns the new number of elements in the array
 func ArrayPush(s *[]interface{}, elements ...interface{}) int {
 	if s == nil {
 		return 0

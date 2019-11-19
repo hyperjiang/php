@@ -170,6 +170,14 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [file_get_contents](https://www.php.net/manual/en/function.file-get-contents.php) | [FileGetContents](https://godoc.org/github.com/hyperjiang/php#FileGetContents) |
 | [file_put_contents](https://www.php.net/manual/en/function.file-put-contents.php) | [FilePutContents](https://godoc.org/github.com/hyperjiang/php#FilePutContents) |
 
+### Directory Functions
+
+| PHP function                                         | Golang function                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| [getcwd](https://www.php.net/manual/en/function.getcwd.php) | [Getcwd](https://godoc.org/github.com/hyperjiang/php#Getcwd) |
+| [chdir](https://www.php.net/manual/en/function.chdir.php) | [Chdir](https://godoc.org/github.com/hyperjiang/php#Chdir) |
+| [scandir](https://www.php.net/manual/en/function.scandir.php) | [Scandir](https://godoc.org/github.com/hyperjiang/php#Scandir) |
+
 ### Image Functions
 
 | PHP function                                         | Golang function                                            |
