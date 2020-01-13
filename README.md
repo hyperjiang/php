@@ -209,6 +209,13 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | ---------------------------------------------------- | ---------------------------------------------------------- |
 | [random_bytes](https://php.net/manual/en/function.random-bytes.php) | [RandomBytes](https://godoc.org/github.com/hyperjiang/php#RandomBytes) |
 
+### URL Functions
+
+| PHP function                                         | Golang function                                            |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| [base64_decode](https://www.php.net/manual/en/function.base64-decode.php) | [Base64Decode](https://godoc.org/github.com/hyperjiang/php#Base64Decode) |
+| [base64_encode](https://www.php.net/manual/en/function.base64-encode.php) | [Base64Encode](https://godoc.org/github.com/hyperjiang/php#Base64Encode) |
+
 ### Misc Functions
 
 | PHP function                                         | Golang function                                            |
