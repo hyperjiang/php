@@ -154,7 +154,6 @@ func init() {
 
 // getPattern gets the matched pattern by the given php style date/time format string
 func getPattern(format string) (pattern, error) {
-
 	for _, p := range _defaultPatterns {
 		if p.format == format {
 			return p, nil
