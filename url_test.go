@@ -1,7 +1,6 @@
 package php_test
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/hyperjiang/php"
@@ -118,11 +117,21 @@ var _ = Describe("URL Functions", func() {
 			"pastimes": []string{"golf", "opera", "poker", "rap"},
 		}
 		query = php.HTTPBuildQuery(data2)
-		fmt.Println(query)
 		Expect(query).To(ContainSubstring("pastimes%5B0%5D=golf&pastimes%5B1%5D=opera&pastimes%5B2%5D=poker&pastimes%5B3%5D=rap"))
 		Expect(query).To(ContainSubstring("user%5Bage%5D=47"))
 		Expect(query).To(ContainSubstring("user%5Bdob%5D=5%2F12%2F1956"))
 		Expect(query).To(ContainSubstring("user%5Bname%5D=Bob+Smith"))
 		Expect(query).To(ContainSubstring("user%5Bsex%5D=M"))
+	})
+	It("ParseURL", func() {
+		url, err := php.ParseURL("https://httpbin.org:80/")
+		Expect(err).NotTo(HaveOccurred())
+		Expect(url.Scheme).To(Equal("https"))
+		Expect(url.Host).To(Equal("httpbin.org:80"))
+		Expect(url.Path).To(Equal("/"))
+		Expect(url.Port()).To(Equal("80"))
+
+		_, err = php.ParseURL("::::")
+		Expect(err).To(HaveOccurred())
 	})
 })

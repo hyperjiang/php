@@ -112,3 +112,8 @@ func HTTPBuildQuery(data map[string]interface{}) string {
 	}
 	return params.Encode()
 }
+
+// ParseURL parses a URL and return its components
+func ParseURL(str string) (*url.URL, error) {
+	return url.Parse(str)
+}
