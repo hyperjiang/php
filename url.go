@@ -2,8 +2,11 @@ package php
 
 import (
 	"encoding/base64"
+	"fmt"
 	"io"
 	"net/http"
+	"net/url"
+	"reflect"
 	"strings"
 
 	"golang.org/x/net/html"
@@ -86,6 +89,26 @@ func ParseDocument(doc io.Reader) map[string]string {
 			}
 		}
 	}
+}
 
-	return data
+// HTTPBuildQuery generate URL-encoded query string
+func HTTPBuildQuery(data map[string]interface{}) string {
+	params := url.Values{}
+	for k, v := range data {
+		key := k
+		val := reflect.ValueOf(v)
+		switch val.Kind() {
+		case reflect.Slice, reflect.Array:
+			for i := 0; i < val.Len(); i++ {
+				params.Add(fmt.Sprintf("%s[%d]", k, i), fmt.Sprint(val.Index(i).Interface()))
+			}
+		case reflect.Map:
+			for _, sk := range val.MapKeys() {
+				params.Add(fmt.Sprintf("%s[%s]", k, sk), fmt.Sprint(val.MapIndex(sk).Interface()))
+			}
+		default:
+			params.Add(key, fmt.Sprint(v))
+		}
+	}
+	return params.Encode()
 }

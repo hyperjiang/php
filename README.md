@@ -217,6 +217,7 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [base64_encode](https://www.php.net/manual/en/function.base64-encode.php) | [Base64Encode](https://godoc.org/github.com/hyperjiang/php#Base64Encode) |
 | [get_headers](https://www.php.net/manual/en/function.get-headers.php) | [GetHeaders](https://godoc.org/github.com/hyperjiang/php#GetHeaders) |
 | [get_meta_tags](https://www.php.net/manual/en/function.get-meta-tags.php) | [GetMetaTags](https://godoc.org/github.com/hyperjiang/php#GetMetaTags) |
+| [http_build_query](https://www.php.net/manual/en/function.http-build-query.php) | [HTTPBuildQuery](https://godoc.org/github.com/hyperjiang/php#HTTPBuildQuery) |
 
 ### Misc Functions
 

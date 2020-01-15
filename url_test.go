@@ -1,6 +1,7 @@
 package php_test
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/hyperjiang/php"
@@ -92,5 +93,36 @@ var _ = Describe("URL Functions", func() {
 		doc2 := "invalid doc"
 		data2 := php.ParseDocument(strings.NewReader(doc2))
 		Expect(len(data2)).To(BeZero())
+	})
+	It("HTTPBuildQuery", func() {
+		data := make(map[string]interface{})
+		Expect(php.HTTPBuildQuery(data)).To(BeEmpty())
+
+		data["foo"] = "bar"
+		data["baz"] = "boom"
+		data["cow"] = "milk"
+		data["php"] = "hypertext processor"
+		query := php.HTTPBuildQuery(data)
+		Expect(query).To(ContainSubstring("foo=bar"))
+		Expect(query).To(ContainSubstring("baz=boom"))
+		Expect(query).To(ContainSubstring("cow=milk"))
+		Expect(query).To(ContainSubstring("php=hypertext+processor"))
+
+		data2 := map[string]interface{}{
+			"user": map[string]interface{}{
+				"name": "Bob Smith",
+				"age":  47,
+				"sex":  "M",
+				"dob":  "5/12/1956",
+			},
+			"pastimes": []string{"golf", "opera", "poker", "rap"},
+		}
+		query = php.HTTPBuildQuery(data2)
+		fmt.Println(query)
+		Expect(query).To(ContainSubstring("pastimes%5B0%5D=golf&pastimes%5B1%5D=opera&pastimes%5B2%5D=poker&pastimes%5B3%5D=rap"))
+		Expect(query).To(ContainSubstring("user%5Bage%5D=47"))
+		Expect(query).To(ContainSubstring("user%5Bdob%5D=5%2F12%2F1956"))
+		Expect(query).To(ContainSubstring("user%5Bname%5D=Bob+Smith"))
+		Expect(query).To(ContainSubstring("user%5Bsex%5D=M"))
 	})
 })
