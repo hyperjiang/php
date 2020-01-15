@@ -219,6 +219,10 @@ This package implements some PHP functions by Golang. Please note that it's impo
 | [get_meta_tags](https://www.php.net/manual/en/function.get-meta-tags.php) | [GetMetaTags](https://godoc.org/github.com/hyperjiang/php#GetMetaTags) |
 | [http_build_query](https://www.php.net/manual/en/function.http-build-query.php) | [HTTPBuildQuery](https://godoc.org/github.com/hyperjiang/php#HTTPBuildQuery) |
 | [parse_url](https://www.php.net/manual/en/function.parse-url.php) | [ParseURL](https://godoc.org/github.com/hyperjiang/php#ParseURL) |
+| [rawurldecode](https://www.php.net/manual/en/function.rawurldecode.php) | [RawURLDecode](https://godoc.org/github.com/hyperjiang/php#RawURLDecode) |
+| [rawurlencode](https://www.php.net/manual/en/function.rawurlencode.php) | [RawURLEncode](https://godoc.org/github.com/hyperjiang/php#RawURLEncode) |
+| [urldecode](https://www.php.net/manual/en/function.urldecode.php) | [URLDecode](https://godoc.org/github.com/hyperjiang/php#URLDecode) |
+| [urlencode](https://www.php.net/manual/en/function.urlencode.php) | [URLEncode](https://godoc.org/github.com/hyperjiang/php#URLEncode) |
 
 ### Misc Functions
 

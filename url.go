@@ -117,3 +117,33 @@ func HTTPBuildQuery(data map[string]interface{}) string {
 func ParseURL(str string) (*url.URL, error) {
 	return url.Parse(str)
 }
+
+// RawURLDecode decodes URL-encoded string.
+//
+// RawURLDecode is identical to URLDecode except that it does not unescape '+' to ' ' (space).
+func RawURLDecode(str string) string {
+	res, _ := url.PathUnescape(str)
+	return res
+}
+
+// RawURLEncode is URL-encode according to RFC 3986.
+//
+// RawURLEncode is identical to URLEncode except that it does not escape space to +.
+func RawURLEncode(str string) string {
+	return url.PathEscape(str)
+}
+
+// URLDecode decodes any %## encoding in the given string. Plus symbols ('+') are decoded to a space character.
+func URLDecode(str string) string {
+	res, _ := url.QueryUnescape(str)
+	return res
+}
+
+// URLEncode returns a string in which all non-alphanumeric characters except -_.
+// have been replaced with a percent (%) sign followed by two hex digits and
+// spaces encoded as plus (+) signs.
+// It is encoded the same way that the posted data from a WWW form is encoded,
+// that is the same way as in application/x-www-form-urlencoded media type.
+func URLEncode(str string) string {
+	return url.QueryEscape(str)
+}

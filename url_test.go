@@ -134,4 +134,56 @@ var _ = Describe("URL Functions", func() {
 		_, err = php.ParseURL("::::")
 		Expect(err).To(HaveOccurred())
 	})
+	It("RawURLDecode", func() {
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{"my=apples&are=green+and+red", "my=apples&are=green+and+red"},
+			{"one%20%26%20two", "one & two"},
+			{"myvar=%BA", "myvar=\xba"},
+			{"myvar=%B", ""},
+		}
+		for _, t := range tests {
+			Expect(php.RawURLDecode(t.input)).To(Equal(t.want))
+		}
+	})
+	It("RawURLEncode", func() {
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{"some=weird/value", "some=weird%2Fvalue"},
+			{" ", "%20"},
+		}
+		for _, t := range tests {
+			Expect(php.RawURLEncode(t.input)).To(Equal(t.want))
+		}
+	})
+	It("URLDecode", func() {
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{"my=apples&are=green+and+red", "my=apples&are=green and red"},
+			{"one%20%26%20two", "one & two"},
+			{"myvar=%BA", "myvar=\xba"},
+			{"myvar=%B", ""},
+		}
+		for _, t := range tests {
+			Expect(php.URLDecode(t.input)).To(Equal(t.want))
+		}
+	})
+	It("URLEncode", func() {
+		tests := []struct {
+			input string
+			want  string
+		}{
+			{"some=weird/value", "some%3Dweird%2Fvalue"},
+			{" ", "+"},
+		}
+		for _, t := range tests {
+			Expect(php.URLEncode(t.input)).To(Equal(t.want))
+		}
+	})
 })
