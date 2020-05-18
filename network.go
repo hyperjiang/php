@@ -55,7 +55,12 @@ func IP2Long(ipAddress string) uint32 {
 	if ip == nil {
 		return 0
 	}
-	return binary.BigEndian.Uint32(ip.To4())
+	ipByte := ip.To4()
+	if ipByte == nil {
+		return 0
+	}
+
+	return binary.BigEndian.Uint32(ipByte)
 }
 
 // Long2IP converts an long integer address into a string in (IPv4) Internet standard dotted format

@@ -39,6 +39,7 @@ var _ = Describe("Network Functions", func() {
 	It("IP2Long", func() {
 		Expect(php.IP2Long("127.0.0.1")).To(Equal(uint32(2130706433)))
 		Expect(php.IP2Long("333.33.3.3")).To(BeZero())
+		Expect(php.IP2Long("::1")).To(BeZero())
 	})
 
 	It("Long2IP", func() {
