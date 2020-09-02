@@ -223,7 +223,7 @@ func Chr(ascii int) string {
 		ascii += 256
 	}
 	ascii %= 256
-	return string(ascii)
+	return string(rune(ascii))
 }
 
 // Ord return ASCII value of character
