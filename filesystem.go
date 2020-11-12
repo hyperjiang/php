@@ -104,21 +104,6 @@ func IsDir(filename string) bool {
 	return fi.Mode().IsDir()
 }
 
-// IsExecutable tells whether the filename is executable
-func IsExecutable(filename string) bool {
-	return syscall.Access(filename, 0x1) == nil
-}
-
-// IsReadable tells whether a file exists and is readable
-func IsReadable(filename string) bool {
-	return syscall.Access(filename, 0x4) == nil
-}
-
-// IsWritable tells whether the filename is writable
-func IsWritable(filename string) bool {
-	return syscall.Access(filename, 0x2) == nil
-}
-
 // IsLink tells whether the filename is a symbolic link
 func IsLink(filename string) bool {
 	fi, err := os.Lstat(filename)

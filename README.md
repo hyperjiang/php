@@ -8,6 +8,15 @@
 
 This package implements some PHP functions by Golang. Please note that it's impossible to have 100% the same behaviour between PHP and Golang functions because their mechanisms are quite different.
 
+Minimum go version requirement:
+
+| OS      | Go version |
+| ------- | ---------- |
+| Linux   | 1.9        |
+| OSX     | 1.12       |
+| Windows | 1.13       |
+
+
 ### Date/Time Functions
 
 | PHP function                             | Golang function                          |

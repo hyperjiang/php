@@ -164,7 +164,7 @@ var _ = Describe("Date/Time Functions", func() {
 		end := php.Microtime()
 		duration := end - start
 
-		Expect(duration).To(BeNumerically(">=", 0.1))
+		Expect(duration).To(BeNumerically(">=", 0.09))
 		Expect(duration).To(BeNumerically("<=", 1))
 	})
 

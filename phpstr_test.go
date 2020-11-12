@@ -1,6 +1,8 @@
 package php_test
 
 import (
+	"runtime"
+
 	"github.com/hyperjiang/php"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -207,19 +209,35 @@ var _ = Describe("String Functions", func() {
 		Expect(php.Md5("apple")).To(Equal("1f3870be274f6c49b3e31a0c6728957f"))
 	})
 
-	It("Md5File", func() {
-		tests := []struct {
-			input string
-			want  string
-		}{
-			{"./LICENSE", "ed92d7885d31d79240594cd0e4a09fb7"},
-			{"./non-existent-file", ""},
-		}
-		for _, t := range tests {
-			h, _ := php.Md5File(t.input)
-			Expect(h).To(Equal(t.want))
-		}
-	})
+	if runtime.GOOS == "windows" {
+		It("Md5File", func() {
+			tests := []struct {
+				input string
+				want  string
+			}{
+				{".\\LICENSE", "c0171389389004072f55061af22acd74"},
+				{".\\non-existent-file", ""},
+			}
+			for _, t := range tests {
+				h, _ := php.Md5File(t.input)
+				Expect(h).To(Equal(t.want))
+			}
+		})
+	} else {
+		It("Md5File", func() {
+			tests := []struct {
+				input string
+				want  string
+			}{
+				{"./LICENSE", "ed92d7885d31d79240594cd0e4a09fb7"},
+				{"./non-existent-file", ""},
+			}
+			for _, t := range tests {
+				h, _ := php.Md5File(t.input)
+				Expect(h).To(Equal(t.want))
+			}
+		})
+	}
 
 	It("Strstr", func() {
 		tests := []struct {
@@ -443,19 +461,35 @@ var _ = Describe("String Functions", func() {
 		Expect(php.Sha1("apple")).To(Equal("d0be2dc421be4fcd0172e5afceea3970e2f3d940"))
 	})
 
-	It("Sha1File", func() {
-		tests := []struct {
-			input string
-			want  string
-		}{
-			{"./LICENSE", "404a894bedbe7256611b7bc5887eb3efb06de19f"},
-			{"./non-existent-file", ""},
-		}
-		for _, t := range tests {
-			h, _ := php.Sha1File(t.input)
-			Expect(h).To(Equal(t.want))
-		}
-	})
+	if runtime.GOOS == "windows" {
+		It("Sha1File", func() {
+			tests := []struct {
+				input string
+				want  string
+			}{
+				{"./LICENSE", "40f4805c23c47c032bbec4a98bff43b8ed1b915b"},
+				{"./non-existent-file", ""},
+			}
+			for _, t := range tests {
+				h, _ := php.Sha1File(t.input)
+				Expect(h).To(Equal(t.want))
+			}
+		})
+	} else {
+		It("Sha1File", func() {
+			tests := []struct {
+				input string
+				want  string
+			}{
+				{"./LICENSE", "404a894bedbe7256611b7bc5887eb3efb06de19f"},
+				{"./non-existent-file", ""},
+			}
+			for _, t := range tests {
+				h, _ := php.Sha1File(t.input)
+				Expect(h).To(Equal(t.want))
+			}
+		})
+	}
 
 	It("StrRepeat", func() {
 		Expect(php.StrRepeat("-=", 10)).To(Equal("-=-=-=-=-=-=-=-=-=-="))
