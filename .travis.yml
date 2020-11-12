@@ -8,6 +8,11 @@ go:
   - 1.14.x
   - 1.15.x
 
+os:
+  - linux
+  - osx
+  - windows
+
 notifications:
   email: false
 
