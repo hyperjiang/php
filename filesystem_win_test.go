@@ -112,7 +112,12 @@ var _ = Describe("Filesystem Functions", func() {
 
 	It("IsExecutable", func() {
 		var filename = "C:\\is-executable-test.exe"
+		Expect(php.IsReadable(filename)).To(BeFalse()) // file not exists
+
+		php.Touch(filename)
 		Expect(php.IsExecutable(filename)).To(BeTrue())
+
+		php.Unlink(filename)
 	})
 
 	It("IsReadable", func() {

@@ -10,6 +10,10 @@ import (
 
 // IsExecutable tells whether the filename is executable
 func IsExecutable(filename string) bool {
+	if !IsReadable(filename) {
+		return false
+	}
+
 	return strings.ToUpper(filepath.Ext(filename)) == ".EXE"
 }
 
