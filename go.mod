@@ -1,6 +1,6 @@
 module github.com/hyperjiang/php
 
-go 1.12
+go 1.16
 
 require (
 	github.com/onsi/ginkgo v1.15.0
