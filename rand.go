@@ -1,6 +1,8 @@
 package php
 
-import "crypto/rand"
+import (
+	"crypto/rand"
+)
 
 // RandomBytes generates cryptographically secure pseudo-random bytes
 func RandomBytes(length int) []byte {
