@@ -1,3 +1,4 @@
+//go:build aix || darwin || dragonfly || freebsd || (js && wasm) || linux || netbsd || openbsd || solaris
 // +build aix darwin dragonfly freebsd js,wasm linux netbsd openbsd solaris
 
 package php_test
@@ -94,77 +95,118 @@ var _ = Describe("Filesystem Functions", func() {
 
 	It("IsFile", func() {
 		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-		php.Unlink(filename)
+
+		if php.IsFile(filename) {
+			err := php.Unlink(filename)
+			Expect(err).NotTo(HaveOccurred())
+		}
 		Expect(php.IsFile(filename)).To(BeFalse()) // file not exists
 
-		php.Touch(filename)
+		err := php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.IsFile(filename)).To(BeTrue())
-		php.Unlink(filename)
+		err = php.Unlink(filename)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("IsDir", func() {
 		var pathname = "/tmp/hyperjiangphpfilesystemtestdir"
-		php.Rmdir(pathname)
+
+		if php.IsDir(pathname) {
+			err := php.Rmdir(pathname)
+			Expect(err).NotTo(HaveOccurred())
+		}
 		Expect(php.IsDir(pathname)).To(BeFalse()) // dir not exists
 
-		php.Mkdir(pathname, 0, false)
+		err := php.Mkdir(pathname, 0, false)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.IsDir(pathname)).To(BeTrue())
-		php.Rmdir(pathname)
+		err = php.Rmdir(pathname)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("IsExecutable", func() {
 		var filename = "/tmp/hyperjiangphpfilesystemtest.exe"
-		php.Unlink(filename)
+
+		if php.IsExecutable(filename) {
+			err := php.Unlink(filename)
+			Expect(err).NotTo(HaveOccurred())
+		}
 		Expect(php.IsExecutable(filename)).To(BeFalse()) // file not exists
 
-		php.Touch(filename)
+		err := php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.IsExecutable(filename)).To(BeFalse()) // not executable
 
-		php.Chmod(filename, 0777)
+		err = php.Chmod(filename, 0777)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.IsExecutable(filename)).To(BeTrue())
-		php.Unlink(filename)
+		err = php.Unlink(filename)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("IsReadable", func() {
 		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-		php.Unlink(filename)
+
+		if php.IsReadable(filename) {
+			err := php.Unlink(filename)
+			Expect(err).NotTo(HaveOccurred())
+		}
 		Expect(php.IsReadable(filename)).To(BeFalse()) // file not exists
 
-		php.Touch(filename)
+		err := php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.IsReadable(filename)).To(BeTrue())
 
-		php.Chmod(filename, 0222)
+		err = php.Chmod(filename, 0222)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.IsReadable(filename)).To(BeFalse()) // not readable
-		php.Unlink(filename)
+		err = php.Unlink(filename)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("IsWritable", func() {
 		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-		php.Unlink(filename)
+
+		if php.IsWritable(filename) {
+			err := php.Unlink(filename)
+			Expect(err).NotTo(HaveOccurred())
+		}
 		Expect(php.IsWritable(filename)).To(BeFalse()) // file not exists
 
-		php.Touch(filename)
+		err := php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.IsWritable(filename)).To(BeTrue())
 
-		php.Chmod(filename, 0555)
+		err = php.Chmod(filename, 0555)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.IsWritable(filename)).To(BeFalse()) // not writable
-		php.Unlink(filename)
+		err = php.Unlink(filename)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("Symlink and IsLink", func() {
 		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-		php.Touch(filename)
-		defer php.Unlink(filename)
+
+		err := php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
 
 		var link = "/tmp/hyperjiangphpfilesystemtest.link"
-		php.Unlink(link)
+
+		if php.IsLink(link) {
+			err := php.Unlink(link)
+			Expect(err).NotTo(HaveOccurred())
+		}
 		Expect(php.IsLink(link)).To(BeFalse()) // file not exists
 
-		err := php.Symlink(filename, link)
+		err = php.Symlink(filename, link)
+		Expect(err).NotTo(HaveOccurred())
+		err = php.Unlink(filename)
 		Expect(err).NotTo(HaveOccurred())
 
 		Expect(php.IsLink(link)).To(BeTrue())
-		php.Unlink(link)
+		err = php.Unlink(link)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("Basename", func() {
@@ -184,37 +226,56 @@ var _ = Describe("Filesystem Functions", func() {
 
 	It("Chown", func() {
 		var filename = "/tmp/tmpfile"
-		php.Touch(filename)
-		defer php.Unlink(filename)
+		err := php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
 
-		err := php.Chown(filename, os.Getuid(), os.Getegid())
+		err = php.Chown(filename, os.Getuid(), os.Getegid())
+		Expect(err).NotTo(HaveOccurred())
+
+		err = php.Unlink(filename)
 		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("Link", func() {
 		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-		php.Touch(filename)
-		defer php.Unlink(filename)
+		err := php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
 
 		var link = "/tmp/hyperjiangphpfilesystemtest.link"
-		php.Unlink(link)
 
-		err := php.Link(filename, link)
+		if php.IsLink(link) {
+			err := php.Unlink(link)
+			Expect(err).NotTo(HaveOccurred())
+		}
+
+		err = php.Link(filename, link)
 		Expect(err).NotTo(HaveOccurred())
-		php.Unlink(link)
+		err = php.Unlink(link)
+		Expect(err).NotTo(HaveOccurred())
+
+		err = php.Unlink(filename)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("Copy", func() {
 		var src = "/tmp/hyperjiangphpfilesystemtest.src"
 		var dst = "/tmp/hyperjiangphpfilesystemtest.dst"
-		php.Unlink(src)
-		php.Unlink(dst)
+
+		if php.FileExists(src) {
+			err := php.Unlink(src)
+			Expect(err).NotTo(HaveOccurred())
+		}
+
+		if php.FileExists(dst) {
+			err := php.Unlink(dst)
+			Expect(err).NotTo(HaveOccurred())
+		}
 
 		err := php.Copy(src, dst)
 		Expect(err).To(HaveOccurred(), "Copy should fail because src file does not exist")
 
-		php.Touch(src)
-		defer php.Unlink(src)
+		err = php.Touch(src)
+		Expect(err).NotTo(HaveOccurred())
 
 		err = php.Copy(src, "/tmp/nodir/hyperjiangphpfilesystemtest.dst")
 		Expect(err).To(HaveOccurred(), "Copy should fail because the directory of dst file does not exist")
@@ -222,49 +283,71 @@ var _ = Describe("Filesystem Functions", func() {
 		err = php.Copy(src, dst)
 		Expect(err).NotTo(HaveOccurred())
 
-		php.Unlink(dst)
+		err = php.Unlink(dst)
+		Expect(err).NotTo(HaveOccurred())
+
+		err = php.Unlink(src)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("FileExists", func() {
 		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-		php.Unlink(filename)
+
+		if php.FileExists(filename) {
+			err := php.Unlink(filename)
+			Expect(err).NotTo(HaveOccurred())
+		}
 		Expect(php.FileExists(filename)).To(BeFalse()) // file not exists
 
-		php.Touch(filename)
+		err := php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.FileExists(filename)).To(BeTrue())
-		php.Unlink(filename)
+		err = php.Unlink(filename)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("FileSize", func() {
 		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-		php.Unlink(filename)
+
+		if php.FileExists(filename) {
+			err := php.Unlink(filename)
+			Expect(err).NotTo(HaveOccurred())
+		}
 		_, err := php.FileSize(filename)
 		Expect(err).To(HaveOccurred())
 
-		php.Touch(filename)
+		err = php.Touch(filename)
+		Expect(err).NotTo(HaveOccurred())
 		size, err := php.FileSize(filename)
 		Expect(err).NotTo(HaveOccurred())
 		Expect(size).To(BeZero())
 
-		php.Unlink(filename)
+		err = php.Unlink(filename)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("Rename", func() {
 		var oldname = "/tmp/hyperjiangphpfilesystemtest.old"
-		php.Touch(oldname)
+		err := php.Touch(oldname)
+		Expect(err).NotTo(HaveOccurred())
 
 		var newname = "/tmp/hyperjiangphpfilesystemtest.new"
-		php.Rename(oldname, newname)
-
+		err = php.Rename(oldname, newname)
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.FileExists(oldname)).To(BeFalse())
 		Expect(php.FileExists(newname)).To(BeTrue())
 
-		php.Unlink(newname)
+		err = php.Unlink(newname)
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	It("FilePutContents and FileGetContents", func() {
 		var filename = "/tmp/hyperjiangphpfilesystemtest.txt"
-		php.Unlink(filename)
+
+		if php.FileExists(filename) {
+			err := php.Unlink(filename)
+			Expect(err).NotTo(HaveOccurred())
+		}
 
 		const msg = "Hello world!"
 		err := php.FilePutContents(filename, msg)
@@ -274,6 +357,7 @@ var _ = Describe("Filesystem Functions", func() {
 		Expect(err).NotTo(HaveOccurred())
 		Expect(str).To(Equal(msg))
 
-		php.Unlink(filename)
+		err = php.Unlink(filename)
+		Expect(err).NotTo(HaveOccurred())
 	})
 })

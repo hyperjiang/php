@@ -24,10 +24,10 @@ func GetImageSize(filename string) (ImageInfo, error) {
 	var info ImageInfo
 
 	file, err := os.Open(filename)
-	defer file.Close()
 	if err != nil {
 		return info, err
 	}
+	defer file.Close()
 
 	cfg, format, err := image.DecodeConfig(file)
 	if err != nil {

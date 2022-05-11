@@ -287,7 +287,7 @@ func DateFormat(t time.Time, f string) string {
 
 // DateIntervalCreateFromDateString returns a time.Duration from the given string
 func DateIntervalCreateFromDateString(str string) (time.Duration, error) {
-	reg := regexp.MustCompile("((\\+|\\-)?\\s*(\\d*)\\s*(day|month|year|week|hour|minute|second)s?\\s*)+?")
+	reg := regexp.MustCompile(`((\+|\-)?\s*(\d*)\s*(day|month|year|week|hour|minute|second)s?\s*)+?`)
 	matches := reg.FindAllStringSubmatch(str, -1)
 	if matches != nil {
 		var duration int64

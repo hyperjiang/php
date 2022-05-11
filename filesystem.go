@@ -137,10 +137,8 @@ func Copy(src, dst string) error {
 // FileExists checks whether a file or directory exists
 func FileExists(filename string) bool {
 	_, err := os.Stat(filename)
-	if err != nil {
-		return false
-	}
-	return true
+
+	return err == nil
 }
 
 // FileSize gets file size

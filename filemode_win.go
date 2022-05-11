@@ -1,3 +1,4 @@
+//go:build windows
 // +build windows
 
 package php
@@ -20,11 +21,8 @@ func IsExecutable(filename string) bool {
 // IsReadable tells whether a file exists and is readable
 func IsReadable(filename string) bool {
 	_, err := os.Stat(filename)
-	if err != nil {
-		return false
-	}
 
-	return true
+	return err == nil
 }
 
 // IsWritable tells whether the filename is writable

@@ -29,9 +29,15 @@ jobs:
 
       - name: Test
         run: go test -race -coverprofile=coverage.txt -covermode=atomic
+        if: runner.os != 'Windows'
+
+      - name: Test Windows
+        run: go test -race
+        if: runner.os == 'Windows'
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
+        if: runner.os != 'Windows'
 
   lint:
     name: Lint

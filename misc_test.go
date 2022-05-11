@@ -10,7 +10,8 @@ var _ = Describe("Misc Functions", func() {
 	It("Putenv and Getenv", func() {
 		err := php.Putenv("xxx")
 		Expect(err).To(HaveOccurred())
-		php.Putenv("a=b")
+		err = php.Putenv("a=b")
+		Expect(err).NotTo(HaveOccurred())
 		Expect(php.Getenv("a")).To(Equal("b"))
 
 	})

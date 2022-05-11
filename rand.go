@@ -7,7 +7,10 @@ import (
 // RandomBytes generates cryptographically secure pseudo-random bytes
 func RandomBytes(length int) []byte {
 	b := make([]byte, length)
-	rand.Read(b)
+	if _, err := rand.Read(b); err != nil {
+		return nil
+	}
+
 	return b
 }
 
