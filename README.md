@@ -1,5 +1,6 @@
 # PHP functions implemented by Golang
 
+[![CI](https://github.com/hyperjiang/php/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/hyperjiang/php/actions/workflows/ci.yml)
 [![GoDoc](https://pkg.go.dev/badge/github.com/hyperjiang/php)](https://pkg.go.dev/github.com/hyperjiang/php)
 [![Build Status](https://app.travis-ci.com/hyperjiang/php.svg?branch=master)](https://app.travis-ci.com/hyperjiang/php)
 [![](https://goreportcard.com/badge/github.com/hyperjiang/php)](https://goreportcard.com/report/github.com/hyperjiang/php)
