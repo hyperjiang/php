@@ -2,7 +2,6 @@
 
 [![CI](https://github.com/hyperjiang/php/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/hyperjiang/php/actions/workflows/ci.yml)
 [![GoDoc](https://pkg.go.dev/badge/github.com/hyperjiang/php)](https://pkg.go.dev/github.com/hyperjiang/php)
-[![Build Status](https://app.travis-ci.com/hyperjiang/php.svg?branch=master)](https://app.travis-ci.com/hyperjiang/php)
 [![](https://goreportcard.com/badge/github.com/hyperjiang/php)](https://goreportcard.com/report/github.com/hyperjiang/php)
 [![codecov](https://codecov.io/gh/hyperjiang/php/branch/master/graph/badge.svg)](https://codecov.io/gh/hyperjiang/php)
 [![Release](https://img.shields.io/github/release/hyperjiang/php.svg)](https://github.com/hyperjiang/php/releases)
