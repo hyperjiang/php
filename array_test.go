@@ -104,27 +104,10 @@ var _ = Describe("Array Functions", func() {
 			Expect(php.InArray(searchInt64, arrInt64)).To(BeTrue())
 		})
 
-		It("interface array", func() {
-			arrInterface := []any{"username", 123, int64(10), false}
-			searchElement := false
-			Expect(php.InArray(searchElement, arrInterface)).To(BeTrue())
-		})
-
-		It("map", func() {
-			m := make(map[string]string, 3)
-			m["a"] = "Tony"
-			m["b"] = "Jimmy"
-			m["c"] = "Jelly"
-			Expect(php.InArray("Tony", m)).To(BeTrue())
-		})
-
 		It("false cases", func() {
 			arrInt64 := []int64{2016, 2017, 2018, 2019}
 
 			Expect(php.InArray(int64(2000), arrInt64)).To(BeFalse())
-
-			// search string in array of int64
-			Expect(php.InArray("2018", arrInt64)).To(BeFalse())
 		})
 	})
 
@@ -188,16 +171,16 @@ var _ = Describe("Array Functions", func() {
 	})
 
 	It("ArrayDiff", func() {
-		array1 := []any{"green", "red", "blue"}
-		array2 := []any{"green", "yellow", "red"}
-		want := []any{"blue"}
+		array1 := []string{"green", "red", "blue"}
+		array2 := []string{"green", "yellow", "red"}
+		want := []string{"blue"}
 		Expect(php.ArrayDiff(array1, array2)).To(Equal(want))
 	})
 
 	It("ArrayIntersect", func() {
-		array1 := []any{"green", "red", "blue"}
-		array2 := []any{"green", "yellow", "red"}
-		want := []any{"green", "red"}
+		array1 := []string{"green", "red", "blue"}
+		array2 := []string{"green", "yellow", "red"}
+		want := []string{"green", "red"}
 		Expect(php.ArrayIntersect(array1, array2)).To(Equal(want))
 	})
 

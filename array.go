@@ -25,23 +25,13 @@ func ArrayUnique[T comparable](arr []T) []T {
 	return result
 }
 
-// InArray checks if a value exists in an array or map
+// InArray checks if a value exists in an array
 //
-// needle is the element to search, haystack is the slice or map to be search
-func InArray(needle any, haystack any) bool {
-	val := reflect.ValueOf(haystack)
-	switch val.Kind() {
-	case reflect.Slice, reflect.Array:
-		for i := 0; i < val.Len(); i++ {
-			if reflect.DeepEqual(needle, val.Index(i).Interface()) {
-				return true
-			}
-		}
-	case reflect.Map:
-		for _, k := range val.MapKeys() {
-			if reflect.DeepEqual(needle, val.MapIndex(k).Interface()) {
-				return true
-			}
+// needle is the element to search, haystack is the slice to be searched
+func InArray[T comparable](needle T, haystack []T) bool {
+	for _, v := range haystack {
+		if needle == v {
+			return true
 		}
 	}
 
@@ -91,8 +81,8 @@ func ArrayCombine(keys, values []any) map[any]any {
 }
 
 // ArrayDiff computes the difference of arrays
-func ArrayDiff(array1, array2 []any) []any {
-	var res []any
+func ArrayDiff[T comparable](array1, array2 []T) []T {
+	var res []T
 	for _, v := range array1 {
 		if !InArray(v, array2) {
 			res = append(res, v)
@@ -102,8 +92,8 @@ func ArrayDiff(array1, array2 []any) []any {
 }
 
 // ArrayIntersect computes the intersection of arrays
-func ArrayIntersect(array1, array2 []any) []any {
-	var res []any
+func ArrayIntersect[T comparable](array1, array2 []T) []T {
+	var res []T
 	for _, v := range array1 {
 		if InArray(v, array2) {
 			res = append(res, v)
