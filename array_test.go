@@ -8,16 +8,7 @@ import (
 
 var _ = Describe("Array Functions", func() {
 	Describe("ArrayUnique", func() {
-		It("if the input is not a slice or empty then return the original input", func() {
-			Expect(php.ArrayUnique(nil)).To(BeNil())
-
-			Expect(php.ArrayUnique(nil)).To(BeNil())
-
-			m := make(map[int]int)
-			m[1] = 1
-			m[2] = 2
-			Expect(php.ArrayUnique(m)).To(Equal(m))
-
+		It("if the input is empty then return the original input", func() {
 			arr := []int{}
 			Expect(php.ArrayUnique(arr)).To(Equal(arr))
 		})
