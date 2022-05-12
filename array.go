@@ -10,7 +10,7 @@ import (
 // if the input is not a slice or empty then return the original input
 //
 // you can use type assertion to convert the result to the type of input
-func ArrayUnique(array interface{}) interface{} {
+func ArrayUnique(array any) any {
 	type empty struct{}
 
 	if array == nil {
@@ -28,7 +28,7 @@ func ArrayUnique(array interface{}) interface{} {
 		return array
 	}
 
-	set := make(map[interface{}]empty)
+	set := make(map[any]empty)
 	for i := 0; i < s.Len(); i++ {
 		set[s.Index(i).Interface()] = empty{}
 	}
@@ -131,7 +131,7 @@ func ArrayUnique(array interface{}) interface{} {
 		}
 		return result
 	default:
-		result := make([]interface{}, 0, s.Len())
+		result := make([]any, 0, s.Len())
 		for k := range set {
 			result = append(result, k)
 		}
@@ -142,7 +142,7 @@ func ArrayUnique(array interface{}) interface{} {
 // InArray checks if a value exists in an array or map
 //
 // needle is the element to search, haystack is the slice or map to be search
-func InArray(needle interface{}, haystack interface{}) bool {
+func InArray(needle any, haystack any) bool {
 	val := reflect.ValueOf(haystack)
 	switch val.Kind() {
 	case reflect.Slice, reflect.Array:
@@ -163,13 +163,13 @@ func InArray(needle interface{}, haystack interface{}) bool {
 }
 
 // ArrayChunk splits an array into chunks, returns nil if size < 1
-func ArrayChunk(array []interface{}, size int) [][]interface{} {
+func ArrayChunk(array []any, size int) [][]any {
 	if size < 1 {
 		return nil
 	}
 	length := len(array)
 	chunkNum := int(math.Ceil(float64(length) / float64(size)))
-	var chunks [][]interface{}
+	var chunks [][]any
 	for i, end := 0, 0; chunkNum > 0; chunkNum-- {
 		end = (i + 1) * size
 		if end > length {
@@ -182,8 +182,8 @@ func ArrayChunk(array []interface{}, size int) [][]interface{} {
 }
 
 // ArrayColumn returns the values from a single column in the input array
-func ArrayColumn(input []map[string]interface{}, columnKey string) []interface{} {
-	columns := make([]interface{}, 0, len(input))
+func ArrayColumn(input []map[string]any, columnKey string) []any {
+	columns := make([]any, 0, len(input))
 	for _, val := range input {
 		if v, ok := val[columnKey]; ok {
 			columns = append(columns, v)
@@ -193,11 +193,11 @@ func ArrayColumn(input []map[string]interface{}, columnKey string) []interface{}
 }
 
 // ArrayCombine creates an array by using one array for keys and another for its values
-func ArrayCombine(keys, values []interface{}) map[interface{}]interface{} {
+func ArrayCombine(keys, values []any) map[any]any {
 	if len(keys) != len(values) {
 		return nil
 	}
-	m := make(map[interface{}]interface{}, len(keys))
+	m := make(map[any]any, len(keys))
 	for i, v := range keys {
 		m[v] = values[i]
 	}
@@ -205,8 +205,8 @@ func ArrayCombine(keys, values []interface{}) map[interface{}]interface{} {
 }
 
 // ArrayDiff computes the difference of arrays
-func ArrayDiff(array1, array2 []interface{}) []interface{} {
-	var res []interface{}
+func ArrayDiff(array1, array2 []any) []any {
+	var res []any
 	for _, v := range array1 {
 		if !InArray(v, array2) {
 			res = append(res, v)
@@ -216,8 +216,8 @@ func ArrayDiff(array1, array2 []interface{}) []interface{} {
 }
 
 // ArrayIntersect computes the intersection of arrays
-func ArrayIntersect(array1, array2 []interface{}) []interface{} {
-	var res []interface{}
+func ArrayIntersect(array1, array2 []any) []any {
+	var res []any
 	for _, v := range array1 {
 		if InArray(v, array2) {
 			res = append(res, v)
@@ -227,7 +227,7 @@ func ArrayIntersect(array1, array2 []interface{}) []interface{} {
 }
 
 // ArrayFlip exchanges all keys with their associated values in an array
-func ArrayFlip(input interface{}) interface{} {
+func ArrayFlip(input any) any {
 	if input == nil {
 		return nil
 	}
@@ -235,7 +235,7 @@ func ArrayFlip(input interface{}) interface{} {
 	if val.Len() == 0 {
 		return nil
 	}
-	res := make(map[interface{}]interface{}, val.Len())
+	res := make(map[any]any, val.Len())
 	switch val.Kind() {
 	case reflect.Slice, reflect.Array:
 		for i := 0; i < val.Len(); i++ {
@@ -252,7 +252,7 @@ func ArrayFlip(input interface{}) interface{} {
 }
 
 // ArrayKeys returns all the keys or a subset of the keys of an array
-func ArrayKeys(input interface{}) interface{} {
+func ArrayKeys(input any) any {
 	if input == nil {
 		return nil
 	}
@@ -281,18 +281,18 @@ func ArrayKeys(input interface{}) interface{} {
 }
 
 // ArrayKeyExists is alias of KeyExists()
-func ArrayKeyExists(k interface{}, m map[interface{}]interface{}) bool {
+func ArrayKeyExists(k any, m map[any]any) bool {
 	return KeyExists(k, m)
 }
 
 // KeyExists checks if the given key or index exists in the array
-func KeyExists(k interface{}, m map[interface{}]interface{}) bool {
+func KeyExists(k any, m map[any]any) bool {
 	_, ok := m[k]
 	return ok
 }
 
 // Count counts all elements in an array or map
-func Count(v interface{}) int {
+func Count(v any) int {
 	if v == nil {
 		return 0
 	}
@@ -300,7 +300,7 @@ func Count(v interface{}) int {
 }
 
 // ArrayFilter filters elements of an array using a callback function
-func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{} {
+func ArrayFilter(input any, callback func(any) bool) any {
 	if input == nil {
 		return nil
 	}
@@ -309,13 +309,13 @@ func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{}
 		return nil
 	}
 	if callback == nil {
-		callback = func(v interface{}) bool {
+		callback = func(v any) bool {
 			return v != nil
 		}
 	}
 	switch val.Kind() {
 	case reflect.Slice, reflect.Array:
-		var res []interface{}
+		var res []any
 		for i := 0; i < val.Len(); i++ {
 			v := val.Index(i).Interface()
 			if callback(v) {
@@ -324,7 +324,7 @@ func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{}
 		}
 		return res
 	case reflect.Map:
-		res := make(map[interface{}]interface{})
+		res := make(map[any]any)
 		for _, k := range val.MapKeys() {
 			v := val.MapIndex(k).Interface()
 			if callback(v) {
@@ -338,7 +338,7 @@ func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{}
 }
 
 // ArrayPad pads array to the specified length with a value
-func ArrayPad(array []interface{}, size int, value interface{}) []interface{} {
+func ArrayPad(array []any, size int, value any) []any {
 	if size == 0 || (size > 0 && size < len(array)) || (size < 0 && size > -len(array)) {
 		return array
 	}
@@ -347,7 +347,7 @@ func ArrayPad(array []interface{}, size int, value interface{}) []interface{} {
 		n = -size
 	}
 	n -= len(array)
-	tmp := make([]interface{}, n)
+	tmp := make([]any, n)
 	for i := 0; i < n; i++ {
 		tmp[i] = value
 	}
@@ -358,7 +358,7 @@ func ArrayPad(array []interface{}, size int, value interface{}) []interface{} {
 }
 
 // ArrayPop pops the element off the end of array
-func ArrayPop(s *[]interface{}) interface{} {
+func ArrayPop(s *[]any) any {
 	if s == nil || len(*s) == 0 {
 		return nil
 	}
@@ -370,7 +370,7 @@ func ArrayPop(s *[]interface{}) interface{} {
 
 // ArrayPush pushes one or more elements onto the end of array,
 // returns the new number of elements in the array
-func ArrayPush(s *[]interface{}, elements ...interface{}) int {
+func ArrayPush(s *[]any, elements ...any) int {
 	if s == nil {
 		return 0
 	}
@@ -379,7 +379,7 @@ func ArrayPush(s *[]interface{}, elements ...interface{}) int {
 }
 
 // ArrayShift shifts an element off the beginning of array
-func ArrayShift(s *[]interface{}) interface{} {
+func ArrayShift(s *[]any) any {
 	if s == nil || len(*s) == 0 {
 		return nil
 	}
@@ -390,7 +390,7 @@ func ArrayShift(s *[]interface{}) interface{} {
 
 // ArrayUnshift prepends one or more elements to the beginning of a array,
 // returns the new number of elements in the array.
-func ArrayUnshift(s *[]interface{}, elements ...interface{}) int {
+func ArrayUnshift(s *[]any, elements ...any) int {
 	if s == nil {
 		return 0
 	}
@@ -399,7 +399,7 @@ func ArrayUnshift(s *[]interface{}, elements ...interface{}) int {
 }
 
 // ArrayReverse returns an array with elements in reverse order
-func ArrayReverse(s []interface{}) []interface{} {
+func ArrayReverse(s []any) []any {
 	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
 		s[i], s[j] = s[j], s[i]
 	}
@@ -407,7 +407,7 @@ func ArrayReverse(s []interface{}) []interface{} {
 }
 
 // ArraySlice extracts a slice of the array
-func ArraySlice(array []interface{}, offset, length uint) []interface{} {
+func ArraySlice(array []any, offset, length uint) []any {
 	if offset > uint(len(array)) {
 		return nil
 	}
@@ -419,7 +419,7 @@ func ArraySlice(array []interface{}, offset, length uint) []interface{} {
 }
 
 // ArraySum returns the sum of values in an array
-func ArraySum(array interface{}) interface{} {
+func ArraySum(array any) any {
 	if array == nil {
 		return nil
 	}
@@ -464,7 +464,7 @@ func ArraySum(array interface{}) interface{} {
 }
 
 // Sort sorts an array (lowest to highest)
-func Sort(array interface{}) interface{} {
+func Sort(array any) any {
 	if array == nil {
 		return nil
 	}
@@ -521,7 +521,7 @@ func Sort(array interface{}) interface{} {
 }
 
 // Rsort sorts an array in reverse order (highest to lowest)
-func Rsort(array interface{}) interface{} {
+func Rsort(array any) any {
 	if array == nil {
 		return nil
 	}

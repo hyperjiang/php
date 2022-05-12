@@ -5,7 +5,7 @@ import (
 )
 
 // JSONEncode returns a string containing the JSON representation of the supplied value
-func JSONEncode(value interface{}) (string, error) {
+func JSONEncode(value any) (string, error) {
 	b, err := json.Marshal(value)
 	return string(b), err
 }
@@ -13,6 +13,6 @@ func JSONEncode(value interface{}) (string, error) {
 // JSONDecode decodes a JSON string and stores the result in the value pointed to by v
 //
 // Be aware that this is different with php json_decode
-func JSONDecode(jsonStr string, v interface{}) error {
+func JSONDecode(jsonStr string, v any) error {
 	return json.Unmarshal([]byte(jsonStr), v)
 }

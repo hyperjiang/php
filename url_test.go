@@ -94,7 +94,7 @@ var _ = Describe("URL Functions", func() {
 		Expect(len(data2)).To(BeZero())
 	})
 	It("HTTPBuildQuery", func() {
-		data := make(map[string]interface{})
+		data := make(map[string]any)
 		Expect(php.HTTPBuildQuery(data)).To(BeEmpty())
 
 		data["foo"] = "bar"
@@ -107,8 +107,8 @@ var _ = Describe("URL Functions", func() {
 		Expect(query).To(ContainSubstring("cow=milk"))
 		Expect(query).To(ContainSubstring("php=hypertext+processor"))
 
-		data2 := map[string]interface{}{
-			"user": map[string]interface{}{
+		data2 := map[string]any{
+			"user": map[string]any{
 				"name": "Bob Smith",
 				"age":  47,
 				"sex":  "M",

@@ -114,7 +114,7 @@ var _ = Describe("Array Functions", func() {
 		})
 
 		It("interface array", func() {
-			arrInterface := []interface{}{"username", 123, int64(10), false}
+			arrInterface := []any{"username", 123, int64(10), false}
 			searchElement := false
 			Expect(php.InArray(searchElement, arrInterface)).To(BeTrue())
 		})
@@ -139,13 +139,13 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArrayChunk", func() {
 		It("valid input", func() {
-			arr := []interface{}{"a", "b", "c", "d", "e"}
+			arr := []any{"a", "b", "c", "d", "e"}
 			res := php.ArrayChunk(arr, 2)
-			Expect(res).To(Equal([][]interface{}{{"a", "b"}, {"c", "d"}, {"e"}}))
+			Expect(res).To(Equal([][]any{{"a", "b"}, {"c", "d"}, {"e"}}))
 		})
 
 		It("invalid size", func() {
-			arr := []interface{}{"a", "b", "c", "d", "e"}
+			arr := []any{"a", "b", "c", "d", "e"}
 			res := php.ArrayChunk(arr, 0)
 			Expect(res).To(BeNil())
 		})
@@ -153,9 +153,9 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArrayCombine", func() {
 		It("valid input", func() {
-			keys := []interface{}{"green", "red", "yellow"}
-			values := []interface{}{"avocado", "apple", "banana"}
-			want := make(map[interface{}]interface{}, 3)
+			keys := []any{"green", "red", "yellow"}
+			values := []any{"avocado", "apple", "banana"}
+			want := make(map[any]any, 3)
 			want["green"] = "avocado"
 			want["red"] = "apple"
 			want["yellow"] = "banana"
@@ -165,27 +165,27 @@ var _ = Describe("Array Functions", func() {
 		})
 
 		It("unmatched size between keys and values", func() {
-			keys := []interface{}{1, 2}
-			values := []interface{}{3}
+			keys := []any{1, 2}
+			values := []any{3}
 			res := php.ArrayCombine(keys, values)
 			Expect(res).To(BeNil())
 		})
 	})
 
 	It("ArrayColumn", func() {
-		var input []map[string]interface{}
+		var input []map[string]any
 
-		row1 := make(map[string]interface{})
+		row1 := make(map[string]any)
 		row1["id"] = 1
 		row1["first_name"] = "John"
 		row1["last_name"] = "Doe"
 
-		row2 := make(map[string]interface{})
+		row2 := make(map[string]any)
 		row2["id"] = 2
 		row2["first_name"] = "Sally"
 		row2["last_name"] = "Smith"
 
-		row3 := make(map[string]interface{})
+		row3 := make(map[string]any)
 		row3["id"] = 3
 		row3["first_name"] = "Jane"
 		row3["last_name"] = "Jones"
@@ -193,27 +193,27 @@ var _ = Describe("Array Functions", func() {
 		input = append(input, row1, row2, row3)
 
 		names := php.ArrayColumn(input, "first_name")
-		Expect(names).To(Equal([]interface{}{"John", "Sally", "Jane"}))
+		Expect(names).To(Equal([]any{"John", "Sally", "Jane"}))
 	})
 
 	It("ArrayDiff", func() {
-		array1 := []interface{}{"green", "red", "blue"}
-		array2 := []interface{}{"green", "yellow", "red"}
-		want := []interface{}{"blue"}
+		array1 := []any{"green", "red", "blue"}
+		array2 := []any{"green", "yellow", "red"}
+		want := []any{"blue"}
 		Expect(php.ArrayDiff(array1, array2)).To(Equal(want))
 	})
 
 	It("ArrayIntersect", func() {
-		array1 := []interface{}{"green", "red", "blue"}
-		array2 := []interface{}{"green", "yellow", "red"}
-		want := []interface{}{"green", "red"}
+		array1 := []any{"green", "red", "blue"}
+		array2 := []any{"green", "yellow", "red"}
+		want := []any{"green", "red"}
 		Expect(php.ArrayIntersect(array1, array2)).To(Equal(want))
 	})
 
 	Describe("ArrayFlip", func() {
 		It("int array", func() {
 			input := []int{3, 4, 5}
-			want := make(map[interface{}]interface{}, 3)
+			want := make(map[any]any, 3)
 			want[3] = 0
 			want[4] = 1
 			want[5] = 2
@@ -223,7 +223,7 @@ var _ = Describe("Array Functions", func() {
 
 		It("string array", func() {
 			input := []string{"oranges", "apples", "pears"}
-			want := make(map[interface{}]interface{}, 3)
+			want := make(map[any]any, 3)
 			want["oranges"] = 0
 			want["apples"] = 1
 			want["pears"] = 2
@@ -235,7 +235,7 @@ var _ = Describe("Array Functions", func() {
 			input := make(map[int]int)
 			input[100] = 1
 			input[200] = 2
-			want := make(map[interface{}]interface{}, 2)
+			want := make(map[any]any, 2)
 			want[1] = 100
 			want[2] = 200
 			res := php.ArrayFlip(input)
@@ -286,7 +286,7 @@ var _ = Describe("Array Functions", func() {
 	})
 
 	It("ArrayKeyExists", func() {
-		m := make(map[interface{}]interface{})
+		m := make(map[any]any)
 		m["a"] = 1
 		m["b"] = 2
 
@@ -299,7 +299,7 @@ var _ = Describe("Array Functions", func() {
 		Expect(php.Count([]int{1, 2, 3})).To(Equal(3))
 		Expect(php.Count([]string{"foo", "bar", "baz"})).To(Equal(3))
 
-		m := make(map[interface{}]interface{})
+		m := make(map[any]any)
 		m["a"] = 1
 		m["b"] = 2
 		Expect(php.Count(m)).To(Equal(2))
@@ -312,9 +312,9 @@ var _ = Describe("Array Functions", func() {
 			input["b"] = 1
 			input["c"] = 2
 
-			callback := func(v interface{}) bool { return v.(int) == 1 }
+			callback := func(v any) bool { return v.(int) == 1 }
 
-			want := make(map[interface{}]interface{})
+			want := make(map[any]any)
 			want["a"] = 1
 			want["b"] = 1
 
@@ -324,8 +324,8 @@ var _ = Describe("Array Functions", func() {
 
 		It("string array", func() {
 			input := []string{"a", "b", "c"}
-			callback := func(v interface{}) bool { return v.(string) == "b" }
-			want := []interface{}{"b"}
+			callback := func(v any) bool { return v.(string) == "b" }
+			want := []any{"b"}
 			res := php.ArrayFilter(input, callback)
 			Expect(res).To(Equal(want))
 		})
@@ -338,7 +338,7 @@ var _ = Describe("Array Functions", func() {
 
 		It("nil callback", func() {
 			input := []string{"c"}
-			want := []interface{}{"c"}
+			want := []any{"c"}
 			res := php.ArrayFilter(input, nil)
 			Expect(res).To(Equal(want))
 		})
@@ -350,9 +350,9 @@ var _ = Describe("Array Functions", func() {
 	})
 
 	It("ArrayPad", func() {
-		var a = []interface{}{"a", "b", "c"}
-		var b = []interface{}{"d", "d", "a", "b", "c"}
-		var c = []interface{}{"a", "b", "c", "d", "d"}
+		var a = []any{"a", "b", "c"}
+		var b = []any{"d", "d", "a", "b", "c"}
+		var c = []any{"a", "b", "c", "d", "d"}
 
 		Expect(php.ArrayPad(a, 0, "d")).To(Equal(a))
 		Expect(php.ArrayPad(a, -5, "d")).To(Equal(b))
@@ -361,8 +361,8 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArrayPop", func() {
 		It("valid input", func() {
-			var a = []interface{}{"orange", "banana", "apple", "raspberry"}
-			var b = []interface{}{"orange", "banana", "apple"}
+			var a = []any{"orange", "banana", "apple", "raspberry"}
+			var b = []any{"orange", "banana", "apple"}
 
 			Expect(php.ArrayPop(&a)).To(Equal("raspberry"))
 			Expect(a).To(Equal(b))
@@ -374,8 +374,8 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArrayPush", func() {
 		It("valid input", func() {
-			var a = []interface{}{"orange", "banana"}
-			var b = []interface{}{"orange", "banana", "apple", "raspberry"}
+			var a = []any{"orange", "banana"}
+			var b = []any{"orange", "banana", "apple", "raspberry"}
 
 			Expect(php.ArrayPush(&a, "apple", "raspberry")).To(Equal(4))
 			Expect(a).To(Equal(b))
@@ -387,8 +387,8 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArrayShift", func() {
 		It("valid input", func() {
-			var a = []interface{}{"orange", "banana", "apple", "raspberry"}
-			var b = []interface{}{"banana", "apple", "raspberry"}
+			var a = []any{"orange", "banana", "apple", "raspberry"}
+			var b = []any{"banana", "apple", "raspberry"}
 
 			Expect(php.ArrayShift(&a)).To(Equal("orange"))
 			Expect(a).To(Equal(b))
@@ -400,8 +400,8 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArrayUnshift", func() {
 		It("valid input", func() {
-			var a = []interface{}{"orange", "banana"}
-			var b = []interface{}{"apple", "raspberry", "orange", "banana"}
+			var a = []any{"orange", "banana"}
+			var b = []any{"apple", "raspberry", "orange", "banana"}
 
 			Expect(php.ArrayUnshift(&a, "apple", "raspberry")).To(Equal(4))
 			Expect(a).To(Equal(b))
@@ -412,15 +412,15 @@ var _ = Describe("Array Functions", func() {
 	})
 
 	It("ArrayReverse", func() {
-		var a = []interface{}{"a", "b", "c"}
-		var b = []interface{}{"c", "b", "a"}
+		var a = []any{"a", "b", "c"}
+		var b = []any{"c", "b", "a"}
 
 		Expect(php.ArrayReverse(a)).To(Equal(b))
 	})
 
 	It("ArraySlice", func() {
-		var a = []interface{}{"a", "b", "c"}
-		var b = []interface{}{"a"}
+		var a = []any{"a", "b", "c"}
+		var b = []any{"a"}
 
 		Expect(php.ArraySlice(a, 10, 1)).To(BeNil())
 		Expect(php.ArraySlice(a, 0, 1)).To(Equal(b))
@@ -430,8 +430,8 @@ var _ = Describe("Array Functions", func() {
 	Describe("ArraySum", func() {
 		It("valid input", func() {
 			tests := []struct {
-				input interface{}
-				want  interface{}
+				input any
+				want  any
 			}{
 				{[]int{}, 0},
 				{[]string{"a", "b", "c"}, "abc"},
@@ -444,7 +444,7 @@ var _ = Describe("Array Functions", func() {
 			}
 		})
 		It("invalid input", func() {
-			tests := []interface{}{
+			tests := []any{
 				nil,
 				[][]int{{1}, {2}},
 				struct{}{},
@@ -458,8 +458,8 @@ var _ = Describe("Array Functions", func() {
 	Describe("Sort", func() {
 		It("valid input", func() {
 			tests := []struct {
-				input interface{}
-				want  interface{}
+				input any
+				want  any
 			}{
 				{[]int{}, []int{}},
 				{[]string{"c", "a", "b"}, []string{"a", "b", "c"}},
@@ -473,7 +473,7 @@ var _ = Describe("Array Functions", func() {
 			}
 		})
 		It("invalid input", func() {
-			tests := []interface{}{
+			tests := []any{
 				nil,
 				struct{}{},
 			}
@@ -486,8 +486,8 @@ var _ = Describe("Array Functions", func() {
 	Describe("Rsort", func() {
 		It("valid input", func() {
 			tests := []struct {
-				input interface{}
-				want  interface{}
+				input any
+				want  any
 			}{
 				{[]int{}, []int{}},
 				{[]string{"c", "a", "b"}, []string{"c", "b", "a"}},
@@ -501,7 +501,7 @@ var _ = Describe("Array Functions", func() {
 			}
 		})
 		It("invalid input", func() {
-			tests := []interface{}{
+			tests := []any{
 				nil,
 				struct{}{},
 			}
