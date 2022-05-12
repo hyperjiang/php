@@ -446,7 +446,7 @@ var _ = Describe("Array Functions", func() {
 		It("invalid input", func() {
 			tests := []interface{}{
 				nil,
-				[][]int{[]int{1}, []int{2}},
+				[][]int{{1}, {2}},
 				struct{}{},
 			}
 			for _, t := range tests {
@@ -466,7 +466,7 @@ var _ = Describe("Array Functions", func() {
 				{[]int{5, 3, 4, 2, 1}, []int64{1, 2, 3, 4, 5}},
 				{[]uint{1, 5, 3, 2, 4}, []uint64{1, 2, 3, 4, 5}},
 				{[]float64{3, 2, 1, 4, 5}, []float64{1, 2, 3, 4, 5}},
-				{[][]int{[]int{1}, []int{2}}, [][]int{[]int{1}, []int{2}}},
+				{[][]int{{1}, {2}}, [][]int{{1}, {2}}},
 			}
 			for _, t := range tests {
 				Expect(php.Sort(t.input)).To(Equal(t.want))
@@ -494,7 +494,7 @@ var _ = Describe("Array Functions", func() {
 				{[]int{1, 2, 3, 4, 5}, []int64{5, 4, 3, 2, 1}},
 				{[]uint{1, 5, 3, 2, 4}, []uint64{5, 4, 3, 2, 1}},
 				{[]float64{3, 2, 1, 4, 5}, []float64{5, 4, 3, 2, 1}},
-				{[][]int{[]int{1}, []int{2}}, [][]int{[]int{1}, []int{2}}},
+				{[][]int{{1}, {2}}, [][]int{{1}, {2}}},
 			}
 			for _, t := range tests {
 				Expect(php.Rsort(t.input)).To(Equal(t.want))
