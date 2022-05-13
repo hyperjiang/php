@@ -113,13 +113,13 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArrayChunk", func() {
 		It("valid input", func() {
-			arr := []any{"a", "b", "c", "d", "e"}
+			arr := []string{"a", "b", "c", "d", "e"}
 			res := php.ArrayChunk(arr, 2)
-			Expect(res).To(Equal([][]any{{"a", "b"}, {"c", "d"}, {"e"}}))
+			Expect(res).To(Equal([][]string{{"a", "b"}, {"c", "d"}, {"e"}}))
 		})
 
 		It("invalid size", func() {
-			arr := []any{"a", "b", "c", "d", "e"}
+			arr := []string{"a", "b", "c", "d", "e"}
 			res := php.ArrayChunk(arr, 0)
 			Expect(res).To(BeNil())
 		})
