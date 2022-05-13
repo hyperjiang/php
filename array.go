@@ -157,12 +157,12 @@ func ArrayKeys(input any) any {
 }
 
 // ArrayKeyExists is alias of KeyExists()
-func ArrayKeyExists(k any, m map[any]any) bool {
+func ArrayKeyExists[K, V comparable](k K, m map[K]V) bool {
 	return KeyExists(k, m)
 }
 
 // KeyExists checks if the given key or index exists in the array
-func KeyExists(k any, m map[any]any) bool {
+func KeyExists[K, V comparable](k K, m map[K]V) bool {
 	_, ok := m[k]
 	return ok
 }

@@ -257,7 +257,7 @@ var _ = Describe("Array Functions", func() {
 	})
 
 	It("ArrayKeyExists", func() {
-		m := make(map[any]any)
+		m := make(map[string]int)
 		m["a"] = 1
 		m["b"] = 2
 
