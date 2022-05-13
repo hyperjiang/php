@@ -58,8 +58,8 @@ func ArrayChunk[T comparable](array []T, size int) [][]T {
 }
 
 // ArrayColumn returns the values from a single column in the input array
-func ArrayColumn(input []map[string]any, columnKey string) []any {
-	columns := make([]any, 0, len(input))
+func ArrayColumn[T comparable](input []map[string]T, columnKey string) []T {
+	columns := make([]T, 0, len(input))
 	for _, val := range input {
 		if v, ok := val[columnKey]; ok {
 			columns = append(columns, v)
@@ -69,11 +69,11 @@ func ArrayColumn(input []map[string]any, columnKey string) []any {
 }
 
 // ArrayCombine creates an array by using one array for keys and another for its values
-func ArrayCombine(keys, values []any) map[any]any {
+func ArrayCombine[K, V comparable](keys []K, values []V) map[K]V {
 	if len(keys) != len(values) {
 		return nil
 	}
-	m := make(map[any]any, len(keys))
+	m := make(map[K]V, len(keys))
 	for i, v := range keys {
 		m[v] = values[i]
 	}

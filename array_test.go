@@ -127,9 +127,9 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArrayCombine", func() {
 		It("valid input", func() {
-			keys := []any{"green", "red", "yellow"}
-			values := []any{"avocado", "apple", "banana"}
-			want := make(map[any]any, 3)
+			keys := []string{"green", "red", "yellow"}
+			values := []string{"avocado", "apple", "banana"}
+			want := make(map[string]string, 3)
 			want["green"] = "avocado"
 			want["red"] = "apple"
 			want["yellow"] = "banana"
@@ -139,35 +139,32 @@ var _ = Describe("Array Functions", func() {
 		})
 
 		It("unmatched size between keys and values", func() {
-			keys := []any{1, 2}
-			values := []any{3}
+			keys := []int{1, 2}
+			values := []int{3}
 			res := php.ArrayCombine(keys, values)
 			Expect(res).To(BeNil())
 		})
 	})
 
 	It("ArrayColumn", func() {
-		var input []map[string]any
+		var input []map[string]string
 
-		row1 := make(map[string]any)
-		row1["id"] = 1
+		row1 := make(map[string]string)
 		row1["first_name"] = "John"
 		row1["last_name"] = "Doe"
 
-		row2 := make(map[string]any)
-		row2["id"] = 2
+		row2 := make(map[string]string)
 		row2["first_name"] = "Sally"
 		row2["last_name"] = "Smith"
 
-		row3 := make(map[string]any)
-		row3["id"] = 3
+		row3 := make(map[string]string)
 		row3["first_name"] = "Jane"
 		row3["last_name"] = "Jones"
 
 		input = append(input, row1, row2, row3)
 
 		names := php.ArrayColumn(input, "first_name")
-		Expect(names).To(Equal([]any{"John", "Sally", "Jane"}))
+		Expect(names).To(Equal([]string{"John", "Sally", "Jane"}))
 	})
 
 	It("ArrayDiff", func() {
