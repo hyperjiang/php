@@ -321,9 +321,9 @@ var _ = Describe("Array Functions", func() {
 	})
 
 	It("ArrayPad", func() {
-		var a = []any{"a", "b", "c"}
-		var b = []any{"d", "d", "a", "b", "c"}
-		var c = []any{"a", "b", "c", "d", "d"}
+		var a = []string{"a", "b", "c"}
+		var b = []string{"d", "d", "a", "b", "c"}
+		var c = []string{"a", "b", "c", "d", "d"}
 
 		Expect(php.ArrayPad(a, 0, "d")).To(Equal(a))
 		Expect(php.ArrayPad(a, -5, "d")).To(Equal(b))
@@ -332,27 +332,27 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArrayPop", func() {
 		It("valid input", func() {
-			var a = []any{"orange", "banana", "apple", "raspberry"}
-			var b = []any{"orange", "banana", "apple"}
+			var a = []string{"orange", "banana", "apple", "raspberry"}
+			var b = []string{"orange", "banana", "apple"}
 
 			Expect(php.ArrayPop(&a)).To(Equal("raspberry"))
 			Expect(a).To(Equal(b))
 		})
 		It("nil", func() {
-			Expect(php.ArrayPop(nil)).To(BeNil())
+			Expect(php.ArrayPop(&[]int{})).To(BeZero())
 		})
 	})
 
 	Describe("ArrayPush", func() {
 		It("valid input", func() {
-			var a = []any{"orange", "banana"}
-			var b = []any{"orange", "banana", "apple", "raspberry"}
+			var a = []string{"orange", "banana"}
+			var b = []string{"orange", "banana", "apple", "raspberry"}
 
 			Expect(php.ArrayPush(&a, "apple", "raspberry")).To(Equal(4))
 			Expect(a).To(Equal(b))
 		})
 		It("nil", func() {
-			Expect(php.ArrayPush(nil)).To(BeZero())
+			Expect(php.ArrayPush(&[]int{})).To(BeZero())
 		})
 	})
 

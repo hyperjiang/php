@@ -214,7 +214,7 @@ func ArrayFilter(input any, callback func(any) bool) any {
 }
 
 // ArrayPad pads array to the specified length with a value
-func ArrayPad(array []any, size int, value any) []any {
+func ArrayPad[T comparable](array []T, size int, value T) []T {
 	if size == 0 || (size > 0 && size < len(array)) || (size < 0 && size > -len(array)) {
 		return array
 	}
@@ -223,7 +223,7 @@ func ArrayPad(array []any, size int, value any) []any {
 		n = -size
 	}
 	n -= len(array)
-	tmp := make([]any, n)
+	tmp := make([]T, n)
 	for i := 0; i < n; i++ {
 		tmp[i] = value
 	}
@@ -234,19 +234,22 @@ func ArrayPad(array []any, size int, value any) []any {
 }
 
 // ArrayPop pops the element off the end of array
-func ArrayPop(s *[]any) any {
+func ArrayPop[T comparable](s *[]T) T {
+	var t T
 	if s == nil || len(*s) == 0 {
-		return nil
+		return t
 	}
+
 	ep := len(*s) - 1
 	e := (*s)[ep]
 	*s = (*s)[:ep]
+
 	return e
 }
 
 // ArrayPush pushes one or more elements onto the end of array,
 // returns the new number of elements in the array
-func ArrayPush(s *[]any, elements ...any) int {
+func ArrayPush[T comparable](s *[]T, elements ...T) int {
 	if s == nil {
 		return 0
 	}
