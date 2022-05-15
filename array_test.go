@@ -339,7 +339,8 @@ var _ = Describe("Array Functions", func() {
 			Expect(a).To(Equal(b))
 		})
 		It("nil", func() {
-			Expect(php.ArrayPop(&[]int{})).To(BeZero())
+			var a *[]int
+			Expect(php.ArrayPop(a)).To(BeZero())
 		})
 	})
 
@@ -352,46 +353,49 @@ var _ = Describe("Array Functions", func() {
 			Expect(a).To(Equal(b))
 		})
 		It("nil", func() {
-			Expect(php.ArrayPush(&[]int{})).To(BeZero())
+			var a *[]int
+			Expect(php.ArrayPush(a)).To(BeZero())
 		})
 	})
 
 	Describe("ArrayShift", func() {
 		It("valid input", func() {
-			var a = []any{"orange", "banana", "apple", "raspberry"}
-			var b = []any{"banana", "apple", "raspberry"}
+			var a = []string{"orange", "banana", "apple", "raspberry"}
+			var b = []string{"banana", "apple", "raspberry"}
 
 			Expect(php.ArrayShift(&a)).To(Equal("orange"))
 			Expect(a).To(Equal(b))
 		})
 		It("nil", func() {
-			Expect(php.ArrayShift(nil)).To(BeNil())
+			var a *[]int
+			Expect(php.ArrayShift(a)).To(BeZero())
 		})
 	})
 
 	Describe("ArrayUnshift", func() {
 		It("valid input", func() {
-			var a = []any{"orange", "banana"}
-			var b = []any{"apple", "raspberry", "orange", "banana"}
+			var a = []string{"orange", "banana"}
+			var b = []string{"apple", "raspberry", "orange", "banana"}
 
 			Expect(php.ArrayUnshift(&a, "apple", "raspberry")).To(Equal(4))
 			Expect(a).To(Equal(b))
 		})
 		It("nil", func() {
-			Expect(php.ArrayUnshift(nil)).To(BeZero())
+			var a *[]int
+			Expect(php.ArrayUnshift(a)).To(BeZero())
 		})
 	})
 
 	It("ArrayReverse", func() {
-		var a = []any{"a", "b", "c"}
-		var b = []any{"c", "b", "a"}
+		var a = []string{"a", "b", "c"}
+		var b = []string{"c", "b", "a"}
 
 		Expect(php.ArrayReverse(a)).To(Equal(b))
 	})
 
 	It("ArraySlice", func() {
-		var a = []any{"a", "b", "c"}
-		var b = []any{"a"}
+		var a = []string{"a", "b", "c"}
+		var b = []string{"a"}
 
 		Expect(php.ArraySlice(a, 10, 1)).To(BeNil())
 		Expect(php.ArraySlice(a, 0, 1)).To(Equal(b))

@@ -258,18 +258,21 @@ func ArrayPush[T comparable](s *[]T, elements ...T) int {
 }
 
 // ArrayShift shifts an element off the beginning of array
-func ArrayShift(s *[]any) any {
+func ArrayShift[T comparable](s *[]T) T {
+	var t T
 	if s == nil || len(*s) == 0 {
-		return nil
+		return t
 	}
+
 	f := (*s)[0]
 	*s = (*s)[1:]
+
 	return f
 }
 
 // ArrayUnshift prepends one or more elements to the beginning of a array,
 // returns the new number of elements in the array.
-func ArrayUnshift(s *[]any, elements ...any) int {
+func ArrayUnshift[T comparable](s *[]T, elements ...T) int {
 	if s == nil {
 		return 0
 	}
@@ -278,7 +281,7 @@ func ArrayUnshift(s *[]any, elements ...any) int {
 }
 
 // ArrayReverse returns an array with elements in reverse order
-func ArrayReverse(s []any) []any {
+func ArrayReverse[T comparable](s []T) []T {
 	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
 		s[i], s[j] = s[j], s[i]
 	}
@@ -286,7 +289,7 @@ func ArrayReverse(s []any) []any {
 }
 
 // ArraySlice extracts a slice of the array
-func ArraySlice(array []any, offset, length uint) []any {
+func ArraySlice[T comparable](array []T, offset, length uint) []T {
 	if offset > uint(len(array)) {
 		return nil
 	}
