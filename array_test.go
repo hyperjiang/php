@@ -404,85 +404,31 @@ var _ = Describe("Array Functions", func() {
 
 	Describe("ArraySum", func() {
 		It("valid input", func() {
-			tests := []struct {
-				input any
-				want  any
-			}{
-				{[]int{}, 0},
-				{[]string{"a", "b", "c"}, "abc"},
-				{[]int{1, 2, 3, 4, 5}, int64(15)},
-				{[]uint{1, 2, 3, 4, 5}, uint64(15)},
-				{[]float64{1, 2, 3, 4, 5}, float64(15)},
-			}
-			for _, t := range tests {
-				Expect(php.ArraySum(t.input)).To(Equal(t.want))
-			}
-		})
-		It("invalid input", func() {
-			tests := []any{
-				nil,
-				[][]int{{1}, {2}},
-				struct{}{},
-			}
-			for _, t := range tests {
-				Expect(php.ArraySum(t)).To(BeNil())
-			}
+			Expect(php.ArraySum([]int{})).To(Equal(0))
+			Expect(php.ArraySum([]string{"a", "b", "c"})).To(Equal("abc"))
+			Expect(php.ArraySum([]int{1, 2, 3, 4, 5})).To(Equal(15))
+			Expect(php.ArraySum([]uint{1, 2, 3, 4, 5})).To(Equal(uint(15)))
+			Expect(php.ArraySum([]float64{1, 2, 3, 4, 5})).To(Equal(float64(15)))
 		})
 	})
 
 	Describe("Sort", func() {
 		It("valid input", func() {
-			tests := []struct {
-				input any
-				want  any
-			}{
-				{[]int{}, []int{}},
-				{[]string{"c", "a", "b"}, []string{"a", "b", "c"}},
-				{[]int{5, 3, 4, 2, 1}, []int64{1, 2, 3, 4, 5}},
-				{[]uint{1, 5, 3, 2, 4}, []uint64{1, 2, 3, 4, 5}},
-				{[]float64{3, 2, 1, 4, 5}, []float64{1, 2, 3, 4, 5}},
-				{[][]int{{1}, {2}}, [][]int{{1}, {2}}},
-			}
-			for _, t := range tests {
-				Expect(php.Sort(t.input)).To(Equal(t.want))
-			}
-		})
-		It("invalid input", func() {
-			tests := []any{
-				nil,
-				struct{}{},
-			}
-			for _, t := range tests {
-				Expect(php.Sort(t)).To(BeNil())
-			}
+			Expect(php.Sort([]int{})).To(Equal([]int{}))
+			Expect(php.Sort([]string{"c", "a", "b"})).To(Equal([]string{"a", "b", "c"}))
+			Expect(php.Sort([]int{5, 3, 4, 2, 1})).To(Equal([]int{1, 2, 3, 4, 5}))
+			Expect(php.Sort([]uint{1, 5, 3, 2, 4})).To(Equal([]uint{1, 2, 3, 4, 5}))
+			Expect(php.Sort([]float64{3, 2, 1, 4, 5})).To(Equal([]float64{1, 2, 3, 4, 5}))
 		})
 	})
 
 	Describe("Rsort", func() {
 		It("valid input", func() {
-			tests := []struct {
-				input any
-				want  any
-			}{
-				{[]int{}, []int{}},
-				{[]string{"c", "a", "b"}, []string{"c", "b", "a"}},
-				{[]int{1, 2, 3, 4, 5}, []int64{5, 4, 3, 2, 1}},
-				{[]uint{1, 5, 3, 2, 4}, []uint64{5, 4, 3, 2, 1}},
-				{[]float64{3, 2, 1, 4, 5}, []float64{5, 4, 3, 2, 1}},
-				{[][]int{{1}, {2}}, [][]int{{1}, {2}}},
-			}
-			for _, t := range tests {
-				Expect(php.Rsort(t.input)).To(Equal(t.want))
-			}
-		})
-		It("invalid input", func() {
-			tests := []any{
-				nil,
-				struct{}{},
-			}
-			for _, t := range tests {
-				Expect(php.Rsort(t)).To(BeNil())
-			}
+			Expect(php.Rsort([]int{})).To(Equal([]int{}))
+			Expect(php.Rsort([]string{"c", "a", "b"})).To(Equal([]string{"c", "b", "a"}))
+			Expect(php.Rsort([]int{1, 2, 3, 4, 5})).To(Equal([]int{5, 4, 3, 2, 1}))
+			Expect(php.Rsort([]uint{1, 5, 3, 2, 4})).To(Equal([]uint{5, 4, 3, 2, 1}))
+			Expect(php.Rsort([]float64{3, 2, 1, 4, 5})).To(Equal([]float64{5, 4, 3, 2, 1}))
 		})
 	})
 })

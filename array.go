@@ -4,6 +4,8 @@ import (
 	"math"
 	"reflect"
 	"sort"
+
+	"golang.org/x/exp/constraints"
 )
 
 type empty struct{}
@@ -301,160 +303,37 @@ func ArraySlice[T comparable](array []T, offset, length uint) []T {
 }
 
 // ArraySum returns the sum of values in an array
-func ArraySum(array any) any {
-	if array == nil {
-		return nil
-	}
-	kind := reflect.TypeOf(array).Kind()
-	if kind != reflect.Slice && kind != reflect.Array {
-		return nil
+func ArraySum[T constraints.Ordered](array []T) T {
+	var sum T
+	for _, v := range array {
+		sum += v
 	}
 
-	s := reflect.ValueOf(array)
-	if s.Len() == 0 {
-		return 0
-	}
-
-	switch s.Index(0).Kind() {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		var sum int64
-		for i := 0; i < s.Len(); i++ {
-			sum += s.Index(i).Int()
-		}
-		return sum
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		var sum uint64
-		for i := 0; i < s.Len(); i++ {
-			sum += s.Index(i).Uint()
-		}
-		return sum
-	case reflect.Float32, reflect.Float64:
-		var sum float64
-		for i := 0; i < s.Len(); i++ {
-			sum += s.Index(i).Float()
-		}
-		return sum
-	case reflect.String:
-		var sum string
-		for i := 0; i < s.Len(); i++ {
-			sum += s.Index(i).String()
-		}
-		return sum
-	}
-
-	return nil
+	return sum
 }
 
 // Sort sorts an array (lowest to highest)
-func Sort(array any) any {
-	if array == nil {
-		return nil
-	}
-	kind := reflect.TypeOf(array).Kind()
-	if kind != reflect.Slice && kind != reflect.Array {
-		return nil
-	}
-
-	s := reflect.ValueOf(array)
-	if s.Len() == 0 {
+func Sort[T constraints.Ordered](array []T) []T {
+	if len(array) == 0 {
 		return array
 	}
 
-	switch s.Index(0).Kind() {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		var res = make([]int64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Int()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] < res[j]
-		})
-		return res
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		var res = make([]uint64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Uint()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] < res[j]
-		})
-		return res
-	case reflect.Float32, reflect.Float64:
-		var res = make([]float64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Float()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] < res[j]
-		})
-		return res
-	case reflect.String:
-		var res = make([]string, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).String()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] < res[j]
-		})
-		return res
-	}
+	sort.Slice(array, func(i int, j int) bool {
+		return array[i] < array[j]
+	})
 
 	return array
 }
 
 // Rsort sorts an array in reverse order (highest to lowest)
-func Rsort(array any) any {
-	if array == nil {
-		return nil
-	}
-	kind := reflect.TypeOf(array).Kind()
-	if kind != reflect.Slice && kind != reflect.Array {
-		return nil
-	}
-
-	s := reflect.ValueOf(array)
-	if s.Len() == 0 {
+func Rsort[T constraints.Ordered](array []T) []T {
+	if len(array) == 0 {
 		return array
 	}
 
-	switch s.Index(0).Kind() {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		var res = make([]int64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Int()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] > res[j]
-		})
-		return res
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		var res = make([]uint64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Uint()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] > res[j]
-		})
-		return res
-	case reflect.Float32, reflect.Float64:
-		var res = make([]float64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Float()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] > res[j]
-		})
-		return res
-	case reflect.String:
-		var res = make([]string, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).String()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] > res[j]
-		})
-		return res
-	}
+	sort.Slice(array, func(i int, j int) bool {
+		return array[i] > array[j]
+	})
 
 	return array
 }
