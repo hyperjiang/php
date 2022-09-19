@@ -99,7 +99,9 @@ var _ = Describe("Math Functions", func() {
 	})
 
 	It("Abs", func() {
-		Expect(php.Abs(-1)).To(Equal(float64(1)))
+		Expect(php.Abs(-1)).To(Equal(int(1)))
+		Expect(php.Abs(-1.1)).To(Equal(float64(1.1)))
+		Expect(php.Abs[float32](-1.1)).To(Equal(float32(1.1)))
 	})
 
 	It("MtRand", func() {
