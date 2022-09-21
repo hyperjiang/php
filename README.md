@@ -8,14 +8,7 @@
 
 This package implements some PHP functions by Golang. Please note that it's impossible to have 100% the same behaviour between PHP and Golang functions because their mechanisms are quite different.
 
-Minimum go version requirement:
-
-| OS      | Go version |
-| ------- | ---------- |
-| Linux   | 1.9        |
-| OSX     | 1.12       |
-| Windows | 1.13       |
-
+Minimum go version requirement: `1.18`, if you are using lower version, please choose version `v0.61`.
 
 ### Date/Time Functions
 
@@ -282,7 +275,7 @@ fmt.Println(php.Round(5.055, 2)) // 5.06
 // Array functions
 
 arr := []string{"1", "1", "2", "3", "a", "ab", "abc", "abc", "abc", "Abc"}
-fmt.Println(php.ArrayUnique(arr).([]string)) // [abc Abc 1 2 3 a ab]
+fmt.Println(php.ArrayUnique(arr)) // [abc Abc 1 2 3 a ab]
 fmt.Println(php.InArray("a", arr)) // true
 
 ```

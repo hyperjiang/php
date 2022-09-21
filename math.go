@@ -5,7 +5,14 @@ import (
 	"math"
 	"math/rand"
 	"strconv"
+
+	"golang.org/x/exp/constraints"
 )
+
+// Real is a type constraint for real number
+type Real interface {
+	constraints.Integer | constraints.Float
+}
 
 // MaxPrecision is the default max precision for math functions
 var MaxPrecision = 14
@@ -42,8 +49,8 @@ func Round(val float64, precision int) float64 {
 }
 
 // Abs returns the absolute value of number
-func Abs(number float64) float64 {
-	return math.Abs(number)
+func Abs[T Real](number T) T {
+	return T(math.Abs(float64(number)))
 }
 
 // MtRand is alias of Rand()

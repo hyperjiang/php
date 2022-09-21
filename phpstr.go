@@ -124,7 +124,7 @@ func Strripos(haystack, needle string) int {
 }
 
 // buildReplaceSlice is a helper function for Replace and Ireplace
-func buildReplaceSlice(search, replace interface{}) ([]string, []string, error) {
+func buildReplaceSlice(search, replace any) ([]string, []string, error) {
 
 	var aSearch, aReplace []string
 
@@ -162,7 +162,7 @@ func buildReplaceSlice(search, replace interface{}) ([]string, []string, error) 
 // This function is an implement of PHP's str_replace
 //
 // see http://php.net/manual/en/function.str-replace.php
-func Replace(search, replace interface{}, subject string) string {
+func Replace(search, replace any, subject string) string {
 
 	var aSearch, aReplace []string
 
@@ -183,7 +183,7 @@ func Replace(search, replace interface{}, subject string) string {
 }
 
 // Ireplace is case-insensitive version of Replace()
-func Ireplace(search, replace interface{}, subject string) string {
+func Ireplace(search, replace any, subject string) string {
 
 	var aSearch, aReplace []string
 

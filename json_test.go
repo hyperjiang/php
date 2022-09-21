@@ -20,7 +20,7 @@ var _ = Describe("Image Functions", func() {
 				Colors: []string{"Crimson", "Red", "Ruby", "Maroon"},
 			}
 			tests := []struct {
-				input interface{}
+				input any
 				want  string
 			}{
 				{
@@ -72,7 +72,7 @@ var _ = Describe("Image Functions", func() {
 
 	Describe("JSONDecode", func() {
 		It("decode into map", func() {
-			var m = make(map[string]interface{})
+			var m = make(map[string]any)
 			err := php.JSONDecode("{\"a\":1,\"b\":2,\"c\":3,\"d\":4,\"e\":5}", &m)
 			Expect(err).NotTo(HaveOccurred())
 		})

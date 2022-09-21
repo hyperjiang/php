@@ -104,8 +104,8 @@ var _ = Describe("String Functions", func() {
 
 	It("Replace", func() {
 		tests := []struct {
-			search  interface{}
-			replace interface{}
+			search  any
+			replace any
 			subject string
 			want    string
 		}{
@@ -135,8 +135,8 @@ var _ = Describe("String Functions", func() {
 
 	It("Ireplace", func() {
 		tests := []struct {
-			search  interface{}
-			replace interface{}
+			search  any
+			replace any
 			subject string
 			want    string
 		}{

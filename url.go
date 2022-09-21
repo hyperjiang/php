@@ -92,7 +92,7 @@ func ParseDocument(doc io.Reader) map[string]string {
 }
 
 // HTTPBuildQuery generate URL-encoded query string
-func HTTPBuildQuery(data map[string]interface{}) string {
+func HTTPBuildQuery(data map[string]any) string {
 	params := url.Values{}
 	for k, v := range data {
 		key := k

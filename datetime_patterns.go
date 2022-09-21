@@ -160,7 +160,7 @@ func getPattern(format string) (pattern, error) {
 		}
 	}
 
-	return pattern{}, errors.New("No pattern found")
+	return pattern{}, errors.New("no pattern found")
 }
 
 // convertLayout converts php date format string to golang date layout

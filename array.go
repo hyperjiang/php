@@ -4,158 +4,36 @@ import (
 	"math"
 	"reflect"
 	"sort"
+
+	"golang.org/x/exp/constraints"
 )
 
+type empty struct{}
+
 // ArrayUnique removes duplicate values from an array,
-// if the input is not a slice or empty then return the original input
-//
-// you can use type assertion to convert the result to the type of input
-func ArrayUnique(array interface{}) interface{} {
-	type empty struct{}
+// if the input is empty then return the original input
+func ArrayUnique[T comparable](arr []T) []T {
+	set := make(map[T]empty)
 
-	if array == nil {
-		return nil
+	for _, v := range arr {
+		set[v] = empty{}
 	}
 
-	// if it's not a slice then return the original input
-	kind := reflect.TypeOf(array).Kind()
-	if kind != reflect.Slice && kind != reflect.Array {
-		return array
+	result := make([]T, 0)
+	for k := range set {
+		result = append(result, k)
 	}
 
-	s := reflect.ValueOf(array)
-	if s.Len() == 0 {
-		return array
-	}
-
-	set := make(map[interface{}]empty)
-	for i := 0; i < s.Len(); i++ {
-		set[s.Index(i).Interface()] = empty{}
-	}
-
-	switch s.Index(0).Kind() {
-	case reflect.Bool:
-		result := make([]bool, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(bool))
-		}
-		return result
-	case reflect.Int:
-		result := make([]int, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(int))
-		}
-		return result
-	case reflect.Int8:
-		result := make([]int8, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(int8))
-		}
-		return result
-	case reflect.Int16:
-		result := make([]int16, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(int16))
-		}
-		return result
-	case reflect.Int32:
-		result := make([]int32, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(int32))
-		}
-		return result
-	case reflect.Int64:
-		result := make([]int64, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(int64))
-		}
-		return result
-	case reflect.Uint:
-		result := make([]uint, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(uint))
-		}
-		return result
-	case reflect.Uint8:
-		result := make([]uint8, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(uint8))
-		}
-		return result
-	case reflect.Uint16:
-		result := make([]uint16, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(uint16))
-		}
-		return result
-	case reflect.Uint32:
-		result := make([]uint32, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(uint32))
-		}
-		return result
-	case reflect.Uint64:
-		result := make([]uint64, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(uint64))
-		}
-		return result
-	case reflect.Float32:
-		result := make([]float32, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(float32))
-		}
-		return result
-	case reflect.Float64:
-		result := make([]float64, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(float64))
-		}
-		return result
-	case reflect.Complex64:
-		result := make([]complex64, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(complex64))
-		}
-		return result
-	case reflect.Complex128:
-		result := make([]complex128, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(complex128))
-		}
-		return result
-	case reflect.String:
-		result := make([]string, 0, s.Len())
-		for k := range set {
-			result = append(result, k.(string))
-		}
-		return result
-	default:
-		result := make([]interface{}, 0, s.Len())
-		for k := range set {
-			result = append(result, k)
-		}
-		return result
-	}
+	return result
 }
 
-// InArray checks if a value exists in an array or map
+// InArray checks if a value exists in an array
 //
-// needle is the element to search, haystack is the slice or map to be search
-func InArray(needle interface{}, haystack interface{}) bool {
-	val := reflect.ValueOf(haystack)
-	switch val.Kind() {
-	case reflect.Slice, reflect.Array:
-		for i := 0; i < val.Len(); i++ {
-			if reflect.DeepEqual(needle, val.Index(i).Interface()) {
-				return true
-			}
-		}
-	case reflect.Map:
-		for _, k := range val.MapKeys() {
-			if reflect.DeepEqual(needle, val.MapIndex(k).Interface()) {
-				return true
-			}
+// needle is the element to search, haystack is the slice to be searched
+func InArray[T comparable](needle T, haystack []T) bool {
+	for _, v := range haystack {
+		if needle == v {
+			return true
 		}
 	}
 
@@ -163,13 +41,13 @@ func InArray(needle interface{}, haystack interface{}) bool {
 }
 
 // ArrayChunk splits an array into chunks, returns nil if size < 1
-func ArrayChunk(array []interface{}, size int) [][]interface{} {
+func ArrayChunk[T comparable](array []T, size int) [][]T {
 	if size < 1 {
 		return nil
 	}
 	length := len(array)
 	chunkNum := int(math.Ceil(float64(length) / float64(size)))
-	var chunks [][]interface{}
+	var chunks [][]T
 	for i, end := 0, 0; chunkNum > 0; chunkNum-- {
 		end = (i + 1) * size
 		if end > length {
@@ -182,8 +60,8 @@ func ArrayChunk(array []interface{}, size int) [][]interface{} {
 }
 
 // ArrayColumn returns the values from a single column in the input array
-func ArrayColumn(input []map[string]interface{}, columnKey string) []interface{} {
-	columns := make([]interface{}, 0, len(input))
+func ArrayColumn[T comparable](input []map[string]T, columnKey string) []T {
+	columns := make([]T, 0, len(input))
 	for _, val := range input {
 		if v, ok := val[columnKey]; ok {
 			columns = append(columns, v)
@@ -193,11 +71,11 @@ func ArrayColumn(input []map[string]interface{}, columnKey string) []interface{}
 }
 
 // ArrayCombine creates an array by using one array for keys and another for its values
-func ArrayCombine(keys, values []interface{}) map[interface{}]interface{} {
+func ArrayCombine[K, V comparable](keys []K, values []V) map[K]V {
 	if len(keys) != len(values) {
 		return nil
 	}
-	m := make(map[interface{}]interface{}, len(keys))
+	m := make(map[K]V, len(keys))
 	for i, v := range keys {
 		m[v] = values[i]
 	}
@@ -205,8 +83,8 @@ func ArrayCombine(keys, values []interface{}) map[interface{}]interface{} {
 }
 
 // ArrayDiff computes the difference of arrays
-func ArrayDiff(array1, array2 []interface{}) []interface{} {
-	var res []interface{}
+func ArrayDiff[T comparable](array1, array2 []T) []T {
+	var res []T
 	for _, v := range array1 {
 		if !InArray(v, array2) {
 			res = append(res, v)
@@ -216,8 +94,8 @@ func ArrayDiff(array1, array2 []interface{}) []interface{} {
 }
 
 // ArrayIntersect computes the intersection of arrays
-func ArrayIntersect(array1, array2 []interface{}) []interface{} {
-	var res []interface{}
+func ArrayIntersect[T comparable](array1, array2 []T) []T {
+	var res []T
 	for _, v := range array1 {
 		if InArray(v, array2) {
 			res = append(res, v)
@@ -227,7 +105,7 @@ func ArrayIntersect(array1, array2 []interface{}) []interface{} {
 }
 
 // ArrayFlip exchanges all keys with their associated values in an array
-func ArrayFlip(input interface{}) interface{} {
+func ArrayFlip(input any) any {
 	if input == nil {
 		return nil
 	}
@@ -235,7 +113,7 @@ func ArrayFlip(input interface{}) interface{} {
 	if val.Len() == 0 {
 		return nil
 	}
-	res := make(map[interface{}]interface{}, val.Len())
+	res := make(map[any]any, val.Len())
 	switch val.Kind() {
 	case reflect.Slice, reflect.Array:
 		for i := 0; i < val.Len(); i++ {
@@ -252,7 +130,7 @@ func ArrayFlip(input interface{}) interface{} {
 }
 
 // ArrayKeys returns all the keys or a subset of the keys of an array
-func ArrayKeys(input interface{}) interface{} {
+func ArrayKeys(input any) any {
 	if input == nil {
 		return nil
 	}
@@ -281,18 +159,18 @@ func ArrayKeys(input interface{}) interface{} {
 }
 
 // ArrayKeyExists is alias of KeyExists()
-func ArrayKeyExists(k interface{}, m map[interface{}]interface{}) bool {
+func ArrayKeyExists[K, V comparable](k K, m map[K]V) bool {
 	return KeyExists(k, m)
 }
 
 // KeyExists checks if the given key or index exists in the array
-func KeyExists(k interface{}, m map[interface{}]interface{}) bool {
+func KeyExists[K, V comparable](k K, m map[K]V) bool {
 	_, ok := m[k]
 	return ok
 }
 
 // Count counts all elements in an array or map
-func Count(v interface{}) int {
+func Count(v any) int {
 	if v == nil {
 		return 0
 	}
@@ -300,7 +178,7 @@ func Count(v interface{}) int {
 }
 
 // ArrayFilter filters elements of an array using a callback function
-func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{} {
+func ArrayFilter(input any, callback func(any) bool) any {
 	if input == nil {
 		return nil
 	}
@@ -309,13 +187,13 @@ func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{}
 		return nil
 	}
 	if callback == nil {
-		callback = func(v interface{}) bool {
+		callback = func(v any) bool {
 			return v != nil
 		}
 	}
 	switch val.Kind() {
 	case reflect.Slice, reflect.Array:
-		var res []interface{}
+		var res []any
 		for i := 0; i < val.Len(); i++ {
 			v := val.Index(i).Interface()
 			if callback(v) {
@@ -324,7 +202,7 @@ func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{}
 		}
 		return res
 	case reflect.Map:
-		res := make(map[interface{}]interface{})
+		res := make(map[any]any)
 		for _, k := range val.MapKeys() {
 			v := val.MapIndex(k).Interface()
 			if callback(v) {
@@ -338,7 +216,7 @@ func ArrayFilter(input interface{}, callback func(interface{}) bool) interface{}
 }
 
 // ArrayPad pads array to the specified length with a value
-func ArrayPad(array []interface{}, size int, value interface{}) []interface{} {
+func ArrayPad[T comparable](array []T, size int, value T) []T {
 	if size == 0 || (size > 0 && size < len(array)) || (size < 0 && size > -len(array)) {
 		return array
 	}
@@ -347,7 +225,7 @@ func ArrayPad(array []interface{}, size int, value interface{}) []interface{} {
 		n = -size
 	}
 	n -= len(array)
-	tmp := make([]interface{}, n)
+	tmp := make([]T, n)
 	for i := 0; i < n; i++ {
 		tmp[i] = value
 	}
@@ -358,19 +236,22 @@ func ArrayPad(array []interface{}, size int, value interface{}) []interface{} {
 }
 
 // ArrayPop pops the element off the end of array
-func ArrayPop(s *[]interface{}) interface{} {
+func ArrayPop[T comparable](s *[]T) T {
+	var t T
 	if s == nil || len(*s) == 0 {
-		return nil
+		return t
 	}
+
 	ep := len(*s) - 1
 	e := (*s)[ep]
 	*s = (*s)[:ep]
+
 	return e
 }
 
 // ArrayPush pushes one or more elements onto the end of array,
 // returns the new number of elements in the array
-func ArrayPush(s *[]interface{}, elements ...interface{}) int {
+func ArrayPush[T comparable](s *[]T, elements ...T) int {
 	if s == nil {
 		return 0
 	}
@@ -379,18 +260,21 @@ func ArrayPush(s *[]interface{}, elements ...interface{}) int {
 }
 
 // ArrayShift shifts an element off the beginning of array
-func ArrayShift(s *[]interface{}) interface{} {
+func ArrayShift[T comparable](s *[]T) T {
+	var t T
 	if s == nil || len(*s) == 0 {
-		return nil
+		return t
 	}
+
 	f := (*s)[0]
 	*s = (*s)[1:]
+
 	return f
 }
 
 // ArrayUnshift prepends one or more elements to the beginning of a array,
 // returns the new number of elements in the array.
-func ArrayUnshift(s *[]interface{}, elements ...interface{}) int {
+func ArrayUnshift[T comparable](s *[]T, elements ...T) int {
 	if s == nil {
 		return 0
 	}
@@ -399,7 +283,7 @@ func ArrayUnshift(s *[]interface{}, elements ...interface{}) int {
 }
 
 // ArrayReverse returns an array with elements in reverse order
-func ArrayReverse(s []interface{}) []interface{} {
+func ArrayReverse[T comparable](s []T) []T {
 	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
 		s[i], s[j] = s[j], s[i]
 	}
@@ -407,7 +291,7 @@ func ArrayReverse(s []interface{}) []interface{} {
 }
 
 // ArraySlice extracts a slice of the array
-func ArraySlice(array []interface{}, offset, length uint) []interface{} {
+func ArraySlice[T comparable](array []T, offset, length uint) []T {
 	if offset > uint(len(array)) {
 		return nil
 	}
@@ -419,160 +303,37 @@ func ArraySlice(array []interface{}, offset, length uint) []interface{} {
 }
 
 // ArraySum returns the sum of values in an array
-func ArraySum(array interface{}) interface{} {
-	if array == nil {
-		return nil
-	}
-	kind := reflect.TypeOf(array).Kind()
-	if kind != reflect.Slice && kind != reflect.Array {
-		return nil
+func ArraySum[T constraints.Ordered](array []T) T {
+	var sum T
+	for _, v := range array {
+		sum += v
 	}
 
-	s := reflect.ValueOf(array)
-	if s.Len() == 0 {
-		return 0
-	}
-
-	switch s.Index(0).Kind() {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		var sum int64
-		for i := 0; i < s.Len(); i++ {
-			sum += s.Index(i).Int()
-		}
-		return sum
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		var sum uint64
-		for i := 0; i < s.Len(); i++ {
-			sum += s.Index(i).Uint()
-		}
-		return sum
-	case reflect.Float32, reflect.Float64:
-		var sum float64
-		for i := 0; i < s.Len(); i++ {
-			sum += s.Index(i).Float()
-		}
-		return sum
-	case reflect.String:
-		var sum string
-		for i := 0; i < s.Len(); i++ {
-			sum += s.Index(i).String()
-		}
-		return sum
-	}
-
-	return nil
+	return sum
 }
 
 // Sort sorts an array (lowest to highest)
-func Sort(array interface{}) interface{} {
-	if array == nil {
-		return nil
-	}
-	kind := reflect.TypeOf(array).Kind()
-	if kind != reflect.Slice && kind != reflect.Array {
-		return nil
-	}
-
-	s := reflect.ValueOf(array)
-	if s.Len() == 0 {
+func Sort[T constraints.Ordered](array []T) []T {
+	if len(array) == 0 {
 		return array
 	}
 
-	switch s.Index(0).Kind() {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		var res = make([]int64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Int()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] < res[j]
-		})
-		return res
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		var res = make([]uint64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Uint()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] < res[j]
-		})
-		return res
-	case reflect.Float32, reflect.Float64:
-		var res = make([]float64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Float()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] < res[j]
-		})
-		return res
-	case reflect.String:
-		var res = make([]string, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).String()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] < res[j]
-		})
-		return res
-	}
+	sort.Slice(array, func(i int, j int) bool {
+		return array[i] < array[j]
+	})
 
 	return array
 }
 
 // Rsort sorts an array in reverse order (highest to lowest)
-func Rsort(array interface{}) interface{} {
-	if array == nil {
-		return nil
-	}
-	kind := reflect.TypeOf(array).Kind()
-	if kind != reflect.Slice && kind != reflect.Array {
-		return nil
-	}
-
-	s := reflect.ValueOf(array)
-	if s.Len() == 0 {
+func Rsort[T constraints.Ordered](array []T) []T {
+	if len(array) == 0 {
 		return array
 	}
 
-	switch s.Index(0).Kind() {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		var res = make([]int64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Int()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] > res[j]
-		})
-		return res
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		var res = make([]uint64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Uint()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] > res[j]
-		})
-		return res
-	case reflect.Float32, reflect.Float64:
-		var res = make([]float64, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).Float()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] > res[j]
-		})
-		return res
-	case reflect.String:
-		var res = make([]string, s.Len())
-		for i := 0; i < s.Len(); i++ {
-			res[i] = s.Index(i).String()
-		}
-		sort.Slice(res, func(i int, j int) bool {
-			return res[i] > res[j]
-		})
-		return res
-	}
+	sort.Slice(array, func(i int, j int) bool {
+		return array[i] > array[j]
+	})
 
 	return array
 }
