@@ -127,6 +127,46 @@ func init() {
 			layout: time.RFC1123Z,
 			format: "r", // RFC 2822 formatted date
 		},
+		pattern{
+			regexp: "^\\d{2} [[:alpha:]]{3} \\d{4}$",
+			layout: "02 Jan 2006",
+			format: "d M Y",
+		},
+		pattern{
+			regexp: "^\\d{2} [[:alpha:]]{3} \\d{2}$",
+			layout: "02 Jan 06",
+			format: "d M y",
+		},
+		pattern{
+			regexp: "^\\d{1} [[:alpha:]]{3} \\d{4}$",
+			layout: "2 Jan 2006",
+			format: "j M Y",
+		},
+		pattern{
+			regexp: "^\\d{1} [[:alpha:]]{3} \\d{2}$",
+			layout: "2 Jan 06",
+			format: "j M y",
+		},
+		pattern{
+			regexp: "^[[:alpha:]]{3} \\d{2} \\d{4}$",
+			layout: "Jan 02 2006",
+			format: "M d Y",
+		},
+		pattern{
+			regexp: "^[[:alpha:]]{3} \\d{2} \\d{2}$",
+			layout: "Jan 02 06",
+			format: "M d y",
+		},
+		pattern{
+			regexp: "^[[:alpha:]]{3} \\d{1} \\d{4}$",
+			layout: "Jan 2 2006",
+			format: "M j Y",
+		},
+		pattern{
+			regexp: "^[[:alpha:]]{3} \\d{1} \\d{2}$",
+			layout: "Jan 2 06",
+			format: "M j y",
+		},
 	}
 
 	formatMap = map[string]string{
