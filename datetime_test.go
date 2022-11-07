@@ -48,6 +48,14 @@ var _ = Describe("Date/Time Functions", func() {
 			{"17-1-01 00:00:00", ts170101},
 			{"17-1-1 00:00:00", ts170101},
 			{"17-01-1 00:00:00", ts170101},
+			{"01 Jan 2017", ts170101},
+			{"01 Jan 17", ts170101},
+			{"1 Jan 2017", ts170101},
+			{"1 Jan 17", ts170101},
+			{"Jan 01 2017", ts170101},
+			{"Jan 01 17", ts170101},
+			{"Jan 1 2017", ts170101},
+			{"Jan 1 17", ts170101},
 		}
 		for _, t := range tests {
 			Expect(php.Strtotime(t.input)).To(Equal(t.want))
