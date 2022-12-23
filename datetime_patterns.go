@@ -118,6 +118,11 @@ func init() {
 			format: "Y",
 		},
 		pattern{
+			regexp: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$",
+			layout: "2006-01-02T15:04:05Z",
+			format: "y-m-dTH:i:sZ",
+		},
+		pattern{
 			regexp: "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}$",
 			layout: "2006-01-02T15:04:05-07:00",
 			format: "c", // ISO 8601 date
